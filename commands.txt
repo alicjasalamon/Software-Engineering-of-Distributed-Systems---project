@@ -1,0 +1,7 @@
+# create controller:
+php zf.php create controller NAZWA MODUL
+	php zf.php create controller db application
+
+#create view:
+php zf.php create action NAZWA KONTROLER MODUL
+	php zf.php create action getData Db Application
