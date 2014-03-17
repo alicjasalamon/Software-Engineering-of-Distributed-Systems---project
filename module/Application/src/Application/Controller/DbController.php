@@ -14,7 +14,7 @@ class DbController extends BaseController {
     public function getAction() {
         $data = 1;
         $viewModel = new ViewModel();
-        $viewModel->setVariable('data', $data);
+        $viewModel->setVariable('xxx', $data);
         return $viewModel;
     }
     
