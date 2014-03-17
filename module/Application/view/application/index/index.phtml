@@ -1,14 +1,88 @@
 <div id="content">
-    <a href="<?php echo $this->url('home') ?>">
+    <!--a href="<?= $this->url('home') ?>">
         <div class="tile bg-darkPink">
             <div class="tile-content icon">
                 <i class="icon-sun-3"></i>
             </div>
             <div class="tile-status">
                 <span class="name">
-                    <?= $this->zmienna ?>
+    <?= $this->zmienna ?>
                 </span>
             </div>
         </div>
-    </a>
+    </a> -->
+
+    <nav class="navigation-bar dark">
+        <nav class="navigation-bar-content">
+            <div class="element"> AAL FANCY NAME </div>
+
+            <div class="element place-right">
+                <a class="dropdown-toggle" href="#">
+                    <span class="icon-cog"></span>
+                </a>
+                <ul class="dropdown-menu place-right" data-role="dropdown">
+                    <li><a href="#">Log out</a></li>
+                    <li><a href="#">Change password</a></li>
+
+                </ul>
+            </div>
+            
+            <span class="element-divider place-right"></span>
+            
+            <a class="element place-right" href="#"><span class="icon-printer"></span></a>
+            <span class="element-divider place-right"></span>
+            <button class="element place-right">
+                Andrian Leczniczy
+            </button>
+        </nav>
+    </nav>
+
+    <div class="grid">
+        <div class="row">
+
+            <div class="span3">               
+                <div class="input-control select">
+                    <select>
+                        <option>Zofia Choralska</option>
+                        <option>Kamil Zaziębiony</option>
+                        <option>Paweł Połamany</option>
+                    </select>
+                </div>
+
+                <div id="calendar">
+                    <div class="input-control text" data-role="datepicker"
+                         data-date="2014-11-13" data-effect="slide" data-other-days="1">
+                        <input type="text" readonly="readonly">
+                        <button class="btn-date">
+                        </button>
+                        <div class="calendar calendar-dropdown"> 
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-control" data-role="tab-control">
+        <ul class="tabs">
+            <li class="place-right"><a href="#_page_1">Visits</a></li>
+            <li class="place-right"><a href="#_page_2">Exercises</a></li>
+            <li class="place-right"><a href="#_page_3">Diet</a></li>
+            <li class="place-right"><a href="#_page_4">Medicines</a></li>
+            <li class="place-right active"><a href="#_page_5">All</a></li>
+        </ul>
+
+        <div class="frames">
+            <div class="frame" id="_page_1">ziom1</div>
+            <div class="frame" id="_page_2">ziooom</div>
+            <div class="frame" id="_page_3">bum</div>
+            <div class="frame" id="_page_4">ziooom</div>
+            <div class="frame" id="_page_5">bum</div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
 </div>
