@@ -87,8 +87,36 @@
                     </div>
                 </div>
 
-                <div class="events">
-                    <div class="events-area">
+                <div class="events" style="overflow-x: scroll">
+                    <div class="events-area" style="width: 4900px; height: 335px">
+
+                        <ul class="meter">
+                            <li class="js-interval-09-00"><em>09:00</em></li>
+                            <li class="js-interval-09-20"><em>09:20</em></li>
+                            <li class="js-interval-09-40"><em>09:40</em></li>
+                            <li class="js-interval-10-00"><em>10:00</em></li>
+                            <li class="js-interval-10-20"><em>10:20</em></li>
+                            <li class="js-interval-10-40"><em>10:40</em></li>
+                            <li class="js-interval-11-00"><em>11:00</em></li>
+                            <li class="js-interval-11-20"><em>11:20</em></li>
+                            <li class="js-interval-11-40"><em>11:40</em></li>
+                            <li class="js-interval-12-00"><em>12:00</em></li>
+                            <li class="js-interval-12-20"><em>12:20</em></li>
+                            <li class="js-interval-12-40"><em>12:40</em></li>
+                            <li class="js-interval-13-00"><em>13:00</em></li>
+                            <li class="js-interval-13-20"><em>13:20</em></li>
+                            <li class="js-interval-13-40"><em>13:40</em></li>
+                            <li class="js-interval-14-00"><em>14:00</em></li>
+                            <li class="js-interval-14-20"><em>14:20</em></li>
+                            <li class="js-interval-14-40"><em>14:40</em></li>
+                            <li class="js-interval-15-00"><em>15:00</em></li>
+                            <li class="js-interval-15-20"><em>15:20</em></li>
+                            <li class="js-interval-15-40"><em>15:40</em></li>
+                            <li class="js-interval-16-00"><em>16:00</em></li>
+                            <li class="js-interval-16-20"><em>16:20</em></li>
+                            <li class="js-interval-16-40"><em>16:40</em></li>
+
+                        </ul>
                         <div class="events-grid">
 
                             <div class="event-group">
@@ -108,12 +136,13 @@
                                         <div>11:40 - 12:40</div>
                                         <h2 class="no-margin">Dinner</h2>
                                     </div>
-                                    <div class="event double"></div>
                                     <div class="event"></div>
                                     <div class="event"></div>
                                     <div class="event"></div>
                                     <div class="event"></div>
-                                    <div class="event double"></div>
+                                    <div class="event"></div>
+                                    <div class="event"></div>
+                                    <div class="event"></div>
                                     <div class="event"></div>
                                     <div class="event"></div>
                                     <div class="event"></div>
@@ -121,6 +150,7 @@
                                 </div>
 
                                 <div class="event-stream" >
+
                                     <div class="event"></div>
                                     <div class="event"></div>
                                     <div class="event"></div>
@@ -128,7 +158,6 @@
                                         <div>10:00 - 11:00</div>
                                         <h2 class="no-margin">Morning Exercises</h2>
                                     </div>
-                                    <div class="event"></div>
                                     <div class="event"></div>
                                     <div class="event"></div>
                                     <div class="event"></div>
@@ -179,7 +208,6 @@
                                     <div class="event"></div>
                                     <div class="event"></div>
                                     <div class="event"></div>
-                                    <div class="event"></div>
 
                                 </div>
 
@@ -206,8 +234,8 @@
                                     <div class="event"></div>
                                     <div class="event"></div>
                                     <div class="event"></div>
-                                    <div class="event"></div>
-                                    <div class="event"></div>
+                                    <div class="event"></div> 
+
                                 </div>
 
 
@@ -268,16 +296,44 @@
                         </div>
                     </div>
 
-                     <div class="row no-margin">
-                        <div class="span2">Begin time: </div>
-                        <div class="span4">
-                            <div class="input-control text" data-role="input-control">
-                                <input id="hour-picker" type="text" placeholder="Type activity title...">
-                                <button class="btn-clear" tabindex="-1" type="button"></button>
+                    <div class="row no-margin">
+                        <div class="span1">Begin time: </div>
+                        <div class="span1 offset1">
+                            <div class="input-control select">
+                                <select>
+                                    <option>06</option>
+                                    <option>07</option>                                    <option>00</option>
+                                    <option>08</option>                   <option>00</option>
+                                    <option>09</option>
+                                    <option>10</option>
+                                    <option>11</option>                                    <option>00</option>
+                                    <option>12</option>                   <option>00</option>
+                                    <option>13</option>
+                                    <option>14</option>                   <option>00</option>
+                                    <option>15</option>
+                                    <option>16</option>                   <option>00</option>
+                                    <option>17</option>
+                                    <option>18</option>                   <option>00</option>
+                                    <option>19</option>
+                                    <option>20</option>                   <option>00</option>
+                                    <option>21</option>
+                                    <option>22</option>                   <option>00</option>
+                                    <option>23</option>  
+                                </select>
                             </div>
                         </div>
+                        <div class="span1">
+                            <div class="input-control select">
+                                <select>
+                                    <option>00</option>
+                                    <option>20</option>
+                                    <option>40</option>
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
-                    
+
                     <div class="row no-margin">
                         <div class="span2"> Duration: </div>
                         <div class="span4">
@@ -292,18 +348,16 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="offset2">
-                        <button>Cancel</button>
-                        <button class="success">OK</button>
-                    </div>
+                            <button>Cancel</button>
+                            <button class="success">OK</button>
                         </div>
                     </div>
                 </div>
-            </form>
         </div>
     </div>
-
 </div>
+
 
