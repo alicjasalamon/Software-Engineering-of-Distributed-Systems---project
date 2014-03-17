@@ -14,7 +14,7 @@
 
     <nav class="navigation-bar dark">
         <nav class="navigation-bar-content">
-            <div class="element"> AAL FANCY NAME </div>
+            <div class="element"> <i class='on-left icon-accessibility'></i>AAL FANCY NAME </div>
 
             <div class="element place-right">
                 <a class="dropdown-toggle" href="#">
@@ -43,6 +43,7 @@
             <div class="span3">               
                 <div class="input-control select">
                     <select>
+                        <option disabled selected style='display: none'>Select your patient</option>
                         <option>Zofia Choralska</option>
                         <option>Kamil Zaziębiony</option>
                         <option>Paweł Połamany</option>
@@ -78,7 +79,7 @@
                     <div class="stream bg-orange">
                         <div class="stream-title">EXERCISES</div>
                     </div>
-                    <div class="stream bg-lightBlue">
+                    <div class="stream bg-pink">
                         <div class="stream-title">MEDICINES</div>
                     </div>
                     <div class="stream bg-darkGreen">
@@ -93,7 +94,7 @@
                             <div class="event-group">
                                 <div class="event-stream" >
                                     <div class="event"></div>
-                                    <div class="event double padding10 bg-teal">
+                                    <div class="event double padding10 ribbed-teal">
                                         <div>9:20 - 10:00</div>
                                         <h2 class="no-margin">Breakfast</h2>
                                     </div>
@@ -149,7 +150,7 @@
                                 </div>
 
                                 <div class="event-stream" >
-                                    <div class="event padding10 bg-lightBlue">
+                                    <div class="event padding10 ribbed-pink">
                                         <div>9:00 - 9:20</div>
                                         <h2 class="no-margin">Medicines 1</h2>
                                     </div>
@@ -196,9 +197,9 @@
                                     <div class="event"></div>
                                     <div class="event"></div>
                                     <div class="event"></div>
+                                    <div class="event"></div> 
                                     <div class="event"></div>
-                                    <div class="event"></div>
-                                       <div class="event padding10 bg-darkGreen quadro">
+                                    <div class="event padding10 bg-darkGreen quadro">
                                         <div>9:00 - 9:20</div>
                                         <h2 class="no-margin">dr. Lol visit</h2>
                                     </div>
@@ -223,7 +224,86 @@
         </div>
     </div>
 
+    <div class="window flat shadow span7">
+        <div class="caption">
+            <span class="icon icon-sun"></span> 
+            <div class="title">New activitity for Zofia Choralska</div>
+            <button class="btn-close"></button>
+        </div>
+        <div class="content">
+            <form>
+                <div class="grid margin20">
+
+                    <div class="row no-margin"> 
+                        <div class="span2">Activity type: </div>
+                        <div class="span4">
+                            <div class="input-control select">
+                                <select>
+                                    <option disabled selected style='display: none;'>Select activity type</option>
+                                    <option>Diet</option>
+                                    <option>Exercise</option>
+                                    <option>Medicines</option>
+                                    <option>Doctor's visit</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row no-margin">
+                        <div class="span2">Title: </div>
+                        <div class="span4">
+                            <div class="input-control text" data-role="input-control">
+                                <input type="text" placeholder="Type activity title...">
+                                <button class="btn-clear" tabindex="-1" type="button"></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row no-margin">
+                        <div class="span2">Detailed info: </div>
+                        <div class="span4">
+                            <div class="input-control textarea">
+                                <textarea></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="row no-margin">
+                        <div class="span2">Begin time: </div>
+                        <div class="span4">
+                            <div class="input-control text" data-role="input-control">
+                                <input id="hour-picker" type="text" placeholder="Type activity title...">
+                                <button class="btn-clear" tabindex="-1" type="button"></button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row no-margin">
+                        <div class="span2"> Duration: </div>
+                        <div class="span4">
+                            <div class="input-control select">
+                                <select>
+                                    <option disabled selected style='display: none'>Select activity duration time</option>
+                                    <option>20 min</option>
+                                    <option>40 min</option>
+                                    <option>1 h</option>
+                                    <option>1 h 20 min</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="offset2">
+                        <button>Cancel</button>
+                        <button class="success">OK</button>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
 </div>
 
-</div>
