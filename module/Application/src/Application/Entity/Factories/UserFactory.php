@@ -1,3 +1,4 @@
+
 <?php
 
 namespace Application\Entity\Factories;
@@ -14,7 +15,8 @@ class UserFactory {
         $this->_mandango = $mandango;
     }
     
-    public function createAndPersist($name) {
+    public function createAndPersist($params) {
+        $name = $params['name'];
         $user = $this->_mandango->create('Application\Entity\User', array($name));
         $this->_mandango->persist($user);
         $this->_mandango->flush();
@@ -24,10 +26,6 @@ class UserFactory {
     public function create($name){
         $user = new User($name);
         return $user;
-    }
-    
-    public function clearAll() {
-        //$this->_mandango->remove();
     }
     
 }

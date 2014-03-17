@@ -3,6 +3,7 @@
 namespace Application\Controller;
 
 use Exception;
+use Zend\View\Model\ViewModel;
 
 class DbController extends BaseController {
 
@@ -18,11 +19,11 @@ class DbController extends BaseController {
     }
     
     public function addUserAction() {
-        $params = $this->params();
-        $name = $params->fromQuery('name');
+        $params = $this->params()->fromQuery();
+        //$name = $params->fromQuery('name');
         try {
             $userFactory = $this->getServiceLocator()->get('user-factory');
-            $user = $userFactory->createAndPersist($name);
+            $user = $userFactory->createAndPersist($params);
             $userJson = $user->toJson();
             $json = $this->generateJSONViewModel(0, '', $userJson);
         } catch (Exception $ex) {

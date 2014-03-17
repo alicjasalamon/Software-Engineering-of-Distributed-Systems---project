@@ -5,9 +5,8 @@
         <group>
             <file>file:/C:/xampp/htdocs/IOSR/module/Application/src/Application/Entity/Factories/UserFactory.php</file>
             <file>file:/C:/xampp/htdocs/IOSR/module/Application/src/Application/Controller/DbController.php</file>
-            <file>file:/C:/xampp/htdocs/IOSR/module/Application/view/application/db/add-user.phtml</file>
             <file>file:/C:/xampp/htdocs/IOSR/module/Application/src/Application/Entity/User.php</file>
-            <file>file:/C:/xampp/htdocs/IOSR/module/Application/config/module.config.php</file>
+            <file>file:/C:/xampp/htdocs/IOSR/module/Application/src/Application/Controller/BaseController.php</file>
         </group>
     </open-files>
 </project-private>
