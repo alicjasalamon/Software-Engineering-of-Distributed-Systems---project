@@ -1,3 +1,11 @@
 body.metro {
     margin: 20px;
 }
+
+.event {
+    opacity: 0.7;
+}
+
+.event div {
+    opacity: 1;
+}

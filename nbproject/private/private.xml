@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/IOSR/module/Application/src/Application/Entity/Factories/UserFactory.php</file>
-            <file>file:/C:/xampp/htdocs/IOSR/module/Application/src/Application/Controller/DbController.php</file>
-            <file>file:/C:/xampp/htdocs/IOSR/module/Application/view/application/db/add-user.phtml</file>
-            <file>file:/C:/xampp/htdocs/IOSR/module/Application/src/Application/Entity/User.php</file>
-            <file>file:/C:/xampp/htdocs/IOSR/module/Application/config/module.config.php</file>
+            <file>file:/D:/Alicja/Documents/Studia/8%20semestr/IOSR/GitHub/Software-Engineering-of-Distributed-Systems---project/public/css/style.css</file>
+            <file>file:/D:/Alicja/Documents/Studia/8%20semestr/IOSR/GitHub/Software-Engineering-of-Distributed-Systems---project/module/Application/view/application/index/index.phtml</file>
+            <file>file:/D:/Alicja/Documents/Studia/8%20semestr/IOSR/GitHub/Software-Engineering-of-Distributed-Systems---project/module/Application/view/layout/layout.phtml</file>
+            <file>file:/D:/Alicja/Documents/Studia/8%20semestr/IOSR/GitHub/Software-Engineering-of-Distributed-Systems---project/module/Application/view/application/db/index.phtml</file>
+            <file>file:/D:/Alicja/Documents/Studia/8%20semestr/IOSR/GitHub/Software-Engineering-of-Distributed-Systems---project/module/Application/view/application/db/add-user.phtml</file>
+            <file>file:/D:/Alicja/Documents/Studia/8%20semestr/IOSR/GitHub/Software-Engineering-of-Distributed-Systems---project/module/Application/view/application/db/get.phtml</file>
         </group>
     </open-files>
 </project-private>
