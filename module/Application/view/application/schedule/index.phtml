@@ -1,0 +1,37 @@
+ <div class="grid">
+        <div class="row">
+
+            <div class="span3">               
+
+
+                <div class="input-control select">
+                    <select>
+                        <option disabled selected style='display: none'>Select your patient</option>
+                        <option>Zofia Choralska</option>
+                        <option>Kamil Zaziebiony</option>
+                        <option>Pawel Polamany</option>
+                    </select>
+                </div>
+
+                <div class="input-control text" data-role="datepicker"
+                     data-date="01/01/2014"
+                     data-format="dd/mm/yyyy"
+                     data-position="bottom"
+                     data-effect="slide">
+                    <input type="text">
+                    <button class="btn-date"></button>
+                </div>
+
+            </div>
+        </div>
+     
+        <div class="row">
+
+            <?= $this->streamer ?>
+         
+        </div>
+
+        <div class="row">
+            <button class="large">Add activity</button>  
+        </div>
+    </div>

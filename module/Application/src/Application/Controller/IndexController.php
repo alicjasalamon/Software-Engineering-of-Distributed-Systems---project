@@ -6,7 +6,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 //use Exception;
 
-class IndexController extends AbstractActionController {
+class IndexController extends BaseController {
     public function indexAction() {
         //throw new Exception();
         $viewModel = new ViewModel();

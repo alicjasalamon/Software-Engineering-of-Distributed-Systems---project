@@ -5,38 +5,65 @@
         <meta charset="utf-8">
         <?php echo $this->headTitle('IOSR')->setAutoEscape(false) ?>
 
-        <?php echo $this->headMeta()
-            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        <?php
+        echo $this->headMeta()
+                ->appendName('viewport', 'width=device-width, initial-scale=1.0')
         ?>
 
         <!-- Styles -->
-        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                        ->appendStylesheet($this->basePath() . '/css/style.css')
-                        ->appendStylesheet($this->basePath() . '/css/iconFont.min.css')
-                        ->appendStylesheet($this->basePath() . '/css/metro-bootstrap.min.css')
-                        ->appendStylesheet($this->basePath() . '/css/metro-bootstrap-responsive.min.css')
-					
-	;?>
+        <?php
+        echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                ->appendStylesheet($this->basePath() . '/css/style.css')
+                ->appendStylesheet($this->basePath() . '/css/iconFont.min.css')
+                ->appendStylesheet($this->basePath() . '/css/metro-bootstrap.min.css')
+                ->appendStylesheet($this->basePath() . '/css/metro-bootstrap-responsive.min.css')
+
+        ;
+        ?>
 
         <!-- Scripts -->
-        <?php echo $this->headScript()
-                        ->appendFile($this->basePath() . '/js/lib/jquery-2.1.0.min.js')
-			->appendFile($this->basePath() . '/js/lib/jquery-ui-1.10.4.custom.min.js')
-                        ->appendFile($this->basePath() . '/js/lib/bootstrap.min.js')		
-                        ->appendFile($this->basePath() . '/js/lib/metro.min.js')
-        ; ?>
+        <?php
+        echo $this->headScript()
+                ->appendFile($this->basePath() . '/js/lib/jquery-2.1.0.min.js')
+                ->appendFile($this->basePath() . '/js/lib/jquery-ui-1.10.4.custom.min.js')
+                ->appendFile($this->basePath() . '/js/lib/bootstrap.min.js')
+                ->appendFile($this->basePath() . '/js/lib/metro.min.js')
+        ;
+        ?>
 
     </head>
     <body class="metro">
-        <?php 
-			echo $this->content; //print index.html
-		?>
-        <?php 
-			echo $this->inlineScript()
-				//->appendFile($this->basePath('js/hourPicker.js'))
-				//->appendFile($this->basePath('js/plik2.js'))
-				//->appendFile($this->basePath('js/plik3.js'))
-			;
-		?>
+        <nav class="navigation-bar dark">
+            <nav class="navigation-bar-content">
+                <div class="element"> <i class='on-left icon-accessibility'></i>AAL FANCY NAME </div>
+
+                <div class="element place-right">
+                    <a class="dropdown-toggle" href="#">
+                        <i class='on-left icon-cog'></i>
+                    </a>
+                    <ul class="dropdown-menu place-right" data-role="dropdown">
+                        <li><a href="#">Log out</a></li>
+                        <li><a href="#">Change password</a></li>
+
+                    </ul>
+                </div>
+
+                <span class="element-divider place-right"></span>
+
+                <a class="element place-right" href="#"><span class="icon-printer"></span></a>
+                <span class="element-divider place-right"></span>
+                <button class="element place-right">
+                    Adrian Leczniczy
+                </button>
+            </nav>
+        </nav>
+        <?php echo $this->content; //print index.html ?>
+        <?php
+        echo $this->inlineScript()
+        //->appendFile($this->basePath('js/hourPicker.js'))
+        //->appendFile($this->basePath('js/plik2.js'))
+        //->appendFile($this->basePath('js/plik3.js'))
+        ;
+        ?>
     </body>
 </html>

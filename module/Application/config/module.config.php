@@ -63,6 +63,19 @@ return array(
                     ),
                 ),
             ),
+            'schedule' => array(
+               'type' => 'segment',
+               'options' => array(
+                   'route' => '/schedule[/:action]',
+                   'constraints' => array(
+                       'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                   ),
+                   'defaults' => array(
+                       'controller' => 'Application\Controller\Schedule',
+                       'action' => 'index',
+                   ),
+               ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -93,7 +106,8 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
-            'Application\Controller\Db' => 'Application\Controller\DbController'
+            'Application\Controller\Db' => 'Application\Controller\DbController',
+            'Application\Controller\Schedule' => 'Application\Controller\ScheduleController'
         ),
     ),
     'view_manager' => array(
