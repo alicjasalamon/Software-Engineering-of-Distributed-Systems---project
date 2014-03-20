@@ -3,9 +3,9 @@
 namespace Application\Entity\Base;
 
 /**
- * Base class of Application\Entity\User document.
+ * Base class of Application\Entity\Institution document.
  */
-abstract class User extends \Mandango\Document\Document
+abstract class Institution extends \Mandango\Document\Document
 {
     /**
      * Initializes the document defaults.
@@ -20,7 +20,7 @@ abstract class User extends \Mandango\Document\Document
      * @param array $data  The document data.
      * @param bool  $clean Whether clean the document.
      *
-     * @return \Application\Entity\User The document (fluent interface).
+     * @return \Application\Entity\Institution The document (fluent interface).
      */
     public function setDocumentData($data, $clean = false)
     {
@@ -50,7 +50,7 @@ abstract class User extends \Mandango\Document\Document
      *
      * @param mixed $value The value.
      *
-     * @return \Application\Entity\User The document (fluent interface).
+     * @return \Application\Entity\Institution The document (fluent interface).
      */
     public function setName($value)
     {
@@ -193,7 +193,7 @@ abstract class User extends \Mandango\Document\Document
      *
      * @param array $array An array.
      *
-     * @return \Application\Entity\User The document (fluent interface).
+     * @return \Application\Entity\Institution The document (fluent interface).
      */
     public function fromArray(array $array)
     {

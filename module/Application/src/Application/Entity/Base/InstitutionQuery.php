@@ -3,9 +3,9 @@
 namespace Application\Entity\Base;
 
 /**
- * Base class of query of Application\Entity\User document.
+ * Base class of query of Application\Entity\Institution document.
  */
-abstract class UserQuery extends \Mandango\Query
+abstract class InstitutionQuery extends \Mandango\Query
 {
     /**
      * {@inheritdoc}

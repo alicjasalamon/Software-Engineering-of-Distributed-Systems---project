@@ -3,18 +3,18 @@
 namespace Application\Entity\Base;
 
 /**
- * Base class of repository of Application\Entity\User document.
+ * Base class of repository of Application\Entity\Institution document.
  */
-abstract class UserRepository extends \Mandango\Repository
+abstract class InstitutionRepository extends \Mandango\Repository
 {
     /**
      * {@inheritdoc}
      */
     public function __construct(\Mandango\Mandango $mandango)
     {
-        $this->documentClass = 'Application\Entity\User';
+        $this->documentClass = 'Application\Entity\Institution';
         $this->isFile = false;
-        $this->collectionName = 'application_entity_user';
+        $this->collectionName = 'application_entity_institution';
 
         parent::__construct($mandango);
     }

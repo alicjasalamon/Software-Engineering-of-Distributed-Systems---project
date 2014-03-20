@@ -105,9 +105,10 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
+            'MandangoModule\Console' => 'MandangoModule\Controller\ConsoleController',
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Db' => 'Application\Controller\DbController',
-            'Application\Controller\Schedule' => 'Application\Controller\ScheduleController'
+            'Application\Controller\Schedule' => 'Application\Controller\ScheduleController',
         ),
     ),
     'view_manager' => array(
@@ -130,6 +131,15 @@ return array(
     'console' => array(
         'router' => array(
             'routes' => array(
+                'mandango_module_mondator_process' => array(
+                    'options' => array(
+                        'route'    => 'mandango mondator process',
+                        'defaults' => array(
+                            'controller' => 'MandangoModule\Console',
+                            'action'     => 'mondator-process',
+                        ),
+                    ),
+                ),
             ),
         ),
     ),

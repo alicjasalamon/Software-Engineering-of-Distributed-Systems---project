@@ -12,5 +12,18 @@
  */
 
 return array(
-    // ...
+    
+    'mandango_config_classes' => [
+        'Application\Entity\User' => [
+            'fields'     => [
+                'name'       => 'string',
+            ],
+        ],
+        'Application\Entity\Institution' => [
+            'fields'     => [
+                'name'       => 'string',
+            ],
+        ],
+    ],
+    
 );

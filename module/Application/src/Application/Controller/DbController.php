@@ -20,7 +20,6 @@ class DbController extends BaseController {
     
     public function addUserAction() {
         $params = $this->params()->fromQuery();
-        //$name = $params->fromQuery('name');
         try {
             $userFactory = $this->getServiceLocator()->get('user-factory');
             $user = $userFactory->createAndPersist($params);
