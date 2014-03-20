@@ -29,4 +29,14 @@ class InstitutionController extends DbController {
         return $json;
     }
     
+    public function allAction() {
+        try {
+            $institutionJson = $this->institutionModel()->allAction();
+            $json = $this->generateJSONViewModel(0, '', $institutionJson);
+        } catch (Exception $ex) {
+            $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);
+        }
+        return $json;
+    }
+    
 }

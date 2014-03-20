@@ -2,7 +2,6 @@
 
 namespace Application\Controller;
 use Application\Controller\DbController;
-use Application\Model;
 
 class DoctorController extends DbController {
 
@@ -27,6 +26,16 @@ class DoctorController extends DbController {
         }
         return $json;
     }
+    
+     public function allAction() {
+        try {
+            $doctors = $this->doctorModel()->allAction();
+            $json = $this->generateJSONViewModel(0, '', $doctors);
+        } catch (Exception $ex) {
+            $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);
+        }
+        return $json;
+    }    
     
     public function setInstitutionAction() {
         $params = $this->getParams();

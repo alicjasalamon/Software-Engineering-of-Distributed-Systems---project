@@ -6,8 +6,19 @@ use Application\Entity\DoctorRepository;
 
 abstract class EntityModel {
     
+    /**
+     * @var Mandango
+     */
     protected $mandango;
+    
+    /**
+     * @var DoctorRepository
+     */
     protected $doctorRepository;
+    
+    /**
+     * @var InstitutionRepository
+     */
     protected $institutionRepository;
     
     function __construct($mandango) {

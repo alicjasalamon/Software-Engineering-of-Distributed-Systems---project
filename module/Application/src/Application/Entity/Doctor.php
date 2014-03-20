@@ -10,7 +10,8 @@ class Doctor extends \Application\Entity\Base\Doctor
     
     public function toArray() {
         $array = parent::toArray();
-        $array['institution'] = $this->getInstitution()->toArray();
+        $institution = $this->getInstitution();
+        $array['institution'] = $institution ? $institution->toArray() : null;
         return $array;
     }
    

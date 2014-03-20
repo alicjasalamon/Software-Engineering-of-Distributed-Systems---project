@@ -1,10 +1,6 @@
 <?php
 
 namespace Application\Model;
-use Application\Entity\DoctorRepository;
-use Application\Entity\Doctor;
-use Application\Entity\InstitutionRepository;
-use Application\Entity\Institution;
 
 class DoctorModel extends EntityModel {
    
@@ -19,6 +15,16 @@ class DoctorModel extends EntityModel {
         $doctor->save();
         $doctorJson = $doctor->toArray();
         return $doctorJson;
+    }
+    
+    public function allAction() {
+        $doctors = $this->doctorRepository->createQuery()->all();
+        $doctorsJson = array();
+        foreach($doctors as $doctor) {
+            $json = $doctor->toArray();
+            array_push($doctorsJson, $json);
+        }
+        return $doctorsJson;
     }
     
     public function updateInstitutionAction($params) {

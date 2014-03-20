@@ -7,4 +7,5 @@ namespace Application\Entity;
  */
 class InstitutionQuery extends \Application\Entity\Base\InstitutionQuery
 {
+    
 }

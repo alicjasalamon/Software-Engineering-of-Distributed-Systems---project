@@ -1,7 +1,6 @@
 <?php
 
 namespace Application\Model;
-use Application\Entity\InstitutionRepository;
 use Application\Entity\Institution;
 
 class InstitutionModel extends EntityModel {
@@ -18,6 +17,16 @@ class InstitutionModel extends EntityModel {
         $this->institutionRepository->save($institution);
         $institutionJson = $institution->toArray();
         return $institutionJson;
+    }
+    
+    public function allAction() {
+        $institutions = $this->institutionRepository->createQuery()->all();
+        $institutionsJson = array();
+        foreach($institutions as $institution) {
+            $json = $institution->toArray();
+            array_push($institutionsJson, $json);
+        }
+        return $institutionsJson;
     }
     
 }
