@@ -13,16 +13,42 @@
 
 return array(
     
+    'params_method' => 'get', //post or get
+    
     'mandango_config_classes' => [
         'Application\Entity\User' => [
-            'fields'     => [
-                'name'       => 'string',
+            'fields' => [
+                'name'          => 'string',
             ],
         ],
         'Application\Entity\Institution' => [
-            'fields'     => [
-                'name'       => 'string',
+            'fields' => [
+                'name'          => 'string',
             ],
+        ],
+        'Application\Entity\Doctor' => [
+            'fields' => [
+                'firstname'     => 'string',
+                'lastname'      => 'string',
+                'login'         => 'string',
+                'password'      => 'string',
+                'email'         => 'string',
+            ],
+            'referencesOne' => array(
+                'institution' => array('class' => 'Application\Entity\Institution'),
+            ),
+        ],
+        'Application\Entity\Patient' => [
+            'fields' => [
+                'firstname'     => 'string',
+                'lastname'      => 'string',
+                'login'         => 'string',
+                'password'      => 'string',
+                'email'         => 'string',
+            ],
+            'referencesOne' => array(
+                'doctor' => array('class' => 'Application\Entity\Doctor'),
+            ),
         ],
     ],
     

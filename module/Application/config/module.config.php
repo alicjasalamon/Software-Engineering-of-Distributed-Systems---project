@@ -10,7 +10,6 @@
 use Mandango\Mandango;
 use Mandango\Connection;
 use Mandango\Cache\FilesystemCache;
-use \Application\Entity\Factories\UserFactory;
 
 $config = array(
     'host'  => 'localhost',
@@ -28,9 +27,6 @@ $mandango->setConnections(array(
     //'other' => new Connection('mongodb://localhost:27017', 'iosr'),
 ));
 $mandango->setDefaultConnectionName('global');
-
-//factories
-$userFactory = new UserFactory($mandango);
 
 return array(
     'router' => array(
@@ -50,15 +46,41 @@ return array(
             // module. Simply drop new controllers in, and you can access them
             // using the path /application/:controller/:action
             
-            'db' => array(
+            'institution' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/db[/:action]',
+                    'route' => '/db/institution[/:action]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Db',
+                        'controller' => 'Application\Controller\Institution',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
+            'doctor' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/db/doctor[/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Doctor',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
+            'patient' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/db/patient[/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Patient',
                         'action' => 'index',
                     ),
                 ),
@@ -90,7 +112,6 @@ return array(
         ),
         'services' => array(
             'mandango' => $mandango,
-            'user-factory' => $userFactory,
         ),
     ),
     'translator' => array(
@@ -108,6 +129,9 @@ return array(
             'MandangoModule\Console' => 'MandangoModule\Controller\ConsoleController',
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Db' => 'Application\Controller\DbController',
+            'Application\Controller\Institution' => 'Application\Controller\InstitutionController',
+            'Application\Controller\Doctor' => 'Application\Controller\DoctorController',
+            'Application\Controller\Patient' => 'Application\Controller\PatientController',
             'Application\Controller\Schedule' => 'Application\Controller\ScheduleController',
         ),
     ),

@@ -1,38 +1,21 @@
 <?php
 
 namespace Application\Controller;
-
-use Exception;
-use Zend\View\Model\ViewModel;
+use Application\Model\DoctorModel;
+use Application\Model\InstitutionModel;
 
 class DbController extends BaseController {
-
-    public function indexAction() {
-        return new ViewModel();
-    }
-
-    public function getAction() {
-        $data = 1;
-        $viewModel = new ViewModel();
-        $viewModel->setVariable('xxx', $data);
-        return $viewModel;
+    
+    protected function doctorModel() {
+        return new DoctorModel($this->mandango());
     }
     
-    public function addUserAction() {
-        $params = $this->params()->fromQuery();
-        try {
-            $userFactory = $this->getServiceLocator()->get('user-factory');
-            $user = $userFactory->createAndPersist($params);
-            $userJson = $user->toJson();
-            $json = $this->generateJSONViewModel(0, '', $userJson);
-        } catch (Exception $ex) {
-            $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);
-        }
-        return $json;
+    protected function institutionModel() {
+        return new InstitutionModel($this->mandango());
     }
-    
-    public function clearAction() {
-        
+
+    protected function mandango() {
+        return $this->getServiceLocator()->get('mandango');
     }
 
 }

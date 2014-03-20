@@ -7,4 +7,5 @@ namespace Application\Entity;
  */
 class Institution extends \Application\Entity\Base\Institution
 {
+    
 }

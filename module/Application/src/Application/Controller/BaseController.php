@@ -6,7 +6,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\View\Model\JsonModel;
 
-class BaseController extends AbstractActionController {
+abstract class BaseController extends AbstractActionController {
     
     protected function generateJSONViewModel($code, $message, $data) {
         $jsonModel = new JsonModel();
@@ -17,6 +17,18 @@ class BaseController extends AbstractActionController {
         $viewModel->setVariable('json', $jsonModel);
         $viewModel->setTerminal(true);
         return $viewModel;
+    }
+    
+    protected function getParams() {
+        $config = $this->getServiceLocator()->get('config');
+        $paramsMethod = $config['params_method'];
+        $params = null;
+        if($paramsMethod == 'post'){
+            $params = $this->params()->fromPost();
+        } else if($paramsMethod == 'get') {
+            $params = $this->params()->fromQuery();
+        }
+        return $params;
     }
     
 }
