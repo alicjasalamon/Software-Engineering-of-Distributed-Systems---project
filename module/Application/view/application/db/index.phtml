@@ -14,6 +14,16 @@
                 alert(data); 
             });
     };
+    
+    function addInstitution() {
+        $.ajax({ 
+            type: "POST", 
+            url: "db/institution/add", 
+            data: { 
+                "name": "Placowka gicior" 
+            }
+        });
+    }
 </script>
 
 <h2>Institution</h2>
@@ -25,7 +35,9 @@
     </ul>
     <span class="fg-darkIndigo">Interfaces</span>
     <ul style="margin-top: 10px;">
-        <span class="fg-darkOrange text-bold" style="margin-top: 20px;">Get institution</span>
+        <span class="fg-darkOrange text-bold" style="margin-top: 20px;">
+            Get institution
+        </span>
         <li>
             url: <span class="fg-blue">/db/institution</span>
         </li>
@@ -37,7 +49,9 @@
                 </li>
             </ul>
         </li>
-        <span class="fg-darkOrange text-bold">Get all institutions</span>
+        <span class="fg-darkOrange text-bold">
+            Get all institutions
+        </span>
         <li>
             url: <span class="fg-blue">/db/institution/all</span> 
             <ul>
@@ -51,9 +65,6 @@
                 </li>
             </ul>
         </li>
-        <li>
-            
-        </li>
         <li style="margin-bottom: 20px;">
             parameters
             <ul>
@@ -62,9 +73,21 @@
                 </li>
             </ul>
         </li>
-        <span class="fg-darkOrange text-bold" style="margin-top: 20px;">Add institution</span>
+        <span class="fg-darkOrange text-bold">
+            Add institution
+        </span>
         <li>
             url: <span class="fg-blue">/db/institution/add</span>
+            <ul>
+                <li>
+                    <span class="fg-grayLight" >$.ajax({ type: "POST", url: "db/institution/add", data: { "name": "Placowka gicior" }});</span>
+                </li>
+                <li>
+                    <button id="load-button" onclick="addInstitution();">
+                        Add sample institution
+                    </button>
+                </li>
+            </ul>
         </li>
         <li style="margin-bottom: 20px;">
             parameters
