@@ -1,1 +1,175 @@
-<p>DbController</p>
+<h1>Database interfaces</h1>
+
+<script type="text/javascript">
+    function loadDoctors() {
+        $.ajax('/db/doctor/all')
+            .success(function(data) { 
+                alert(data); 
+            });
+    };
+    
+    function loadInstitutions() {
+        $.ajax('/db/institution/all')
+            .success(function(data) { 
+                alert(data); 
+            });
+    };
+</script>
+
+<h2>Institution</h2>
+<ul style="margin-top: 20px;">
+    <span class="fg-darkIndigo">Fields</span>
+    <ul style="margin-bottom: 20px; margin-top: 10px;">
+        <li>id.$id: <span class="fg-darkGreen text-bold">string</span></li>
+        <li>name: <span class="fg-darkGreen text-bold">string</span></li>
+    </ul>
+    <span class="fg-darkIndigo">Interfaces</span>
+    <ul style="margin-top: 10px;">
+        <span class="fg-darkOrange text-bold" style="margin-top: 20px;">Get institution</span>
+        <li>
+            url: <span class="fg-blue">/db/institution</span>
+        </li>
+        <li style="margin-bottom: 20px;">
+            parameters
+            <ul>
+                <li>
+                    id: <span class="fg-darkGreen text-bold">string</span></li>
+                </li>
+            </ul>
+        </li>
+        <span class="fg-darkOrange text-bold">Get all institutions</span>
+        <li>
+            url: <span class="fg-blue">/db/institution/all</span> 
+            <ul>
+                <li>
+                    <span class="fg-grayLight" >$.ajax('/db/institution/all').success(function(data) { alert(data); });</span>
+                </li>
+                <li>
+                    <button id="load-button" onclick="loadInstitutions();">
+                        Load institutions
+                    </button>
+                </li>
+            </ul>
+        </li>
+        <li>
+            
+        </li>
+        <li style="margin-bottom: 20px;">
+            parameters
+            <ul>
+                <li>
+                    <span class="fg-grayLight">no parameters</span>
+                </li>
+            </ul>
+        </li>
+        <span class="fg-darkOrange text-bold" style="margin-top: 20px;">Add institution</span>
+        <li>
+            url: <span class="fg-blue">/db/institution/add</span>
+        </li>
+        <li style="margin-bottom: 20px;">
+            parameters
+            <ul>
+                <li>
+                    name: <span class="fg-darkGreen text-bold">string</span></li>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</ul>
+
+
+<h2>Doctor</h2>
+<ul style="margin-top: 20px;">
+    <span class="fg-darkIndigo">Fields</span>
+    <ul style="margin-bottom: 20px; margin-top: 10px;">
+        <li>id.$id: <span class="fg-darkGreen text-bold">string</span></li>
+        <li>firstname: <span class="fg-darkGreen text-bold">string</span></li>
+        <li>lastname: <span class="fg-darkGreen text-bold">string</span></li>
+        <li>login: <span class="fg-darkGreen text-bold">string</span></li>
+        <li>password: <span class="fg-darkGreen text-bold">string</span></li>
+        <li>email: <span class="fg-darkGreen text-bold">string</span></li>
+        <li>institution: <span class="fg-darkGreen text-bold">Institution</span></li>
+    </ul>
+    <span class="fg-darkIndigo">Interfaces</span>
+    <ul style="margin-top: 10px;">
+        <span class="fg-darkOrange text-bold" style="margin-top: 20px;">
+            Get doctor
+        </span>
+        <li>
+            url: <span class="fg-blue">/db/doctor</span>
+        </li>
+        <li style="margin-bottom: 20px;">
+            parameters
+            <ul>
+                <li>
+                    id: <span class="fg-darkGreen text-bold">string</span></li>
+                </li>
+            </ul>
+        </li>
+        <span class="fg-darkOrange text-bold">
+            Get all doctors
+        </span>
+        <li>
+            url: <span class="fg-blue">/db/doctor/all</span> 
+            <ul>
+                <li>
+                    <span class="fg-grayLight" >$.ajax('/db/doctor/all').success(function(data) { alert(data); });</span>
+                </li>
+                <li>
+                    <button id="load-button" onclick="loadDoctors();">
+                        Load doctors
+                    </button>
+                </li>
+            </ul>
+        </li>
+        <li style="margin-bottom: 20px;">
+            parameters
+            <ul>
+                <li>
+                    <span class="fg-grayLight">no parameters</span>
+                </li>
+            </ul>
+        </li>
+        <span class="fg-darkOrange text-bold" style="margin-top: 20px;">
+            Add doctor
+        </span>
+        <li>
+            url: <span class="fg-blue">/db/doctor/add</span>
+        </li>
+        <li style="margin-bottom: 20px;">
+            parameters
+            <ul>
+                <li>
+                    firstname: <span class="fg-darkGreen text-bold">string</span></li>
+                </li>
+                <li>
+                    lastname: <span class="fg-darkGreen text-bold">string</span></li>
+                </li>
+                <li>
+                    login: <span class="fg-darkGreen text-bold">string</span></li>
+                </li>
+                <li>
+                    password: <span class="fg-darkGreen text-bold">string</span></li>
+                </li>
+                <li>
+                    email: <span class="fg-darkGreen text-bold">string</span></li>
+                </li>
+            </ul>
+        </li>
+        <span class="fg-darkOrange text-bold" style="margin-top: 20px;">
+            Set institution
+        </span>
+        <li>
+            url: <span class="fg-blue">/db/doctor/setInstitution</span>
+        </li>
+        <li style="margin-bottom: 20px;">
+            parameters
+            <ul>
+                <li>
+                    institution: <span class="fg-darkGreen text-bold">Institution</span></li>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</ul>
+

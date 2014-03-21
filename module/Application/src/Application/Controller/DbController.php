@@ -6,6 +6,10 @@ use Application\Model\InstitutionModel;
 
 class DbController extends BaseController {
     
+    public function indexAction() {
+        
+    }
+    
     protected function doctorModel() {
         return new DoctorModel($this->mandango());
     }

@@ -59,6 +59,19 @@ return array(
                     ),
                 ),
             ),
+            'db' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/db[/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Db',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
             'doctor' => array(
                 'type' => 'segment',
                 'options' => array(

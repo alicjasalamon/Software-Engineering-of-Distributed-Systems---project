@@ -6,6 +6,7 @@ use Application\Controller\DbController;
 class DoctorController extends DbController {
 
     public function indexAction() {
+
         $params = $this->getParams();
         try{
             $doctorJson = $this->doctorModel()->getAction($params);
