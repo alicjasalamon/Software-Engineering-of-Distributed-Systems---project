@@ -28,6 +28,7 @@
                 ->appendFile($this->basePath() . '/js/lib/jquery-ui-1.10.4.custom.min.js')
                 ->appendFile($this->basePath() . '/js/lib/bootstrap.min.js')
                 ->appendFile($this->basePath() . '/js/lib/metro.min.js')
+                ->appendFile($this->basePath() . '/js/doc.js')
         ;
         ?>
 
@@ -60,9 +61,9 @@
         <?php echo $this->content; //print index.html ?>
         <?php
         echo $this->inlineScript()
-        //->appendFile($this->basePath('js/hourPicker.js'))
-        //->appendFile($this->basePath('js/plik2.js'))
-        //->appendFile($this->basePath('js/plik3.js'))
+            //->appendFile($this->basePath('js/hourPicker.js'))
+            //->appendFile($this->basePath('js/plik2.js'))
+            //->appendFile($this->basePath('js/plik3.js'))
         ;
         ?>
     </body>
