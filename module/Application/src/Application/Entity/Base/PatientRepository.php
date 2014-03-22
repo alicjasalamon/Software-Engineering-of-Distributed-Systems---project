@@ -77,6 +77,7 @@ abstract class PatientRepository extends \Mandango\Repository
                 $document->clearModified();
                 $identityMap[(string) $data['_id']] = $document;
 
+                $document->resetGroups();
             }
         }
 
@@ -86,6 +87,7 @@ abstract class PatientRepository extends \Mandango\Repository
                 $query = $document->queryForSave();
                 $collection->update(array('_id' => $this->idToMongo($document->getId())), $query, $updateOptions);
                 $document->clearModified();
+                $document->resetGroups();
             }
         }
     }
@@ -135,6 +137,22 @@ abstract class PatientRepository extends \Mandango\Repository
     {
         $skip = 0;
         do {
+            $cursor = $this->getCollection()->find(array('institution' => array('$exists' => 1)), array('institution' => 1))->limit($documentsPerBatch)->skip($skip);
+            $ids = array_unique(array_values(array_map(function ($result) { return $result['institution']; }, iterator_to_array($cursor))));
+            if (count($ids)) {
+                $collection = $this->getMandango()->getRepository('Application\Entity\Institution')->getCollection();
+                $referenceCursor = $collection->find(array('_id' => array('$in' => $ids)), array('_id' => 1));
+                $referenceIds =  array_values(array_map(function ($result) { return $result['_id']; }, iterator_to_array($referenceCursor)));
+
+                if ($idsDiff = array_diff($ids, $referenceIds)) {
+                    $this->remove(array('institution' => array('$in' => $idsDiff)), array('multiple' => 1));
+                }
+            }
+
+            $skip += $documentsPerBatch;
+        } while(count($ids));
+        $skip = 0;
+        do {
             $cursor = $this->getCollection()->find(array('doctor' => array('$exists' => 1)), array('doctor' => 1))->limit($documentsPerBatch)->skip($skip);
             $ids = array_unique(array_values(array_map(function ($result) { return $result['doctor']; }, iterator_to_array($cursor))));
             if (count($ids)) {
@@ -144,6 +162,22 @@ abstract class PatientRepository extends \Mandango\Repository
 
                 if ($idsDiff = array_diff($ids, $referenceIds)) {
                     $this->remove(array('doctor' => array('$in' => $idsDiff)), array('multiple' => 1));
+                }
+            }
+
+            $skip += $documentsPerBatch;
+        } while(count($ids));
+        $skip = 0;
+        do {
+            $cursor = $this->getCollection()->find(array('user' => array('$exists' => 1)), array('user' => 1))->limit($documentsPerBatch)->skip($skip);
+            $ids = array_unique(array_values(array_map(function ($result) { return $result['user']; }, iterator_to_array($cursor))));
+            if (count($ids)) {
+                $collection = $this->getMandango()->getRepository('Application\Entity\User')->getCollection();
+                $referenceCursor = $collection->find(array('_id' => array('$in' => $ids)), array('_id' => 1));
+                $referenceIds =  array_values(array_map(function ($result) { return $result['_id']; }, iterator_to_array($referenceCursor)));
+
+                if ($idsDiff = array_diff($ids, $referenceIds)) {
+                    $this->remove(array('user' => array('$in' => $idsDiff)), array('multiple' => 1));
                 }
             }
 

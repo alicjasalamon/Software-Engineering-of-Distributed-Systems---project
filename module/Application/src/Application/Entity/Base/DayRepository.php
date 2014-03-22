@@ -3,18 +3,18 @@
 namespace Application\Entity\Base;
 
 /**
- * Base class of repository of Application\Entity\Doctor document.
+ * Base class of repository of Application\Entity\Day document.
  */
-abstract class DoctorRepository extends \Mandango\Repository
+abstract class DayRepository extends \Mandango\Repository
 {
     /**
      * {@inheritdoc}
      */
     public function __construct(\Mandango\Mandango $mandango)
     {
-        $this->documentClass = 'Application\Entity\Doctor';
+        $this->documentClass = 'Application\Entity\Day';
         $this->isFile = false;
-        $this->collectionName = 'application_entity_doctor';
+        $this->collectionName = 'application_entity_day';
 
         parent::__construct($mandango);
     }
@@ -52,8 +52,6 @@ abstract class DoctorRepository extends \Mandango\Repository
         $inserts = array();
         $updates = array();
         foreach ($documents as $document) {
-            $document->saveReferences();
-            $document->updateReferenceFields();
             if ($document->isNew()) {
                 $inserts[spl_object_hash($document)] = $document;
             } else {
@@ -64,9 +62,6 @@ abstract class DoctorRepository extends \Mandango\Repository
         // insert
         if ($inserts) {
             foreach ($inserts as $oid => $document) {
-                if (!$document->isModified()) {
-                    continue;
-                }
                 $data = $document->queryForSave();
                 $data['_id'] = new \MongoId();
 
@@ -77,6 +72,7 @@ abstract class DoctorRepository extends \Mandango\Repository
                 $document->clearModified();
                 $identityMap[(string) $data['_id']] = $document;
 
+                $document->resetGroups();
             }
         }
 
@@ -86,6 +82,7 @@ abstract class DoctorRepository extends \Mandango\Repository
                 $query = $document->queryForSave();
                 $collection->update(array('_id' => $this->idToMongo($document->getId())), $query, $updateOptions);
                 $document->clearModified();
+                $document->resetGroups();
             }
         }
     }
@@ -133,37 +130,5 @@ abstract class DoctorRepository extends \Mandango\Repository
      */
     public function fixMissingReferences($documentsPerBatch = 1000)
     {
-        $skip = 0;
-        do {
-            $cursor = $this->getCollection()->find(array('institution' => array('$exists' => 1)), array('institution' => 1))->limit($documentsPerBatch)->skip($skip);
-            $ids = array_unique(array_values(array_map(function ($result) { return $result['institution']; }, iterator_to_array($cursor))));
-            if (count($ids)) {
-                $collection = $this->getMandango()->getRepository('Application\Entity\Institution')->getCollection();
-                $referenceCursor = $collection->find(array('_id' => array('$in' => $ids)), array('_id' => 1));
-                $referenceIds =  array_values(array_map(function ($result) { return $result['_id']; }, iterator_to_array($referenceCursor)));
-
-                if ($idsDiff = array_diff($ids, $referenceIds)) {
-                    $this->remove(array('institution' => array('$in' => $idsDiff)), array('multiple' => 1));
-                }
-            }
-
-            $skip += $documentsPerBatch;
-        } while(count($ids));
-        $skip = 0;
-        do {
-            $cursor = $this->getCollection()->find(array('user' => array('$exists' => 1)), array('user' => 1))->limit($documentsPerBatch)->skip($skip);
-            $ids = array_unique(array_values(array_map(function ($result) { return $result['user']; }, iterator_to_array($cursor))));
-            if (count($ids)) {
-                $collection = $this->getMandango()->getRepository('Application\Entity\User')->getCollection();
-                $referenceCursor = $collection->find(array('_id' => array('$in' => $ids)), array('_id' => 1));
-                $referenceIds =  array_values(array_map(function ($result) { return $result['_id']; }, iterator_to_array($referenceCursor)));
-
-                if ($idsDiff = array_diff($ids, $referenceIds)) {
-                    $this->remove(array('user' => array('$in' => $idsDiff)), array('multiple' => 1));
-                }
-            }
-
-            $skip += $documentsPerBatch;
-        } while(count($ids));
     }
 }

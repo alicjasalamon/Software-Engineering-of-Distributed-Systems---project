@@ -41,11 +41,19 @@ return array(
                     ),
                 ),
             ),
-            // The following is a route to simplify getting started creating
-            // new controllers and actions without needing to create a new
-            // module. Simply drop new controllers in, and you can access them
-            // using the path /application/:controller/:action
-            
+            'login' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/login[/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Login',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
             'institution' => array(
                 'type' => 'segment',
                 'options' => array(
@@ -141,6 +149,7 @@ return array(
         'invokables' => array(
             'MandangoModule\Console' => 'MandangoModule\Controller\ConsoleController',
             'Application\Controller\Index' => 'Application\Controller\IndexController',
+            'Application\Controller\Login' => 'Application\Controller\LoginController',
             'Application\Controller\Db' => 'Application\Controller\DbController',
             'Application\Controller\Institution' => 'Application\Controller\InstitutionController',
             'Application\Controller\Doctor' => 'Application\Controller\DoctorController',
