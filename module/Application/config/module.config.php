@@ -67,6 +67,19 @@ return array(
                     ),
                 ),
             ),
+			'admin' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/admin[/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Admin',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
             'db' => array(
                 'type' => 'segment',
                 'options' => array(
@@ -149,6 +162,7 @@ return array(
         'invokables' => array(
             'MandangoModule\Console' => 'MandangoModule\Controller\ConsoleController',
             'Application\Controller\Index' => 'Application\Controller\IndexController',
+            'Application\Controller\Admin' => 'Application\Controller\AdminController',
             'Application\Controller\Login' => 'Application\Controller\LoginController',
             'Application\Controller\Db' => 'Application\Controller\DbController',
             'Application\Controller\Institution' => 'Application\Controller\InstitutionController',

@@ -13,10 +13,10 @@
         <!-- Styles -->
         <?php
         echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                ->appendStylesheet($this->basePath() . '/css/style.css')
                 ->appendStylesheet($this->basePath() . '/css/iconFont.min.css')
                 ->appendStylesheet($this->basePath() . '/css/metro-bootstrap.min.css')
                 ->appendStylesheet($this->basePath() . '/css/metro-bootstrap-responsive.min.css')
+				->appendStylesheet($this->basePath() . '/css/style.css')
 
         ;
         ?>
@@ -61,6 +61,7 @@
         <?php echo $this->content; //print index.html ?>
         <?php
         echo $this->inlineScript()
+			->appendFile($this->basePath('js/admin/AdminDialogs.js'))
             //->appendFile($this->basePath('js/hourPicker.js'))
             //->appendFile($this->basePath('js/plik2.js'))
             //->appendFile($this->basePath('js/plik3.js'))

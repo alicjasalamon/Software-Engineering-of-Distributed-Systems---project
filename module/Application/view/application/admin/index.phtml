@@ -1,0 +1,91 @@
+<div class="grid">
+    <div class="row">
+
+        <div class="span3">               
+
+            <div class="input-control select">
+                <select>
+                    <option disabled selected style='display: none'>
+                        Select institution</option>
+                    <option>Zofia Choralska</option>
+                    <option>Kamil Zaziebiony</option>
+                    <option>Pawel Polamany</option>
+                </select>
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="tab-control" data-role="tab-control">
+            <ul class="tabs">
+                <li class="active"><a href="#_page_1">Doctors</a></li>
+                <li><a href="#_page_2">Patients</a></li>
+            </ul>
+
+            <div class="frames">
+                <div class="frame" id="_page_1">
+                    <table class="table striped">
+                        <thead>
+                            <tr>
+                                <th class="text-left">Name</th>
+                                <th class="text-left">Surname</th>
+                                <th class="text-left">Login</th>
+                                <th class="text-left">E-mail</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr><td>Bing</td><td >0:00:01</td><td >0,1 Mb</td><td >0 Mb</td></tr>
+                            <tr><td>Internet Explorer</td><td >0:00:01</td><td >0 Mb</td><td >0,1 Mb</td></tr>
+                            <tr><td>Chrome</td><td >0:00:01</td><td >0 Mb</td><td >0,1 Mb</td></tr>
+                            <tr><td>News</td><td >0:00:01</td><td >0 Mb</td><td >0,1 Mb</td></tr>
+                            <tr><td>Weather</td><td >0:00:01</td><td >0 Mb</td><td >0,1 Mb</td></tr>
+                            <tr><td>Music</td><td >0:00:01</td><td >0 Mb</td><td >0,1 Mb</td></tr>
+                        </tbody>
+
+                    </table>
+                </div>
+                <div class="frame" id="_page_2">
+                    <table class="table striped">
+                        <thead>
+                            <tr>
+                                <th class="text-left">Name</th>
+                                <th class="text-left">Surname</th>
+                                <th class="text-left">Login</th>
+                                <th class="text-left">E-mail</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr><td>Bing</td><td >0:00:01</td><td >0,1 Mb</td><td >0 Mb</td></tr>
+                            <tr><td>Internet Explorer</td><td >0:00:01</td><td >0 Mb</td><td >0,1 Mb</td></tr>
+                            <tr><td>Chrome</td><td >0:00:01</td><td >0 Mb</td><td >0,1 Mb</td></tr>
+                            <tr><td>News</td><td >0:00:01</td><td >0 Mb</td><td >0,1 Mb</td></tr>
+                            <tr><td>Weather</td><td >0:00:01</td><td >0 Mb</td><td >0,1 Mb</td></tr>
+                            <tr><td>Music</td><td >0:00:01</td><td >0 Mb</td><td >0,1 Mb</td></tr>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <button class="large" id="addNewIstitutionButton">Add institution</button>  
+        <button class="large" id="addNewDoctor">Add doctor</button>  
+        <button class="large" id="addNewPatient">Add patient</button>  
+      <!--  <button class="large" id="createNewBinding">Create binding</button>  -->
+    </div>
+</div>
+
+<div style="display: none">
+    <?= $this->addInstitution ?>
+    <?= $this->addDoctor ?>
+    <?= $this->addPatient ?>
+    <?= $this->createBinding ?>
+</div>
