@@ -80,6 +80,19 @@ return array(
                     ),
                 ),
             ),
+            'admin' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/admin[/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Admin',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
             'user' => array(
                 'type' => 'segment',
                 'options' => array(
@@ -176,7 +189,7 @@ return array(
             'MandangoModule\Console' => 'MandangoModule\Controller\ConsoleController',
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Auth' => 'Application\Controller\AuthController',
-            'Application\Controller\Db' => 'Application\Controller\DbController',
+            'Application\Controller\Admin' => 'Application\Controller\AdminController',            'Application\Controller\Db' => 'Application\Controller\DbController',
             'Application\Controller\Institution' => 'Application\Controller\InstitutionController',
             'Application\Controller\Doctor' => 'Application\Controller\DoctorController',
             'Application\Controller\Patient' => 'Application\Controller\PatientController',
