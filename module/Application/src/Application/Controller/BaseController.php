@@ -13,10 +13,7 @@ abstract class BaseController extends AbstractActionController {
         $jsonModel->setVariable('code', $code);
         $jsonModel->setVariable('message', $message);
         $jsonModel->setVariable('data', $data);
-        $viewModel = new ViewModel();
-        $viewModel->setVariable('json', $jsonModel);
-        $viewModel->setTerminal(true);
-        return $viewModel;
+        return $jsonModel;
     }
     
     protected function getParams() {
