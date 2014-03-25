@@ -14,14 +14,6 @@ class MetadataFactoryInfo
             'inheritable' => false,
             'inheritance' => false,
             'fields' => array(
-                'firstname' => array(
-                    'type' => 'string',
-                    'dbName' => 'firstname',
-                ),
-                'lastname' => array(
-                    'type' => 'string',
-                    'dbName' => 'lastname',
-                ),
                 'login' => array(
                     'type' => 'string',
                     'dbName' => 'login',
@@ -29,10 +21,6 @@ class MetadataFactoryInfo
                 'password' => array(
                     'type' => 'string',
                     'dbName' => 'password',
-                ),
-                'email' => array(
-                    'type' => 'string',
-                    'dbName' => 'email',
                 ),
                 'group' => array(
                     'type' => 'string',
@@ -132,26 +120,38 @@ class MetadataFactoryInfo
             'inheritable' => false,
             'inheritance' => false,
             'fields' => array(
-                'institution_reference_field' => array(
-                    'type' => 'raw',
-                    'dbName' => 'institution',
-                    'referenceField' => true,
+                'firstname' => array(
+                    'type' => 'string',
+                    'dbName' => 'firstname',
+                ),
+                'lastname' => array(
+                    'type' => 'string',
+                    'dbName' => 'lastname',
+                ),
+                'email' => array(
+                    'type' => 'string',
+                    'dbName' => 'email',
                 ),
                 'user_reference_field' => array(
                     'type' => 'raw',
                     'dbName' => 'user',
                     'referenceField' => true,
                 ),
+                'institution_reference_field' => array(
+                    'type' => 'raw',
+                    'dbName' => 'institution',
+                    'referenceField' => true,
+                ),
             ),
             '_has_references' => true,
             'referencesOne' => array(
-                'institution' => array(
-                    'class' => 'Application\\Entity\\Institution',
-                    'field' => 'institution_reference_field',
-                ),
                 'user' => array(
                     'class' => 'Application\\Entity\\User',
                     'field' => 'user_reference_field',
+                ),
+                'institution' => array(
+                    'class' => 'Application\\Entity\\Institution',
+                    'field' => 'institution_reference_field',
                 ),
             ),
             'referencesMany' => array(
@@ -194,6 +194,23 @@ class MetadataFactoryInfo
             'inheritable' => false,
             'inheritance' => false,
             'fields' => array(
+                'firstname' => array(
+                    'type' => 'string',
+                    'dbName' => 'firstname',
+                ),
+                'lastname' => array(
+                    'type' => 'string',
+                    'dbName' => 'lastname',
+                ),
+                'email' => array(
+                    'type' => 'string',
+                    'dbName' => 'email',
+                ),
+                'user_reference_field' => array(
+                    'type' => 'raw',
+                    'dbName' => 'user',
+                    'referenceField' => true,
+                ),
                 'institution_reference_field' => array(
                     'type' => 'raw',
                     'dbName' => 'institution',
@@ -204,14 +221,13 @@ class MetadataFactoryInfo
                     'dbName' => 'doctor',
                     'referenceField' => true,
                 ),
-                'user_reference_field' => array(
-                    'type' => 'raw',
-                    'dbName' => 'user',
-                    'referenceField' => true,
-                ),
             ),
             '_has_references' => true,
             'referencesOne' => array(
+                'user' => array(
+                    'class' => 'Application\\Entity\\User',
+                    'field' => 'user_reference_field',
+                ),
                 'institution' => array(
                     'class' => 'Application\\Entity\\Institution',
                     'field' => 'institution_reference_field',
@@ -219,10 +235,6 @@ class MetadataFactoryInfo
                 'doctor' => array(
                     'class' => 'Application\\Entity\\Doctor',
                     'field' => 'doctor_reference_field',
-                ),
-                'user' => array(
-                    'class' => 'Application\\Entity\\User',
-                    'field' => 'user_reference_field',
                 ),
             ),
             'referencesMany' => array(
@@ -260,10 +272,7 @@ class MetadataFactoryInfo
     public function getApplicationEntityScheduleClass()
     {
         return array(
-            'isEmbedded' => false,
-            'mandango' => null,
-            'connection' => '',
-            'collection' => 'application_entity_schedule',
+            'isEmbedded' => true,
             'inheritable' => false,
             'inheritance' => false,
             'fields' => array(
@@ -284,18 +293,6 @@ class MetadataFactoryInfo
                     'class' => 'Application\\Entity\\Day',
                 ),
             ),
-            'relationsOne' => array(
-
-            ),
-            'relationsManyOne' => array(
-
-            ),
-            'relationsManyMany' => array(
-
-            ),
-            'relationsManyThrough' => array(
-
-            ),
             'indexes' => array(
 
             ),
@@ -308,10 +305,7 @@ class MetadataFactoryInfo
     public function getApplicationEntityDayClass()
     {
         return array(
-            'isEmbedded' => false,
-            'mandango' => null,
-            'connection' => '',
-            'collection' => 'application_entity_day',
+            'isEmbedded' => true,
             'inheritable' => false,
             'inheritance' => false,
             'fields' => array(
@@ -335,18 +329,6 @@ class MetadataFactoryInfo
                     'class' => 'Application\\Entity\\Stream',
                 ),
             ),
-            'relationsOne' => array(
-
-            ),
-            'relationsManyOne' => array(
-
-            ),
-            'relationsManyMany' => array(
-
-            ),
-            'relationsManyThrough' => array(
-
-            ),
             'indexes' => array(
 
             ),
@@ -359,10 +341,7 @@ class MetadataFactoryInfo
     public function getApplicationEntityStreamClass()
     {
         return array(
-            'isEmbedded' => false,
-            'mandango' => null,
-            'connection' => '',
-            'collection' => 'application_entity_stream',
+            'isEmbedded' => true,
             'inheritable' => false,
             'inheritance' => false,
             'fields' => array(
@@ -386,18 +365,6 @@ class MetadataFactoryInfo
                     'class' => 'Application\\Entity\\Event',
                 ),
             ),
-            'relationsOne' => array(
-
-            ),
-            'relationsManyOne' => array(
-
-            ),
-            'relationsManyMany' => array(
-
-            ),
-            'relationsManyThrough' => array(
-
-            ),
             'indexes' => array(
 
             ),
@@ -410,10 +377,7 @@ class MetadataFactoryInfo
     public function getApplicationEntityEventClass()
     {
         return array(
-            'isEmbedded' => false,
-            'mandango' => null,
-            'connection' => '',
-            'collection' => 'application_entity_event',
+            'isEmbedded' => true,
             'inheritable' => false,
             'inheritance' => false,
             'fields' => array(
@@ -425,9 +389,9 @@ class MetadataFactoryInfo
                     'type' => 'string',
                     'dbName' => 'details',
                 ),
-                'start' => array(
+                'time' => array(
                     'type' => 'string',
-                    'dbName' => 'start',
+                    'dbName' => 'time',
                 ),
                 'duration' => array(
                     'type' => 'integer',
@@ -449,18 +413,6 @@ class MetadataFactoryInfo
 
             ),
             'embeddedsMany' => array(
-
-            ),
-            'relationsOne' => array(
-
-            ),
-            'relationsManyOne' => array(
-
-            ),
-            'relationsManyMany' => array(
-
-            ),
-            'relationsManyThrough' => array(
 
             ),
             'indexes' => array(

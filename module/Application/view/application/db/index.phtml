@@ -1,6 +1,33 @@
-<h1>Database interfaces</h1>
+<h1>Data model and database interfaces</h1>
 
 <script type="text/javascript">
+    var user = {
+        name: "User",
+        fields: [
+            {name:"id.$id", type:"string"},
+            {name:"login", type:"string"},
+            {name:"password", type:"string"},
+            {name:"group", type:"string"},
+        ],
+        interfaces: [
+            {
+                name: "Add user",
+                url: "/db/user/add",
+                parameters: [
+                    {name:"login", type:"string"},
+                    {name:"password", type:"string"},
+                    {name:"group", type:"string"},
+                    {name:"firstname", type:"string"},
+                    {name:"lastname", type:"string"},
+                    {name:"email", type:"string"},
+                    {name:"institution", type:"string (id)", optional: true},
+                    {name:"doctor", type:"string (id)", optional: true},
+                ],
+            },
+        ],
+    };
+    generateDocs(user);
+    
     var institution = {
         name: "Institution",
         fields: [
@@ -38,10 +65,8 @@
             {name:"id.$id", type:"string"},
             {name:"firstname", type:"string"},
             {name:"lastname", type:"string"},
-            {name:"login", type:"string"},
-            {name:"password", type:"string"},
-            {name:"email", type:"string"},
-            {name:"institution", type:"Institution"},
+            {name:"user", type:"string (id)"},
+            {name:"institution", type:"string (id)"},
         ],
         interfaces: [
             {
@@ -56,26 +81,90 @@
                 url: "/db/doctor/all",
                 example: '$.ajax("/db/doctor/all").success(function(data) { alert(data); });',
             },
-            {
-                name: "Add doctor",
-                url: "/db/doctor/add",
-                parameters: [
-                    {name:"firstname", type:"string"},
-                    {name:"lastname", type:"string"},
-                    {name:"login", type:"string"},
-                    {name:"password", type:"string"},
-                    {name:"email", type:"string"},
-                ],
-            },
-            {
-                name: "Set institution",
-                url: "/db/doctor/setInstitution",
-                parameters: [
-                    {name:"doctorid", type:"string"},
-                    {name:"institutionid", type:"string"},
-                ],
-            }
         ],
     };
     generateDocs(doctor);
+    
+    var patient = {
+        name: "Patient",
+        fields: [
+            {name:"id.$id", type:"string"},
+            {name:"firstname", type:"string"},
+            {name:"lastname", type:"string"},
+            {name:"schedule", type:"Schedule"},
+            {name:"user", type:"string (id)"},
+            {name:"institution", type:"string (id)"},
+            {name:"doctor", type:"string (id)"},
+        ],
+        interfaces: [
+            {
+                name: "Get patient",
+                url: "/db/patient",
+                parameters: [
+                    {name:"id", type:"string"},
+                ],
+            },
+            {
+                name: "Get all patients",
+                url: "/db/patient/all",
+                example: '$.ajax("/db/patient/all").success(function(data) { alert(data); });',
+            },
+        ],
+    };
+    generateDocs(patient);
+    
+    var schedule = {
+        name: "Schedule",
+        fields: [
+            {name:"days", type:"Day[]"},
+        ],
+    };
+    generateDocs(schedule);
+    
+    var day = {
+        name: "Day",
+        fields: [
+            {name:"date", type:"string"},
+            {name:"streams", type:"Stream[]"},
+        ],
+    };
+    generateDocs(day);
+    
+    var stream = {
+        name: "Stream",
+        fields: [
+            {name:"activity", type:"string"},
+            {name:"events", type:"Event[]"},
+        ],
+    };
+    generateDocs(stream);
+    
+    var event = {
+        name: "Event",
+        fields: [
+            {name:"title", type:"string"},
+            {name:"details", type:"string"},
+            {name:"time", type:"string"},
+            {name:"duration", type:"integer"},
+            {name:"state", type:"string"},
+        ],
+        interfaces: [
+            {
+                name: "Add event",
+                url: "/db/event/add",
+                parameters: [
+                    {name:"patientid", type:"string"},
+                    {name:"date", type:"string"},
+                    {name:"activity", type:"string"},
+                    {name:"title", type:"string"},
+                    {name:"details", type:"string"},
+                    {name:"time", type:"string"},
+                    {name:"duration", type:"integer"},
+                    {name:"state", type:"string"},
+                ],
+            },
+        ],
+    };
+    generateDocs(event);
+    
 </script>

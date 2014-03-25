@@ -2,9 +2,8 @@
 
 namespace Application\Controller;
 
-class LoginController extends BaseController
-{
-
+class AuthController extends BaseController {
+    
     public function indexAction() {
         return new ViewModel();
     }

@@ -10,6 +10,7 @@
 use Mandango\Mandango;
 use Mandango\Connection;
 use Mandango\Cache\FilesystemCache;
+use Application\Entity\Mapping\MetadataFactory;
 
 $config = array(
     'host'  => 'localhost',
@@ -17,8 +18,7 @@ $config = array(
     'db'    => 'iosr',
 );
 
-//mandango
-$metadataFactory = new \Application\Entity\Mapping\MetadataFactory();
+$metadataFactory = new MetadataFactory();
 $cache = new FilesystemCache('cache');
 $mandango = new Mandango($metadataFactory, $cache);
 $url = 'mongodb://' . $config['host'] . ':' . $config['port'];
@@ -41,31 +41,31 @@ return array(
                     ),
                 ),
             ),
-            'login' => array(
+            'auth' => array(
                 'type' => 'segment',
                 'options' => array(
-                    'route' => '/login[/:action]',
+                    'route' => '/auth[/:action]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Login',
+                        'controller' => 'Application\Controller\Auth',
                         'action' => 'index',
                     ),
                 ),
             ),
-            'institution' => array(
-                'type' => 'segment',
-                'options' => array(
-                    'route' => '/db/institution[/:action]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'Application\Controller\Institution',
-                        'action' => 'index',
-                    ),
-                ),
+            'schedule' => array(
+               'type' => 'segment',
+               'options' => array(
+                   'route' => '/schedule[/:action]',
+                   'constraints' => array(
+                       'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                   ),
+                   'defaults' => array(
+                       'controller' => 'Application\Controller\Schedule',
+                       'action' => 'index',
+                   ),
+               ),
             ),
             'db' => array(
                 'type' => 'segment',
@@ -76,6 +76,19 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'Application\Controller\Db',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
+            'user' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/db/user[/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\User',
                         'action' => 'index',
                     ),
                 ),
@@ -106,18 +119,31 @@ return array(
                     ),
                 ),
             ),
-            'schedule' => array(
-               'type' => 'segment',
-               'options' => array(
-                   'route' => '/schedule[/:action]',
-                   'constraints' => array(
-                       'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                   ),
-                   'defaults' => array(
-                       'controller' => 'Application\Controller\Schedule',
-                       'action' => 'index',
-                   ),
-               ),
+            'institution' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/db/institution[/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Institution',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
+            'event' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/db/event[/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Event',
+                        'action' => 'index',
+                    ),
+                ),
             ),
         ),
     ),
@@ -149,12 +175,14 @@ return array(
         'invokables' => array(
             'MandangoModule\Console' => 'MandangoModule\Controller\ConsoleController',
             'Application\Controller\Index' => 'Application\Controller\IndexController',
-            'Application\Controller\Login' => 'Application\Controller\LoginController',
+            'Application\Controller\Auth' => 'Application\Controller\AuthController',
             'Application\Controller\Db' => 'Application\Controller\DbController',
             'Application\Controller\Institution' => 'Application\Controller\InstitutionController',
             'Application\Controller\Doctor' => 'Application\Controller\DoctorController',
             'Application\Controller\Patient' => 'Application\Controller\PatientController',
             'Application\Controller\Schedule' => 'Application\Controller\ScheduleController',
+            'Application\Controller\User' => 'Application\Controller\UserController',
+            'Application\Controller\Event' => 'Application\Controller\EventController',
         ),
     ),
     'view_manager' => array(

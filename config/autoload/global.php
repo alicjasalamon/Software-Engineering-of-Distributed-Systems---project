@@ -13,16 +13,13 @@
 
 return array(
     
-    'params_method' => 'post', //post or get
+    'params_method' => 'get', //post or get
     
     'mandango_config_classes' => [
         'Application\Entity\User' => [
             'fields' => [
-                'firstname'     => 'string',
-                'lastname'      => 'string',
                 'login'         => 'string',
                 'password'      => 'string',
-                'email'         => 'string',
                 'group'         => 'string',    // admin / doctor / patient
             ],
         ],
@@ -32,34 +29,45 @@ return array(
             ],
         ],
         'Application\Entity\Doctor' => [
+            'fields' => [
+                'firstname'     => 'string',
+                'lastname'      => 'string',
+                'email'         => 'string',
+            ],
             'referencesOne' => [
+                'user' => [
+                    'class' => 'Application\Entity\User'
+                ],
                 'institution' => [
                     'class' => 'Application\Entity\Institution'
                 ],
-                'user' => [
-                    'class' => 'Application\Entity\User'
-                ]
             ],
         ],
         'Application\Entity\Patient' => [
+            'fields' => [
+                'firstname'     => 'string',
+                'lastname'      => 'string',
+                'email'         => 'string',
+            ],
             'embeddedsOne' => [
                 'schedule'   => [
                     'class' => 'Application\Entity\Schedule'
                 ],
             ],
             'referencesOne' => [
+                'user' => [
+                    'class' => 'Application\Entity\User'
+                ],
                 'institution' => [
                     'class' => 'Application\Entity\Institution'
                 ],
                 'doctor' => [
                     'class' => 'Application\Entity\Doctor'
                 ],
-                'user' => [
-                    'class' => 'Application\Entity\User'
-                ],
             ],
         ],
-        'Application\Entity\Schedule' => [
+        'Application\Entity\Schedule' => [            
+            'isEmbedded' => true,
             'embeddedsMany' => [
                 'days' => [
                     'class' => 'Application\Entity\Day',
@@ -67,6 +75,7 @@ return array(
             ],
         ],
         'Application\Entity\Day' => [
+            'isEmbedded' => true,
             'fields' => [
                 'date'          => 'string',
             ],
@@ -77,6 +86,7 @@ return array(
             ],
         ],
         'Application\Entity\Stream' => [
+            'isEmbedded' => true,
             'fields' => [
                 'activity'      => 'string', // diet, exercises, medicines, visits
             ],
@@ -87,10 +97,11 @@ return array(
             ],
         ],
         'Application\Entity\Event' => [
+            'isEmbedded' => true,
             'fields' => [
                 'title'         => 'string',
                 'details'       => 'string',
-                'start'         => 'string',
+                'time'          => 'string',
                 'duration'      => 'integer',
                 'state'         => 'string', // future, inprogress, done, undone
             ],

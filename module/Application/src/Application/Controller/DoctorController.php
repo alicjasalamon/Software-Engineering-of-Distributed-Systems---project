@@ -7,8 +7,8 @@ class DoctorController extends DbController {
 
     public function indexAction() {
         $params = $this->getParams();
-        try{
-            $doctorJson = $this->doctorModel()->getAction($params);
+        try {
+            $doctorJson = $this->doctorModel()->get($params);
             $json = $this->generateJSONViewModel(0, '', $doctorJson);
         } catch (Exception $ex) {
             $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);
@@ -16,32 +16,10 @@ class DoctorController extends DbController {
         return $json;
     }
     
-    public function addAction() {
-        $params = $this->getParams();
+    public function allAction() {
         try {
-            $doctorJson = $this->doctorModel()->addAction($params);
-            $json = $this->generateJSONViewModel(0, '', $doctorJson);
-        } catch (Exception $ex) {
-            $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);
-        }
-        return $json;
-    }
-    
-     public function allAction() {
-        try {
-            $doctors = $this->doctorModel()->allAction();
+            $doctors = $this->doctorModel()->getAll();
             $json = $this->generateJSONViewModel(0, '', $doctors);
-        } catch (Exception $ex) {
-            $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);
-        }
-        return $json;
-    }    
-    
-    public function setInstitutionAction() {
-        $params = $this->getParams();
-        try {
-            $doctorJson = $this->doctorModel()->updateInstitutionAction($params);
-            $json = $this->generateJSONViewModel(0, '', $doctorJson);
         } catch (Exception $ex) {
             $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);
         }
