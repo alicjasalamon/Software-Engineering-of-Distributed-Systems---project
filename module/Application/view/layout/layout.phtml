@@ -16,7 +16,7 @@
                 ->appendStylesheet($this->basePath() . '/css/iconFont.min.css')
                 ->appendStylesheet($this->basePath() . '/css/metro-bootstrap.min.css')
                 ->appendStylesheet($this->basePath() . '/css/metro-bootstrap-responsive.min.css')
-				->appendStylesheet($this->basePath() . '/css/style.css')
+		->appendStylesheet($this->basePath() . '/css/style.css')
 
         ;
         ?>
@@ -62,7 +62,6 @@
         <?php
         echo $this->inlineScript()
             ->appendFile($this->basePath('js/admin/adminDialogs.js'))
-            ->appendFile($this->basePath('js/admin/loadAdminData.js'))
             //->appendFile($this->basePath('js/hourPicker.js'))
             //->appendFile($this->basePath('js/plik2.js'))
             //->appendFile($this->basePath('js/plik3.js'))
