@@ -19,8 +19,9 @@ class UserModel extends EntityModel {
     
     public function add($params) {
         $user = $this->buildUser($params);
-        $subUser= $this->createSubUser($user, $params);
         $user->save();
+        $subUser = $this->createSubUser($user, $params);
+        $subUser->save();
         $json = $subUser ? $subUser->toArray() : [];
         return $json;
     }
@@ -73,8 +74,9 @@ class UserModel extends EntityModel {
         }        
         $groupAction = $this->groupActions[$params['group']];
         $subUser = $groupAction($user, $params);
-        $subUser->save();
         return $subUser;
     }
+    
+    
     
 }

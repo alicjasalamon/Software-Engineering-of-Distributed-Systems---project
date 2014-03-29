@@ -10,13 +10,13 @@ class PatientModel extends EntityModel {
     
     public function get($params) {
         $patient = $this->patientRepository()->findOneById($params['id']);
-        $patientJson = $patient->toArray(true);
+        $patientJson = $patient ? $patient->toArray(true) : [];
         return $patientJson;
     }
     
     public function getAll() {
         $patients = $this->patientRepository()->createQuery()->all();
-        $patientsJson = array();
+        $patientsJson = [];
         foreach($patients as $patient) {
             $json = $patient->toArray();
             array_push($patientsJson, $json);
@@ -50,10 +50,10 @@ class PatientModel extends EntityModel {
                 $foundDay = $day;
             }
         }
-        if(!$foundDay){
+        if(!$foundDay) {
             $foundDay = new Day($this->mandango);
             $foundDay->setDate($params['date']);
-            $schedule->addDays($foundDay);
+            $schedule->addDay($foundDay);
         }
         return $foundDay;
     }

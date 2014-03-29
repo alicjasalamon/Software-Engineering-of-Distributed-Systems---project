@@ -45,7 +45,7 @@
             {
                 name: "Get all institutions",
                 url: "/db/institution/all",
-                example: "$.ajax('/db/institution/all').success(function(data) { alert(data); });",
+                example: "$.ajax('/db/institution/all').success(function(data) { alert(JSON.stringify(data)); });",
             },
             {
                 name: "Add institution",
@@ -79,7 +79,7 @@
             {
                 name: "Get all doctors",
                 url: "/db/doctor/all",
-                example: '$.ajax("/db/doctor/all").success(function(data) { alert(data); });',
+                example: '$.ajax("/db/doctor/all").success(function(data) { alert(JSON.stringify(data)); });',
             },
         ],
     };
@@ -107,7 +107,7 @@
             {
                 name: "Get all patients",
                 url: "/db/patient/all",
-                example: '$.ajax("/db/patient/all").success(function(data) { alert(data); });',
+                example: '$.ajax("/db/patient/all").success(function(data) { alert(JSON.stringify(data)); });',
             },
         ],
     };
