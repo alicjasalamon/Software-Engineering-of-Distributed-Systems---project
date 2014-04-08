@@ -29,11 +29,13 @@
                 ->appendFile($this->basePath() . '/js/lib/bootstrap.min.js')
                 ->appendFile($this->basePath() . '/js/lib/metro.min.js')
                 ->appendFile($this->basePath() . '/js/doc.js')
+         //       ->appendFile($this->basePath() . '/js/databasePopulating.js')
         ;
         ?>
 
     </head>
     <body class="metro">
+        <div id="wrap">
         <nav class="navigation-bar dark">
             <nav class="navigation-bar-content">
                 <div class="element"> <i class='on-left icon-accessibility'></i>AAL FANCY NAME </div>
@@ -67,5 +69,6 @@
             //->appendFile($this->basePath('js/plik3.js'))
         ;
         ?>
+         </div>
     </body>
 </html>
