@@ -24,3 +24,10 @@ body.metro {
 {
     background-color: lightgray;
 }
+
+.firstSelect
+{
+    color: red !important;
+    display: none !important;
+    background-color: aquamarine;
+}
