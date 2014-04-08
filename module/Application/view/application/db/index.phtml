@@ -1,6 +1,23 @@
 <h1>Data model and database interfaces</h1>
 
 <script type="text/javascript">
+    var data = {
+        name: "Data management",
+        interfaces: [
+            {
+                name: "Create sample data",
+                url: "/data",
+                example: '$.ajax({ type: "POST", url: "data" }).success(function(data) { alert(data.message) });',
+            },
+            {
+                name: "Clear database",
+                url: "/data/clear",
+                example: '$.ajax({ type: "POST", url: "data/clear" }).success(function(data) { alert(data.message) });',
+            },
+        ],
+    };
+    generateDocs(data);
+    
     var user = {
         name: "User",
         fields: [
