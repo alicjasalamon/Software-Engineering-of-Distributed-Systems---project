@@ -54,18 +54,18 @@ return array(
                     ),
                 ),
             ),
-            'schedule' => array(
-               'type' => 'segment',
-               'options' => array(
-                   'route' => '/schedule[/:action]',
-                   'constraints' => array(
-                       'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                   ),
-                   'defaults' => array(
-                       'controller' => 'Application\Controller\Schedule',
-                       'action' => 'index',
-                   ),
-               ),
+            'data' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/data[/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Data',
+                        'action' => 'index',
+                    ),
+                ),
             ),
             'db' => array(
                 'type' => 'segment',
@@ -132,6 +132,19 @@ return array(
                     ),
                 ),
             ),
+            'schedule' => array(
+               'type' => 'segment',
+               'options' => array(
+                   'route' => '/schedule[/:action]',
+                   'constraints' => array(
+                       'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                   ),
+                   'defaults' => array(
+                       'controller' => 'Application\Controller\Schedule',
+                       'action' => 'index',
+                   ),
+               ),
+            ),
             'institution' => array(
                 'type' => 'segment',
                 'options' => array(
@@ -190,6 +203,7 @@ return array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Auth' => 'Application\Controller\AuthController',
             'Application\Controller\Admin' => 'Application\Controller\AdminController',            'Application\Controller\Db' => 'Application\Controller\DbController',
+            'Application\Controller\Data' => 'Application\Controller\DataController',
             'Application\Controller\Institution' => 'Application\Controller\InstitutionController',
             'Application\Controller\Doctor' => 'Application\Controller\DoctorController',
             'Application\Controller\Patient' => 'Application\Controller\PatientController',

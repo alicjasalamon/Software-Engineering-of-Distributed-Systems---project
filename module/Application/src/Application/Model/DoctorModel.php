@@ -4,20 +4,21 @@ namespace Application\Model;
 
 class DoctorModel extends EntityModel {
    
+    /**
+     * @var \Application\Entity\Doctor
+     */
     public function get($params) {
         $doctor = $this->doctorRepository()->findOneById($params['id']);
-        $doctorJson = $doctor->toArray(true);
-        return $doctorJson;
+        return $doctor;
     }
     
     public function getAll() {
         $doctors = $this->doctorRepository()->createQuery()->all();
-        $doctorsJson = array();
-        foreach($doctors as $doctor) {
-            $json = $doctor->toArray();
-            array_push($doctorsJson, $json);
-        }
-        return $doctorsJson;
+        return $doctors;
+    }
+    
+    public function clear() {
+        $this->doctorRepository()->remove();
     }
     
 }

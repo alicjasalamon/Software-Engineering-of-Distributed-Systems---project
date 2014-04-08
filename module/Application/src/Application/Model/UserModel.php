@@ -1,6 +1,8 @@
 <?php
 
 namespace Application\Model;
+
+use Application\Entity\UserRepository;
 use Application\Entity\User;
 use Application\Entity\Doctor;
 use Application\Entity\Patient;
@@ -22,8 +24,11 @@ class UserModel extends EntityModel {
         $user->save();
         $subUser = $this->createSubUser($user, $params);
         $subUser->save();
-        $json = $subUser ? $subUser->toArray() : [];
-        return $json;
+        return $subUser;
+    }
+    
+    public function clear() {
+        $this->userRepository()->remove();
     }
     
     protected function buildUser($params) {

@@ -10,18 +10,12 @@ class PatientModel extends EntityModel {
     
     public function get($params) {
         $patient = $this->patientRepository()->findOneById($params['id']);
-        $patientJson = $patient ? $patient->toArray(true) : [];
-        return $patientJson;
+        return $patient;
     }
     
     public function getAll() {
         $patients = $this->patientRepository()->createQuery()->all();
-        $patientsJson = [];
-        foreach($patients as $patient) {
-            $json = $patient->toArray();
-            array_push($patientsJson, $json);
-        }
-        return $patientsJson;
+        return $patients;
     }
     
     public function addEvent($params) {
@@ -36,6 +30,11 @@ class PatientModel extends EntityModel {
         $event = $this->buildEvent($params);
         $stream->addEvents($event);
         $patient->save();
+        return $event;
+    }
+    
+    public function clear() {
+        $this->patientRepository()->remove();
     }
     
     protected function buildEvent($params) {

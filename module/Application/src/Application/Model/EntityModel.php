@@ -1,6 +1,8 @@
 <?php
 
 namespace Application\Model;
+
+use Application\Entity\UserRepository;
 use Application\Entity\DoctorRepository;
 use Application\Entity\PatientRepository;
 use Application\Entity\InstitutionRepository;
@@ -26,6 +28,11 @@ abstract class EntityModel {
      * @var InstitutionRepository
      */
     private $institutionRepository;
+    
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
     
     function __construct($mandango) {
         $this->mandango = $mandango;
@@ -61,5 +68,14 @@ abstract class EntityModel {
         return $this->institutionRepository;
     }
     
+    /**
+     * @var UserRepository
+     */
+    protected function userRepository() {
+        if(!$this->userRepository) {
+            $this->userRepository = new UserRepository($this->mandango);
+        }
+        return $this->userRepository;
+    }
     
 }

@@ -8,7 +8,8 @@ class InstitutionController extends DbController {
     public function indexAction() {
         $params = $this->getParams();
         try{
-            $institutionJson = $this->institutionModel()->get($params);
+            $institution = $this->institutionModel()->get($params);
+            $institutionJson = $institution ? $institution->toArray() : [];
             $json = $this->generateJSONViewModel(0, '', $institutionJson);
         } catch (Exception $ex) {
             $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);
@@ -18,7 +19,12 @@ class InstitutionController extends DbController {
     
     public function allAction() {
         try {
-            $institutionsJson = $this->institutionModel()->getAll();
+            $institutions = $this->institutionModel()->getAll();
+            $institutionsJson = [];
+            foreach($institutions as $institution) {
+                $json = $institution->toArray();
+                array_push($institutionsJson, $json);
+            }
             $json = $this->generateJSONViewModel(0, '', $institutionsJson);
         } catch (Exception $ex) {
             $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);
@@ -29,7 +35,8 @@ class InstitutionController extends DbController {
     public function addAction() {
         $params = $this->getParams();
         try {
-            $institutionJson = $this->institutionModel()->add($params);
+            $institution = $this->institutionModel()->add($params);
+            $institutionJson = $institution ? $institution->toArray() : [];
             $json = $this->generateJSONViewModel(0, '', $institutionJson);
         } catch (Exception $ex) {
             $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);

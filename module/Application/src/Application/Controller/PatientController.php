@@ -8,8 +8,9 @@ class PatientController extends DbController {
     public function indexAction() {
         $params = $this->getParams();
         try {
-            $doctorJson = $this->patientModel()->get($params);
-            $json = $this->generateJSONViewModel(0, '', $doctorJson);
+            $patient = $this->patientModel()->get($params);
+            $patientJson = $patient ? $patient->toArray(true) : [];
+            $json = $this->generateJSONViewModel(0, '', $patientJson);
         } catch (Exception $ex) {
             $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);
         }
@@ -19,7 +20,12 @@ class PatientController extends DbController {
     public function allAction() {
         try {
             $patients = $this->patientModel()->getAll();
-            $json = $this->generateJSONViewModel(0, '', $patients);
+            $patientsJson = [];
+            foreach($patients as $patient) {
+                $json = $patient->toArray();
+                array_push($patientsJson, $json);
+            }
+            $json = $this->generateJSONViewModel(0, '', $patientsJson);
         } catch (Exception $ex) {
             $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);
         }

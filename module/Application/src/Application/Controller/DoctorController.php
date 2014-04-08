@@ -1,6 +1,7 @@
 <?php
 
 namespace Application\Controller;
+
 use Application\Controller\DbController;
 
 class DoctorController extends DbController {
@@ -8,7 +9,8 @@ class DoctorController extends DbController {
     public function indexAction() {
         $params = $this->getParams();
         try {
-            $doctorJson = $this->doctorModel()->get($params);
+            $doctor = $this->doctorModel()->get($params);
+            $doctorJson = $doctor ? $doctor->toArray(true) : [];
             $json = $this->generateJSONViewModel(0, '', $doctorJson);
         } catch (Exception $ex) {
             $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);
@@ -19,7 +21,12 @@ class DoctorController extends DbController {
     public function allAction() {
         try {
             $doctors = $this->doctorModel()->getAll();
-            $json = $this->generateJSONViewModel(0, '', $doctors);
+            $doctorsJson = [];
+            foreach($doctors as $doctor) {
+                $json = $doctor->toArray();
+                array_push($doctorsJson, $json);
+            }
+            $json = $this->generateJSONViewModel(0, '', $doctorsJson);
         } catch (Exception $ex) {
             $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);
         }
