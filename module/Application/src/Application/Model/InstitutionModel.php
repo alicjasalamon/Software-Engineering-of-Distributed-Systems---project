@@ -1,6 +1,7 @@
 <?php
 
 namespace Application\Model;
+
 use Application\Entity\Institution;
 
 class InstitutionModel extends EntityModel {
