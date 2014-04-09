@@ -1,9 +1,4 @@
 
-    <?php
-echo $this->inlineScript()
-        ->appendFile($this->basePath('js/schedule/eventClick.js'))
-;
-?>
 
 <div class="grid">
     <div class="row">
@@ -12,11 +7,8 @@ echo $this->inlineScript()
 
 
             <div class="input-control select">
-                <select>
+                <select class="fillWithPatients">
                     <option disabled selected style='display: none'>Select your patient</option>
-                    <option>Zofia Choralska</option>
-                    <option>Kamil Zaziebiony</option>
-                    <option>Pawel Polamany</option>
                 </select>
             </div>
 
