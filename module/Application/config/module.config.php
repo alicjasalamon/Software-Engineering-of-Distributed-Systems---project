@@ -132,10 +132,23 @@ return array(
                     ),
                 ),
             ),
+            'day' => array(
+               'type' => 'segment',
+               'options' => array(
+                   'route' => '/db/day[/:action]',
+                   'constraints' => array(
+                       'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                   ),
+                   'defaults' => array(
+                       'controller' => 'Application\Controller\Day',
+                       'action' => 'index',
+                   ),
+               ),
+            ),
             'schedule' => array(
                'type' => 'segment',
                'options' => array(
-                   'route' => '/schedule[/:action]',
+                   'route' => '/db/schedule[/:action]',
                    'constraints' => array(
                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                    ),
@@ -202,7 +215,8 @@ return array(
             'MandangoModule\Console' => 'MandangoModule\Controller\ConsoleController',
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Auth' => 'Application\Controller\AuthController',
-            'Application\Controller\Admin' => 'Application\Controller\AdminController',            'Application\Controller\Db' => 'Application\Controller\DbController',
+            'Application\Controller\Admin' => 'Application\Controller\AdminController',            
+            'Application\Controller\Db' => 'Application\Controller\DbController',
             'Application\Controller\Data' => 'Application\Controller\DataController',
             'Application\Controller\Institution' => 'Application\Controller\InstitutionController',
             'Application\Controller\Doctor' => 'Application\Controller\DoctorController',
@@ -210,6 +224,7 @@ return array(
             'Application\Controller\Schedule' => 'Application\Controller\ScheduleController',
             'Application\Controller\User' => 'Application\Controller\UserController',
             'Application\Controller\Event' => 'Application\Controller\EventController',
+            'Application\Controller\Day' => 'Application\Controller\DayController',
         ),
     ),
     'view_manager' => array(

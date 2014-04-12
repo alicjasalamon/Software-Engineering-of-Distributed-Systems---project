@@ -7,12 +7,12 @@
             {
                 name: "Create sample data",
                 url: "/data",
-                example: '$.ajax({ type: "POST", url: "data" }).success(function(data) { alert(data.message) });',
+                example: '$.ajax({ type: "POST", url: "data" }).success(function(data) { console.log(data.message) });',
             },
             {
                 name: "Clear database",
                 url: "/data/clear",
-                example: '$.ajax({ type: "POST", url: "data/clear" }).success(function(data) { alert(data.message) });',
+                example: '$.ajax({ type: "POST", url: "data/clear" }).success(function(data) { console.log(data.message) });',
             },
         ],
     };
@@ -62,7 +62,7 @@
             {
                 name: "Get all institutions",
                 url: "/db/institution/all",
-                example: "$.ajax('/db/institution/all').success(function(data) { alert(JSON.stringify(data)); });",
+                example: "$.ajax('/db/institution/all').success(function(data) { console.log(JSON.stringify(data)); });",
             },
             {
                 name: "Add institution",
@@ -82,8 +82,8 @@
             {name:"id.$id", type:"string"},
             {name:"firstname", type:"string"},
             {name:"lastname", type:"string"},
-            {name:"user", type:"string (id)"},
-            {name:"institution", type:"string (id)"},
+            {name:"user_reference_field.$id", type:"string (id)"},
+            {name:"institution_reference_field.$id", type:"string (id)"},
         ],
         interfaces: [
             {
@@ -96,7 +96,7 @@
             {
                 name: "Get all doctors",
                 url: "/db/doctor/all",
-                example: '$.ajax("/db/doctor/all").success(function(data) { alert(JSON.stringify(data)); });',
+                example: '$.ajax("/db/doctor/all").success(function(data) { console.log(JSON.stringify(data)); });',
             },
         ],
     };
@@ -109,9 +109,9 @@
             {name:"firstname", type:"string"},
             {name:"lastname", type:"string"},
             {name:"schedule", type:"Schedule"},
-            {name:"user", type:"string (id)"},
-            {name:"institution", type:"string (id)"},
-            {name:"doctor", type:"string (id)"},
+            {name:"user_reference_field.$id", type:"string (id)"},
+            {name:"institution_reference_field.$id", type:"string (id)"},
+            {name:"doctor_reference_field.$id", type:"string (id)"},
         ],
         interfaces: [
             {
@@ -124,7 +124,7 @@
             {
                 name: "Get all patients",
                 url: "/db/patient/all",
-                example: '$.ajax("/db/patient/all").success(function(data) { alert(JSON.stringify(data)); });',
+                example: '$.ajax("/db/patient/all").success(function(data) { console.log(JSON.stringify(data)); });',
             },
         ],
     };
@@ -133,7 +133,7 @@
     var schedule = {
         name: "Schedule",
         fields: [
-            {name:"days", type:"Day[]"},
+            {name:"days", type:"string[] (ids)"},
         ],
     };
     generateDocs(schedule);
@@ -141,6 +141,7 @@
     var day = {
         name: "Day",
         fields: [
+            {name:"id.$id", type:"string"},
             {name:"date", type:"string"},
             {name:"streams", type:"Stream[]"},
         ],
@@ -151,7 +152,7 @@
         name: "Stream",
         fields: [
             {name:"activity", type:"string"},
-            {name:"events", type:"Event[]"},
+            {name:"events", type:"string[] (ids)"},
         ],
     };
     generateDocs(stream);
@@ -159,6 +160,7 @@
     var event = {
         name: "Event",
         fields: [
+            {name:"id.$id", type:"string"},
             {name:"title", type:"string"},
             {name:"details", type:"string"},
             {name:"time", type:"string"},

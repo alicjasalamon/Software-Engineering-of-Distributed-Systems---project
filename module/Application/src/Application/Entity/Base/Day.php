@@ -5,7 +5,7 @@ namespace Application\Entity\Base;
 /**
  * Base class of Application\Entity\Day document.
  */
-abstract class Day extends \Mandango\Document\EmbeddedDocument
+abstract class Day extends \Mandango\Document\Document
 {
     /**
      * Initializes the document defaults.
@@ -29,6 +29,13 @@ abstract class Day extends \Mandango\Document\EmbeddedDocument
             $this->fieldsModified = array();
         }
 
+        if (isset($data['_query_hash'])) {
+            $this->addQueryHash($data['_query_hash']);
+        }
+        if (isset($data['_id'])) {
+            $this->setId($data['_id']);
+            $this->setIsNew(false);
+        }
         if (isset($data['date'])) {
             $this->data['fields']['date'] = (string) $data['date'];
         } elseif (isset($data['_fields']['date'])) {
@@ -36,9 +43,7 @@ abstract class Day extends \Mandango\Document\EmbeddedDocument
         }
         if (isset($data['streams'])) {
             $embedded = new \Mandango\Group\EmbeddedGroup('Application\Entity\Stream');
-            if ($rap = $this->getRootAndPath()) {
-                $embedded->setRootAndPath($rap['root'], $rap['path'].'.streams');
-            }
+            $embedded->setRootAndPath($this, 'streams');
             $embedded->setSavedData($data['streams']);
             $this->data['embeddedsMany']['streams'] = $embedded;
         }
@@ -56,7 +61,7 @@ abstract class Day extends \Mandango\Document\EmbeddedDocument
     public function setDate($value)
     {
         if (!isset($this->data['fields']['date'])) {
-            if (($rap = $this->getRootAndPath()) && !$rap['root']->isNew()) {
+            if (!$this->isNew()) {
                 $this->getDate();
                 if ($this->isFieldEqualTo('date', $value)) {
                     return $this;
@@ -92,32 +97,16 @@ abstract class Day extends \Mandango\Document\EmbeddedDocument
     public function getDate()
     {
         if (!isset($this->data['fields']['date'])) {
-            if (
-                (!isset($this->data['fields']) || !array_key_exists('date', $this->data['fields']))
-                &&
-                ($rap = $this->getRootAndPath())
-                &&
-                !$this->isEmbeddedOneChangedInParent()
-                &&
-                !$this->isEmbeddedManyNew()
-            ) {
-                $field = $rap['path'].'.date';
-                $rap['root']->addFieldCache($field);
-                $collection = $this->getMandango()->getRepository(get_class($rap['root']))->getCollection();
-                $data = $collection->findOne(array('_id' => $rap['root']->getId()), array($field => 1));
-                foreach (explode('.', $field) as $key) {
-                    if (!isset($data[$key])) {
-                        $data = null;
-                        break;
-                    }
-                    $data = $data[$key];
-                }
-                if (null !== $data) {
-                    $this->data['fields']['date'] = (string) $data;
-                }
-            }
-            if (!isset($this->data['fields']['date'])) {
+            if ($this->isNew()) {
                 $this->data['fields']['date'] = null;
+            } elseif (!isset($this->data['fields']) || !array_key_exists('date', $this->data['fields'])) {
+                $this->addFieldCache('date');
+                $data = $this->getRepository()->getCollection()->findOne(array('_id' => $this->getId()), array('date' => 1));
+                if (isset($data['date'])) {
+                    $this->data['fields']['date'] = (string) $data['date'];
+                } else {
+                    $this->data['fields']['date'] = null;
+                }
             }
         }
 
@@ -177,9 +166,7 @@ abstract class Day extends \Mandango\Document\EmbeddedDocument
     {
         if (!isset($this->data['embeddedsMany']['streams'])) {
             $this->data['embeddedsMany']['streams'] = $embedded = new \Mandango\Group\EmbeddedGroup('Application\Entity\Stream');
-            if ($rap = $this->getRootAndPath()) {
-                $embedded->setRootAndPath($rap['root'], $rap['path'].'.streams');
-            }
+            $embedded->setRootAndPath($this, 'streams');
         }
 
         return $this->data['embeddedsMany']['streams'];
@@ -281,6 +268,9 @@ abstract class Day extends \Mandango\Document\EmbeddedDocument
      */
     public function fromArray(array $array)
     {
+        if (isset($array['id'])) {
+            $this->setId($array['id']);
+        }
         if (isset($array['date'])) {
             $this->setDate($array['date']);
         }
@@ -305,9 +295,10 @@ abstract class Day extends \Mandango\Document\EmbeddedDocument
      */
     public function toArray($withReferenceFields = false)
     {
-        $array = array();
+        $array = array('id' => $this->getId());
 
         $array['date'] = $this->getDate();
+        $array['streams'] = $this->getStreams()->all();
 
         return $array;
     }
@@ -315,45 +306,26 @@ abstract class Day extends \Mandango\Document\EmbeddedDocument
     /**
      * Query for save.
      */
-    public function queryForSave($query, $isNew, $reset = false)
+    public function queryForSave()
     {
+        $isNew = $this->isNew();
+        $query = array();
+        $reset = false;
+
         if (isset($this->data['fields'])) {
             if ($isNew || $reset) {
-                $rootQuery = $query;
-                $query =& $rootQuery;
-                $rap = $this->getRootAndPath();
-                if (true === $reset) {
-                    $path = array('$set', $rap['path']);
-                } elseif ('deep' == $reset) {
-                    $path = explode('.', '$set.'.$rap['path']);
-                } else {
-                    $path = explode('.', $rap['path']);
-                }
-                foreach ($path as $name) {
-                    if (0 === strpos($name, '_add')) {
-                        $name = substr($name, 4);
-                    }
-                    if (!isset($query[$name])) {
-                        $query[$name] = array();
-                    }
-                    $query =& $query[$name];
-                }
                 if (isset($this->data['fields']['date'])) {
                     $query['date'] = (string) $this->data['fields']['date'];
                 }
-                unset($query);
-                $query = $rootQuery;
             } else {
-                $rap = $this->getRootAndPath();
-                $documentPath = $rap['path'];
                 if (isset($this->data['fields']['date']) || array_key_exists('date', $this->data['fields'])) {
                     $value = $this->data['fields']['date'];
                     $originalValue = $this->getOriginalFieldValue('date');
                     if ($value !== $originalValue) {
                         if (null !== $value) {
-                            $query['$set'][$documentPath.'.date'] = (string) $this->data['fields']['date'];
+                            $query['$set']['date'] = (string) $this->data['fields']['date'];
                         } else {
-                            $query['$unset'][$documentPath.'.date'] = 1;
+                            $query['$unset']['date'] = 1;
                         }
                     }
                 }

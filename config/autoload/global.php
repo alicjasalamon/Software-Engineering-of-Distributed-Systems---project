@@ -13,7 +13,7 @@
 
 return array(
     
-    'params_method' => 'post', //post or get
+    'params_method' => 'get', //post or get
     
     'mandango_config_classes' => [
         'Application\Entity\User' => [
@@ -68,14 +68,13 @@ return array(
         ],
         'Application\Entity\Schedule' => [            
             'isEmbedded' => true,
-            'embeddedsMany' => [
+            'referencesMany' => [
                 'days' => [
                     'class' => 'Application\Entity\Day',
                 ],
             ],
         ],
         'Application\Entity\Day' => [
-            'isEmbedded' => true,
             'fields' => [
                 'date'          => 'string',
             ],

@@ -30,15 +30,90 @@ abstract class Schedule extends \Mandango\Document\EmbeddedDocument
         }
 
         if (isset($data['days'])) {
-            $embedded = new \Mandango\Group\EmbeddedGroup('Application\Entity\Day');
-            if ($rap = $this->getRootAndPath()) {
-                $embedded->setRootAndPath($rap['root'], $rap['path'].'.days');
-            }
-            $embedded->setSavedData($data['days']);
-            $this->data['embeddedsMany']['days'] = $embedded;
+            $this->data['fields']['days_reference_field'] = $data['days'];
+        } elseif (isset($data['_fields']['days'])) {
+            $this->data['fields']['days_reference_field'] = null;
         }
 
         return $this;
+    }
+
+    /**
+     * Set the "days_reference_field" field.
+     *
+     * @param mixed $value The value.
+     *
+     * @return \Application\Entity\Schedule The document (fluent interface).
+     */
+    public function setDays_reference_field($value)
+    {
+        if (!isset($this->data['fields']['days_reference_field'])) {
+            if (($rap = $this->getRootAndPath()) && !$rap['root']->isNew()) {
+                $this->getDays_reference_field();
+                if ($this->isFieldEqualTo('days_reference_field', $value)) {
+                    return $this;
+                }
+            } else {
+                if (null === $value) {
+                    return $this;
+                }
+                $this->fieldsModified['days_reference_field'] = null;
+                $this->data['fields']['days_reference_field'] = $value;
+                return $this;
+            }
+        } elseif ($this->isFieldEqualTo('days_reference_field', $value)) {
+            return $this;
+        }
+
+        if (!isset($this->fieldsModified['days_reference_field']) && !array_key_exists('days_reference_field', $this->fieldsModified)) {
+            $this->fieldsModified['days_reference_field'] = $this->data['fields']['days_reference_field'];
+        } elseif ($this->isFieldModifiedEqualTo('days_reference_field', $value)) {
+            unset($this->fieldsModified['days_reference_field']);
+        }
+
+        $this->data['fields']['days_reference_field'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Returns the "days_reference_field" field.
+     *
+     * @return mixed The $name field.
+     */
+    public function getDays_reference_field()
+    {
+        if (!isset($this->data['fields']['days_reference_field'])) {
+            if (
+                (!isset($this->data['fields']) || !array_key_exists('days_reference_field', $this->data['fields']))
+                &&
+                ($rap = $this->getRootAndPath())
+                &&
+                !$this->isEmbeddedOneChangedInParent()
+                &&
+                !$this->isEmbeddedManyNew()
+            ) {
+                $field = $rap['path'].'.days';
+                $rap['root']->addFieldCache($field);
+                $collection = $this->getMandango()->getRepository(get_class($rap['root']))->getCollection();
+                $data = $collection->findOne(array('_id' => $rap['root']->getId()), array($field => 1));
+                foreach (explode('.', $field) as $key) {
+                    if (!isset($data[$key])) {
+                        $data = null;
+                        break;
+                    }
+                    $data = $data[$key];
+                }
+                if (null !== $data) {
+                    $this->data['fields']['days_reference_field'] = $data;
+                }
+            }
+            if (!isset($this->data['fields']['days_reference_field'])) {
+                $this->data['fields']['days_reference_field'] = null;
+            }
+        }
+
+        return $this->data['fields']['days_reference_field'];
     }
 
     private function isFieldEqualTo($field, $otherValue)
@@ -65,6 +140,48 @@ abstract class Schedule extends \Mandango\Document\EmbeddedDocument
     }
 
     /**
+     * Returns the "days" reference.
+     *
+     * @return \Mandango\Group\ReferenceGroup The reference.
+     */
+    public function getDays()
+    {
+        if (!isset($this->data['referencesMany']['days'])) {
+            $this->data['referencesMany']['days'] = new \Mandango\Group\ReferenceGroup('Application\Entity\Day', $this, 'days_reference_field');
+        }
+
+        return $this->data['referencesMany']['days'];
+    }
+
+    /**
+     * Adds documents to the "days" reference many.
+     *
+     * @param mixed $documents A document or an array or documents.
+     *
+     * @return \Application\Entity\Schedule The document (fluent interface).
+     */
+    public function addDays($documents)
+    {
+        $this->getDays()->add($documents);
+
+        return $this;
+    }
+
+    /**
+     * Removes documents to the "days" reference many.
+     *
+     * @param mixed $documents A document or an array or documents.
+     *
+     * @return \Application\Entity\Schedule The document (fluent interface).
+     */
+    public function removeDays($documents)
+    {
+        $this->getDays()->remove($documents);
+
+        return $this;
+    }
+
+    /**
      * Process onDelete.
      */
     public function processOnDelete()
@@ -86,48 +203,49 @@ abstract class Schedule extends \Mandango\Document\EmbeddedDocument
     }
 
     /**
-     * Returns the "days" embedded many.
-     *
-     * @return \Mandango\Group\EmbeddedGroup The "days" embedded many.
+     * Update the value of the reference fields.
      */
-    public function getDays()
+    public function updateReferenceFields()
     {
-        if (!isset($this->data['embeddedsMany']['days'])) {
-            $this->data['embeddedsMany']['days'] = $embedded = new \Mandango\Group\EmbeddedGroup('Application\Entity\Day');
-            if ($rap = $this->getRootAndPath()) {
-                $embedded->setRootAndPath($rap['root'], $rap['path'].'.days');
+        if (isset($this->data['referencesMany']['days'])) {
+            $group = $this->data['referencesMany']['days'];
+            $add = $group->getAdd();
+            $remove = $group->getRemove();
+            if ($add || $remove) {
+                $ids = $this->getDays_reference_field();
+                foreach ($add as $document) {
+                    $ids[] = $document->getId();
+                }
+                foreach ($remove as $document) {
+                    if (false !== $key = array_search($document->getId(), $ids)) {
+                        unset($ids[$key]);
+                    }
+                }
+                $this->setDays_reference_field($ids ? array_values($ids) : null);
             }
         }
-
-        return $this->data['embeddedsMany']['days'];
     }
 
     /**
-     * Adds documents to the "days" embeddeds many.
-     *
-     * @param mixed $documents A document or an array or documents.
-     *
-     * @return \Application\Entity\Schedule The document (fluent interface).
+     * Save the references.
      */
-    public function addDays($documents)
+    public function saveReferences()
     {
-        $this->getDays()->add($documents);
-
-        return $this;
-    }
-
-    /**
-     * Removes documents to the "days" embeddeds many.
-     *
-     * @param mixed $documents A document or an array or documents.
-     *
-     * @return \Application\Entity\Schedule The document (fluent interface).
-     */
-    public function removeDays($documents)
-    {
-        $this->getDays()->remove($documents);
-
-        return $this;
+        if (isset($this->data['referencesMany']['days'])) {
+            $group = $this->data['referencesMany']['days'];
+            $documents = array();
+            foreach ($group->getAdd() as $document) {
+                $documents[] = $document;
+            }
+            if ($group->isSavedInitialized()) {
+                foreach ($group->getSaved() as $document) {
+                    $documents[] = $document;
+                }
+            }
+            if ($documents) {
+                $this->getMandango()->getRepository('Application\Entity\Day')->save($documents);
+            }
+        }
     }
 
     /**
@@ -135,17 +253,8 @@ abstract class Schedule extends \Mandango\Document\EmbeddedDocument
      */
     public function resetGroups()
     {
-        if (isset($this->data['embeddedsMany']['days'])) {
-            $group = $this->data['embeddedsMany']['days'];
-            foreach (array_merge($group->getAdd(), $group->getRemove()) as $document) {
-                $document->resetGroups();
-            }
-            if ($group->isSavedInitialized()) {
-                foreach ($group->getSaved() as $document) {
-                    $document->resetGroups();
-                }
-            }
-            $group->reset();
+        if (isset($this->data['referencesMany']['days'])) {
+            $this->data['referencesMany']['days']->reset();
         }
     }
 
@@ -161,6 +270,10 @@ abstract class Schedule extends \Mandango\Document\EmbeddedDocument
      */
     public function set($name, $value)
     {
+        if ('days_reference_field' == $name) {
+            return $this->setDays_reference_field($value);
+        }
+
         throw new \InvalidArgumentException(sprintf('The document data "%s" is not valid.', $name));
     }
 
@@ -175,6 +288,9 @@ abstract class Schedule extends \Mandango\Document\EmbeddedDocument
      */
     public function get($name)
     {
+        if ('days_reference_field' == $name) {
+            return $this->getDays_reference_field();
+        }
         if ('days' == $name) {
             return $this->getDays();
         }
@@ -191,13 +307,12 @@ abstract class Schedule extends \Mandango\Document\EmbeddedDocument
      */
     public function fromArray(array $array)
     {
+        if (isset($array['days_reference_field'])) {
+            $this->setDays_reference_field($array['days_reference_field']);
+        }
         if (isset($array['days'])) {
-            $embeddeds = array();
-            foreach ($array['days'] as $documentData) {
-                $embeddeds[] = $embedded = new \Application\Entity\Day($this->getMandango());
-                $embedded->setDocumentData($documentData);
-            }
-            $this->getDays()->replace($embeddeds);
+            $this->removeDays($this->getDays()->all());
+            $this->addDays($array['days']);
         }
 
         return $this;
@@ -214,6 +329,9 @@ abstract class Schedule extends \Mandango\Document\EmbeddedDocument
     {
         $array = array();
 
+        if ($withReferenceFields) {
+            $array['days_reference_field'] = $this->getDays_reference_field();
+        }
 
         return $array;
     }
@@ -223,40 +341,50 @@ abstract class Schedule extends \Mandango\Document\EmbeddedDocument
      */
     public function queryForSave($query, $isNew, $reset = false)
     {
-        if (true === $reset) {
-            $reset = 'deep';
-        }
-        if (isset($this->data['embeddedsMany'])) {
-            if ($isNew) {
-                if (isset($this->data['embeddedsMany']['days'])) {
-                    foreach ($this->data['embeddedsMany']['days']->getAdd() as $document) {
-                        $query = $document->queryForSave($query, $isNew);
-                    }
+        if (isset($this->data['fields'])) {
+            if ($isNew || $reset) {
+                $rootQuery = $query;
+                $query =& $rootQuery;
+                $rap = $this->getRootAndPath();
+                if (true === $reset) {
+                    $path = array('$set', $rap['path']);
+                } elseif ('deep' == $reset) {
+                    $path = explode('.', '$set.'.$rap['path']);
+                } else {
+                    $path = explode('.', $rap['path']);
                 }
+                foreach ($path as $name) {
+                    if (0 === strpos($name, '_add')) {
+                        $name = substr($name, 4);
+                    }
+                    if (!isset($query[$name])) {
+                        $query[$name] = array();
+                    }
+                    $query =& $query[$name];
+                }
+                if (isset($this->data['fields']['days_reference_field'])) {
+                    $query['days'] = $this->data['fields']['days_reference_field'];
+                }
+                unset($query);
+                $query = $rootQuery;
             } else {
-                if (isset($this->data['embeddedsMany']['days'])) {
-                    $group = $this->data['embeddedsMany']['days'];
-                    foreach ($group->getSaved() as $document) {
-                        $query = $document->queryForSave($query, $isNew);
-                    }
-                    $groupRap = $group->getRootAndPath();
-                    foreach ($group->getAdd() as $document) {
-                        $q = $document->queryForSave(array(), true);
-                        $rap = $document->getRootAndPath();
-                        foreach (explode('.', $rap['path']) as $name) {
-                            if (0 === strpos($name, '_add')) {
-                                $name = substr($name, 4);
-                            }
-                            $q = $q[$name];
+                $rap = $this->getRootAndPath();
+                $documentPath = $rap['path'];
+                if (isset($this->data['fields']['days_reference_field']) || array_key_exists('days_reference_field', $this->data['fields'])) {
+                    $value = $this->data['fields']['days_reference_field'];
+                    $originalValue = $this->getOriginalFieldValue('days_reference_field');
+                    if ($value !== $originalValue) {
+                        if (null !== $value) {
+                            $query['$set'][$documentPath.'.days'] = $this->data['fields']['days_reference_field'];
+                        } else {
+                            $query['$unset'][$documentPath.'.days'] = 1;
                         }
-                        $query['$pushAll'][$groupRap['path']][] = $q;
-                    }
-                    foreach ($group->getRemove() as $document) {
-                        $rap = $document->getRootAndPath();
-                        $query['$unset'][$rap['path']] = 1;
                     }
                 }
             }
+        }
+        if (true === $reset) {
+            $reset = 'deep';
         }
 
         return $query;

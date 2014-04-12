@@ -644,6 +644,9 @@ abstract class Patient extends \Mandango\Document\Document
         if (isset($this->data['referencesOne']['doctor']) && !isset($this->data['fields']['doctor_reference_field'])) {
             $this->setDoctor_reference_field($this->data['referencesOne']['doctor']->getId());
         }
+        if (isset($this->data['embeddedsOne']['schedule'])) {
+            $this->data['embeddedsOne']['schedule']->updateReferenceFields();
+        }
     }
 
     /**
@@ -659,6 +662,9 @@ abstract class Patient extends \Mandango\Document\Document
         }
         if (isset($this->data['referencesOne']['doctor'])) {
             $this->data['referencesOne']['doctor']->save();
+        }
+        if (isset($this->data['embeddedsOne']['schedule'])) {
+            $this->data['embeddedsOne']['schedule']->saveReferences();
         }
     }
 

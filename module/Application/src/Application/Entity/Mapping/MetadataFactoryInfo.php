@@ -276,22 +276,27 @@ class MetadataFactoryInfo
             'inheritable' => false,
             'inheritance' => false,
             'fields' => array(
-
+                'days_reference_field' => array(
+                    'type' => 'raw',
+                    'dbName' => 'days',
+                    'referenceField' => true,
+                ),
             ),
-            '_has_references' => false,
+            '_has_references' => true,
             'referencesOne' => array(
 
             ),
             'referencesMany' => array(
-
+                'days' => array(
+                    'class' => 'Application\\Entity\\Day',
+                    'field' => 'days_reference_field',
+                ),
             ),
             'embeddedsOne' => array(
 
             ),
             'embeddedsMany' => array(
-                'days' => array(
-                    'class' => 'Application\\Entity\\Day',
-                ),
+
             ),
             'indexes' => array(
 
@@ -305,7 +310,10 @@ class MetadataFactoryInfo
     public function getApplicationEntityDayClass()
     {
         return array(
-            'isEmbedded' => true,
+            'isEmbedded' => false,
+            'mandango' => null,
+            'connection' => '',
+            'collection' => 'application_entity_day',
             'inheritable' => false,
             'inheritance' => false,
             'fields' => array(
@@ -328,6 +336,18 @@ class MetadataFactoryInfo
                 'streams' => array(
                     'class' => 'Application\\Entity\\Stream',
                 ),
+            ),
+            'relationsOne' => array(
+
+            ),
+            'relationsManyOne' => array(
+
+            ),
+            'relationsManyMany' => array(
+
+            ),
+            'relationsManyThrough' => array(
+
             ),
             'indexes' => array(
 
