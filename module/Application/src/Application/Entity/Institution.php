@@ -7,4 +7,14 @@ namespace Application\Entity;
  */
 class Institution extends \Application\Entity\Base\Institution
 {
+    
+    public function toArray($withReferenceFields = false)
+    {
+        $array = array('id' => (string)$this->getId());
+
+        $array['name'] = $this->getName();
+
+        return $array;
+    }
+    
 }

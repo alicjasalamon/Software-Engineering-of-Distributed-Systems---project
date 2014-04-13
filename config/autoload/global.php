@@ -13,7 +13,7 @@
 
 return array(
     
-    'params_method' => 'get', //post or get
+    'params_method' => 'post', //post or get
     
     'mandango_config_classes' => [
         'Application\Entity\User' => [

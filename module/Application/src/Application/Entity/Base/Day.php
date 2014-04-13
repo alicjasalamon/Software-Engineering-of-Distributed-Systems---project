@@ -298,7 +298,6 @@ abstract class Day extends \Mandango\Document\Document
         $array = array('id' => $this->getId());
 
         $array['date'] = $this->getDate();
-        $array['streams'] = $this->getStreams()->all();
 
         return $array;
     }

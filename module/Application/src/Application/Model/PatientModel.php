@@ -11,7 +11,7 @@ use Application\Entity\Patient;
 class PatientModel extends EntityModel {
     
     public function get($params) {
-        $patient = $this->patientRepository()->findOneById($params['id']);                
+        $patient = $this->patientRepository()->findOneById($params['id']);
         return $patient;
     }
     
@@ -38,12 +38,6 @@ class PatientModel extends EntityModel {
         return $event;
     }
     
-    protected function addEventToStream(Stream $stream, $params) {
-        $event = $this->buildEvent($params);
-        $stream->addEvents($event);
-        return $event;
-    }
-    
     public function getStream($params) {
         $patient = $this->patientRepository()->findOneById($params['patientid']);
         $schedule = $this->getSchedule($patient);
@@ -54,6 +48,12 @@ class PatientModel extends EntityModel {
     
     public function clear() {
         $this->patientRepository()->remove();
+    }
+    
+    protected function addEventToStream(Stream $stream, $params) {
+        $event = $this->buildEvent($params);
+        $stream->addEvents($event);
+        return $event;
     }
     
     //http://localhost/db/event/add?patient=5346c505df722ed41200003a&date=20140410&activity=diet
@@ -68,9 +68,9 @@ class PatientModel extends EntityModel {
     }
     
     protected function getDayFromSchedule(Schedule $schedule, $params) {
-        $days = $schedule->getDays();
+        $days = $schedule->getDays();// ->createQuery()->all();
         $foundDay = null;
-        foreach($days as $day) {
+        foreach($days->all() as $day) {
             if($day->getDate() == $params['date']) {
                 $foundDay = $day;
             }
@@ -85,7 +85,7 @@ class PatientModel extends EntityModel {
     }
     
     protected function getStreamByDay(Day $day, $params) {
-        $streams = $day->getStreams();
+        $streams = $day->getStreams()->all();
         if(!$streams) {
             $streams = array();
         }
@@ -109,17 +109,13 @@ class PatientModel extends EntityModel {
         if(!$schedule) {
             $schedule = $this->createSchedule();
             $patient->setSchedule($schedule);
-            $patient->save();
+            //$patient->save();
         }
         return $schedule;
     }
     
     protected function createSchedule() {
         $schedule = new Schedule($this->mandango);
-        $foundDay = new Day($this->mandango);
-        $foundDay->setDate('date');
-        $foundDay->save();
-        $schedule->addDays($foundDay);
         return $schedule;
     }
     

@@ -21,7 +21,7 @@
     var user = {
         name: "User",
         fields: [
-            {name:"id.$id", type:"string"},
+            {name:"id", type:"string"},
             {name:"login", type:"string"},
             {name:"password", type:"string"},
             {name:"group", type:"string"},
@@ -48,7 +48,7 @@
     var institution = {
         name: "Institution",
         fields: [
-            {name:"id.$id", type:"string"},
+            {name:"id", type:"string"},
             {name:"name", type:"string"},
         ],
         interfaces: [
@@ -79,11 +79,11 @@
     var doctor = {
         name: "Doctor",
         fields: [
-            {name:"id.$id", type:"string"},
+            {name:"id", type:"string"},
             {name:"firstname", type:"string"},
             {name:"lastname", type:"string"},
-            {name:"user_reference_field.$id", type:"string (id)"},
-            {name:"institution_reference_field.$id", type:"string (id)"},
+            {name:"user", type:"string (id)"},
+            {name:"institution", type:"string (id)"},
         ],
         interfaces: [
             {
@@ -105,13 +105,13 @@
     var patient = {
         name: "Patient",
         fields: [
-            {name:"id.$id", type:"string"},
+            {name:"id", type:"string"},
             {name:"firstname", type:"string"},
             {name:"lastname", type:"string"},
             {name:"schedule", type:"Schedule"},
-            {name:"user_reference_field.$id", type:"string (id)"},
-            {name:"institution_reference_field.$id", type:"string (id)"},
-            {name:"doctor_reference_field.$id", type:"string (id)"},
+            {name:"user", type:"string (id)"},
+            {name:"institution", type:"string (id)"},
+            {name:"doctor", type:"string (id)"},
         ],
         interfaces: [
             {
@@ -141,7 +141,7 @@
     var day = {
         name: "Day",
         fields: [
-            {name:"id.$id", type:"string"},
+            {name:"id", type:"string"},
             {name:"date", type:"string"},
             {name:"streams", type:"Stream[]"},
         ],
@@ -152,7 +152,7 @@
         name: "Stream",
         fields: [
             {name:"activity", type:"string"},
-            {name:"events", type:"string[] (ids)"},
+            {name:"events", type:"Event[]"},
         ],
     };
     generateDocs(stream);
@@ -160,7 +160,6 @@
     var event = {
         name: "Event",
         fields: [
-            {name:"id.$id", type:"string"},
             {name:"title", type:"string"},
             {name:"details", type:"string"},
             {name:"time", type:"string"},

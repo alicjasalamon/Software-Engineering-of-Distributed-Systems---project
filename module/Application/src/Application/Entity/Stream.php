@@ -13,7 +13,13 @@ class Stream extends \Application\Entity\Base\Stream
         $array = array();
 
         $array['activity'] = $this->getActivity();
-        $array['events'] = $this->getEvents()->all();
+        
+        $events = $this->getEvents()->all();
+        $eventsArray = [];
+        foreach ($events as $event) {
+            array_push($eventsArray, $event->toArray());
+        }
+        $array['events'] = $eventsArray;
 
         return $array;
     }
