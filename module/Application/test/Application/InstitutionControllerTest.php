@@ -9,8 +9,7 @@ class InstitutionControllerTest extends ControllerTestCase {
     public function testAddInstitution() {
         $addedJson = $this->addInstitution();
         $getJson = $this->getInstitution($addedJson->data->id);
-        $this->assertEquals($getJson->data->id, $addedJson->data->id);
-        $this->assertEquals($getJson->data->name, $addedJson->data->name);
+        $this->assertEquals($getJson, $addedJson);
         $this->assertEquals($getJson->data->name, 'Placowka testowa');
     }
     
