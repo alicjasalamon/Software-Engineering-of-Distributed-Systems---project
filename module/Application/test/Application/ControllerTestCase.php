@@ -17,8 +17,7 @@ class ControllerTestCase extends AbstractHttpControllerTestCase {
     protected function getInstitutionId() {
         $this->dispatch('/db/institution/all', 'POST', []);
         $this->assertResponseStatusCode(200);
-        $institutionsJson = $this->getResponse()->getContent();
-        $institutions = Json::decode($institutionsJson);
+        $institutions = $this->getResponseAsArray();
         $firstInstitution = $institutions->data[0];
         $firstInstitutionId = $firstInstitution->id;
         return $firstInstitutionId;
@@ -27,8 +26,7 @@ class ControllerTestCase extends AbstractHttpControllerTestCase {
     protected function getDoctorId() {
         $this->dispatch('/db/doctor/all', 'POST', []);
         $this->assertResponseStatusCode(200);
-        $doctorsJson = $this->getResponse()->getContent();
-        $doctors = Json::decode($doctorsJson);
+        $doctors = $this->getResponseAsArray();
         $firstDoctor = $doctors->data[0];
         $firstDoctorId = $firstDoctor->id;
         return $firstDoctorId;
@@ -37,11 +35,17 @@ class ControllerTestCase extends AbstractHttpControllerTestCase {
     protected function getPatientId() {
         $this->dispatch('/db/patient/all', 'POST', []);
         $this->assertResponseStatusCode(200);
-        $patientsJson = $this->getResponse()->getContent();
-        $patients = Json::decode($patientsJson);
+        $patients = $this->getResponseAsArray();
         $firstPatient = $patients->data[0];
         $firstPatientId = $firstPatient->id;
         return $firstPatientId;
+    }
+    
+    protected function getResponseAsArray() {
+        $response = $this->getResponse();
+        $content = $response->getContent();
+        $json = Json::decode($content);
+        return $json;
     }
     
 }

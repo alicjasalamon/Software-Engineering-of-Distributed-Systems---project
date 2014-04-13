@@ -2,8 +2,6 @@
 
 require_once 'ControllerTestCase.php';
 
-use Zend\Json\Json;
-
 class DayControllerTest extends ControllerTestCase {
 
     public function testGetDay() {
@@ -20,8 +18,7 @@ class DayControllerTest extends ControllerTestCase {
         ];
         $this->dispatch('/db/day', 'POST', $getData);
         $this->assertResponseStatusCode(200);
-        $getDayJson = $this->getResponse()->getContent();
-        $getJson = Json::decode($getDayJson);
+        $getJson = $this->getResponseAsArray();
         return $getJson;
     }
 

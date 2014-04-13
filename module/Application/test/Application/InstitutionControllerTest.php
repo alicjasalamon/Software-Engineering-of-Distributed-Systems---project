@@ -19,8 +19,7 @@ class InstitutionControllerTest extends ControllerTestCase {
         ];
         $this->dispatch('/db/institution/add', 'POST', $insertData);
         $this->assertResponseStatusCode(200);
-        $addedInstitutionJson = $this->getResponse()->getContent();
-        $addedJson = Json::decode($addedInstitutionJson);
+        $addedJson = $this->getResponseAsArray();
         return $addedJson;
     }
     
@@ -30,8 +29,7 @@ class InstitutionControllerTest extends ControllerTestCase {
         ];
         $this->dispatch('/db/institution', 'POST', $getData);
         $this->assertResponseStatusCode(200);
-        $getInstitutionJson = $this->getResponse()->getContent();
-        $getJson = Json::decode($getInstitutionJson);
+        $getJson = $this->getResponseAsArray();
         return $getJson;
     }
     

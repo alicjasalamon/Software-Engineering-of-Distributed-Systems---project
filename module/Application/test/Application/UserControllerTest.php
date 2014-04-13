@@ -2,8 +2,6 @@
 
 require_once 'ControllerTestCase.php';
 
-use Zend\Json\Json;
-
 class UserControllerTest extends ControllerTestCase {
     
     public function testAddDoctor() {
@@ -30,8 +28,7 @@ class UserControllerTest extends ControllerTestCase {
         ];
         $this->dispatch('/db/user/add', 'POST', $insertData);
         $this->assertResponseStatusCode(200);
-        $addedDoctorJson = $this->getResponse()->getContent();
-        $addedDoctor = Json::decode($addedDoctorJson);
+        $addedDoctor = $this->getResponseAsArray();
         return $addedDoctor;
     }
     
@@ -41,8 +38,7 @@ class UserControllerTest extends ControllerTestCase {
         ];
         $this->dispatch('/db/doctor', 'POST', $getData);
         $this->assertResponseStatusCode(200);
-        $getDoctorJson = $this->getResponse()->getContent();
-        $getJson = Json::decode($getDoctorJson);
+        $getJson = $this->getResponseAsArray();
         return $getJson;
     }
     
@@ -59,8 +55,7 @@ class UserControllerTest extends ControllerTestCase {
         ];
         $this->dispatch('/db/user/add', 'POST', $insertData);
         $this->assertResponseStatusCode(200);
-        $addedPatientJson = $this->getResponse()->getContent();
-        $addedPatient = Json::decode($addedPatientJson);
+        $addedPatient = $this->getResponseAsArray();
         return $addedPatient;
     }
     
@@ -70,8 +65,7 @@ class UserControllerTest extends ControllerTestCase {
         ];
         $this->dispatch('/db/patient', 'POST', $getData);
         $this->assertResponseStatusCode(200);
-        $getPatientJson = $this->getResponse()->getContent();
-        $getJson = Json::decode($getPatientJson);
+        $getJson = $this->getResponseAsArray();
         return $getJson;
     }
     
