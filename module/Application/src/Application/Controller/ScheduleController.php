@@ -7,14 +7,20 @@ use Zend\View\Model\ViewModel;
 class ScheduleController extends BaseController {
     
     public function indexAction() {
+        $viewModel = new ViewModel();
+                
         $renderer = $this->getServiceLocator()->get('ViewRenderer');
         
         $streamerViewModel = new ViewModel();
         $streamerViewModel->setTemplate('application/schedule/streamer');
         $streamer = $renderer->render($streamerViewModel);
         
-        $viewModel = new ViewModel();
+        $eventDialogsViewModel = new ViewModel();
+        $eventDialogsViewModel->setTemplate('application/schedule/eventDialogs');
+        $eventDialogsHtml = $renderer->render($eventDialogsViewModel);
+
         $viewModel->setVariable('streamer', $streamer);
+        $viewModel->setVariable('eventDialogs', $eventDialogsHtml);
         return $viewModel;
     }
     

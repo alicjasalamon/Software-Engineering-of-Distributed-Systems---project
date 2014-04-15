@@ -10,20 +10,18 @@ class AdminController extends BaseController  //dziedziczymy tu po zendowej klas
 {
     public function indexAction() {
         $viewModel = new ViewModel();
-
+        $renderer = $this->getServiceLocator()->get('ViewRenderer');
+        
         $addInstitutionViewModel = new ViewModel();
         $addInstitutionViewModel->setTemplate('application/admin/addInstitution');
-        $renderer = $this->getServiceLocator()->get('ViewRenderer');
         $addInstitutionHtml = $renderer->render($addInstitutionViewModel);
 
         $addDoctorViewModel = new ViewModel();
         $addDoctorViewModel->setTemplate('application/admin/addDoctor');
-        $renderer = $this->getServiceLocator()->get('ViewRenderer');
         $addDoctorHtml = $renderer->render($addDoctorViewModel);
 
         $addPatientViewModel = new ViewModel();
         $addPatientViewModel->setTemplate('application/admin/addPatient');
-        $renderer = $this->getServiceLocator()->get('ViewRenderer');
         $addPatientHtml = $renderer->render($addPatientViewModel);
 
         $viewModel->setVariable('addInstitution', $addInstitutionHtml);

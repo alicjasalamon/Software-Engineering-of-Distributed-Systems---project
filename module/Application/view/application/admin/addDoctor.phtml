@@ -19,17 +19,17 @@
             <button class="btn-clear"></button>
         </div>
 
-        <label>Select institution:</label>
+        <label>Institution:</label>
         <div class="input-control select">
-            <select>
-                <option>Zofia Choralska</option>
-                <option>Kamil Zaziebiony</option>
-                <option>Pawel Połamany</option>
+            <select class="fillWithInstitutions">
+                <option disabled selected style='display: none' class="fg-blue">
+                    Select institution</option>
             </select>
         </div>
 
         <div class="margin20"></div>
-        <div class="form-actions">
+
+        <div class="form-actions centeredButton">
             <button class="button success">Add</button>
             <button class="button" type="button" onclick="$.Dialog.close()">Cancel</button> 
         </div>

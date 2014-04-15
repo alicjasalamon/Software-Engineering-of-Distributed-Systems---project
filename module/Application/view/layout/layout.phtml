@@ -64,6 +64,8 @@
         <?php
         echo $this->inlineScript()
             ->appendFile($this->basePath('js/admin/adminDialogs.js'))
+            ->appendFile($this->basePath('js/admin/loadAdminData.js'))
+            ->appendFile($this->basePath('js/schedule/eventClick.js'))
             //->appendFile($this->basePath('js/hourPicker.js'))
             //->appendFile($this->basePath('js/plik2.js'))
             //->appendFile($this->basePath('js/plik3.js'))
