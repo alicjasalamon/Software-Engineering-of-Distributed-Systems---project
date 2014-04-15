@@ -2,10 +2,10 @@
 
 namespace Application\Model;
 
-use Application\Entity\UserRepository;
 use Application\Entity\User;
 use Application\Entity\Doctor;
 use Application\Entity\Patient;
+use Application\Entity\Schedule;
 
 class UserModel extends EntityModel {
     
@@ -60,6 +60,8 @@ class UserModel extends EntityModel {
         $patient->setInstitution($institution);
         $patient->setDoctor($doctor);
         $patient->setUser($user);
+        $schedule = new Schedule($this->mandango);
+        $patient->setSchedule($schedule);
         return $patient;
     }
 

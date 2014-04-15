@@ -1,9 +1,10 @@
 <?php
 
 namespace Application\Controller;
+
 use Application\Controller\DbController;
 
-class InstitutionController extends DbController {
+class InstitutionDbController extends DbController {
     
     public function indexAction() {
         $params = $this->getParams();

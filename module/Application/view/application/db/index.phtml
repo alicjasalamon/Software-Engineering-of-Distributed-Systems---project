@@ -108,7 +108,7 @@
             {name:"id", type:"string"},
             {name:"firstname", type:"string"},
             {name:"lastname", type:"string"},
-            {name:"schedule", type:"Schedule"},
+            {name:"schedule", type:"string (id)"},
             {name:"user", type:"string (id)"},
             {name:"institution", type:"string (id)"},
             {name:"doctor", type:"string (id)"},
@@ -135,6 +135,15 @@
         fields: [
             {name:"days", type:"string[] (ids)"},
         ],
+        interfaces: [
+            {
+                name: "Get schedule",
+                url: "/db/schedule",
+                parameters: [
+                    {name:"id", type:"string"},
+                ],
+            },
+        ]
     };
     generateDocs(schedule);
     
@@ -145,6 +154,16 @@
             {name:"date", type:"string"},
             {name:"streams", type:"Stream[]"},
         ],
+        interfaces: [
+            {
+                name: "Get day",
+                url: "/db/day",
+                parameters: [
+                    {name:"patientid", type:"string"},
+                    {name:"date", type:"string"},
+                ],
+            },
+        ]
     };
     generateDocs(day);
     

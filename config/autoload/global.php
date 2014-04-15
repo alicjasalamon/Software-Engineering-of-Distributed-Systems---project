@@ -13,7 +13,16 @@
 
 return array(
     
-    'params_method' => 'post', //post or get
+    /*
+     * post, get or any 
+     * 
+     * post: use POST values
+     * get: use GET values
+     * any:
+     *      works as post if there is at least 1 post value
+     *      works as get otherwise
+     */
+    'params_method' => 'any', 
     
     'mandango_config_classes' => [
         'Application\Entity\User' => [
@@ -49,11 +58,6 @@ return array(
                 'lastname'      => 'string',
                 'email'         => 'string',
             ],
-            'embeddedsOne' => [
-                'schedule'   => [
-                    'class' => 'Application\Entity\Schedule'
-                ],
-            ],
             'referencesOne' => [
                 'user' => [
                     'class' => 'Application\Entity\User'
@@ -64,10 +68,12 @@ return array(
                 'doctor' => [
                     'class' => 'Application\Entity\Doctor'
                 ],
+                'schedule'   => [
+                    'class' => 'Application\Entity\Schedule'
+                ],
             ],
         ],
-        'Application\Entity\Schedule' => [            
-            'isEmbedded' => true,
+        'Application\Entity\Schedule' => [
             'referencesMany' => [
                 'days' => [
                     'class' => 'Application\Entity\Day',
@@ -89,14 +95,13 @@ return array(
             'fields' => [
                 'activity'      => 'string', // diet, exercises, medicines, visits
             ],
-            'embeddedsMany' => [
+            'referencesMany' => [
                 'events' => [
                     'class' => 'Application\Entity\Event',
                 ],
             ],
         ],
         'Application\Entity\Event' => [
-            'isEmbedded' => true,
             'fields' => [
                 'title'         => 'string',
                 'details'       => 'string',

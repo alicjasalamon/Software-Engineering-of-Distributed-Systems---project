@@ -35,12 +35,9 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
             $this->data['fields']['activity'] = null;
         }
         if (isset($data['events'])) {
-            $embedded = new \Mandango\Group\EmbeddedGroup('Application\Entity\Event');
-            if ($rap = $this->getRootAndPath()) {
-                $embedded->setRootAndPath($rap['root'], $rap['path'].'.events');
-            }
-            $embedded->setSavedData($data['events']);
-            $this->data['embeddedsMany']['events'] = $embedded;
+            $this->data['fields']['events_reference_field'] = $data['events'];
+        } elseif (isset($data['_fields']['events'])) {
+            $this->data['fields']['events_reference_field'] = null;
         }
 
         return $this;
@@ -124,6 +121,84 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
         return $this->data['fields']['activity'];
     }
 
+    /**
+     * Set the "events_reference_field" field.
+     *
+     * @param mixed $value The value.
+     *
+     * @return \Application\Entity\Stream The document (fluent interface).
+     */
+    public function setEvents_reference_field($value)
+    {
+        if (!isset($this->data['fields']['events_reference_field'])) {
+            if (($rap = $this->getRootAndPath()) && !$rap['root']->isNew()) {
+                $this->getEvents_reference_field();
+                if ($this->isFieldEqualTo('events_reference_field', $value)) {
+                    return $this;
+                }
+            } else {
+                if (null === $value) {
+                    return $this;
+                }
+                $this->fieldsModified['events_reference_field'] = null;
+                $this->data['fields']['events_reference_field'] = $value;
+                return $this;
+            }
+        } elseif ($this->isFieldEqualTo('events_reference_field', $value)) {
+            return $this;
+        }
+
+        if (!isset($this->fieldsModified['events_reference_field']) && !array_key_exists('events_reference_field', $this->fieldsModified)) {
+            $this->fieldsModified['events_reference_field'] = $this->data['fields']['events_reference_field'];
+        } elseif ($this->isFieldModifiedEqualTo('events_reference_field', $value)) {
+            unset($this->fieldsModified['events_reference_field']);
+        }
+
+        $this->data['fields']['events_reference_field'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Returns the "events_reference_field" field.
+     *
+     * @return mixed The $name field.
+     */
+    public function getEvents_reference_field()
+    {
+        if (!isset($this->data['fields']['events_reference_field'])) {
+            if (
+                (!isset($this->data['fields']) || !array_key_exists('events_reference_field', $this->data['fields']))
+                &&
+                ($rap = $this->getRootAndPath())
+                &&
+                !$this->isEmbeddedOneChangedInParent()
+                &&
+                !$this->isEmbeddedManyNew()
+            ) {
+                $field = $rap['path'].'.events';
+                $rap['root']->addFieldCache($field);
+                $collection = $this->getMandango()->getRepository(get_class($rap['root']))->getCollection();
+                $data = $collection->findOne(array('_id' => $rap['root']->getId()), array($field => 1));
+                foreach (explode('.', $field) as $key) {
+                    if (!isset($data[$key])) {
+                        $data = null;
+                        break;
+                    }
+                    $data = $data[$key];
+                }
+                if (null !== $data) {
+                    $this->data['fields']['events_reference_field'] = $data;
+                }
+            }
+            if (!isset($this->data['fields']['events_reference_field'])) {
+                $this->data['fields']['events_reference_field'] = null;
+            }
+        }
+
+        return $this->data['fields']['events_reference_field'];
+    }
+
     private function isFieldEqualTo($field, $otherValue)
     {
         $value = $this->data['fields'][$field];
@@ -148,6 +223,48 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
     }
 
     /**
+     * Returns the "events" reference.
+     *
+     * @return \Mandango\Group\ReferenceGroup The reference.
+     */
+    public function getEvents()
+    {
+        if (!isset($this->data['referencesMany']['events'])) {
+            $this->data['referencesMany']['events'] = new \Mandango\Group\ReferenceGroup('Application\Entity\Event', $this, 'events_reference_field');
+        }
+
+        return $this->data['referencesMany']['events'];
+    }
+
+    /**
+     * Adds documents to the "events" reference many.
+     *
+     * @param mixed $documents A document or an array or documents.
+     *
+     * @return \Application\Entity\Stream The document (fluent interface).
+     */
+    public function addEvents($documents)
+    {
+        $this->getEvents()->add($documents);
+
+        return $this;
+    }
+
+    /**
+     * Removes documents to the "events" reference many.
+     *
+     * @param mixed $documents A document or an array or documents.
+     *
+     * @return \Application\Entity\Stream The document (fluent interface).
+     */
+    public function removeEvents($documents)
+    {
+        $this->getEvents()->remove($documents);
+
+        return $this;
+    }
+
+    /**
      * Process onDelete.
      */
     public function processOnDelete()
@@ -169,48 +286,49 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
     }
 
     /**
-     * Returns the "events" embedded many.
-     *
-     * @return \Mandango\Group\EmbeddedGroup The "events" embedded many.
+     * Update the value of the reference fields.
      */
-    public function getEvents()
+    public function updateReferenceFields()
     {
-        if (!isset($this->data['embeddedsMany']['events'])) {
-            $this->data['embeddedsMany']['events'] = $embedded = new \Mandango\Group\EmbeddedGroup('Application\Entity\Event');
-            if ($rap = $this->getRootAndPath()) {
-                $embedded->setRootAndPath($rap['root'], $rap['path'].'.events');
+        if (isset($this->data['referencesMany']['events'])) {
+            $group = $this->data['referencesMany']['events'];
+            $add = $group->getAdd();
+            $remove = $group->getRemove();
+            if ($add || $remove) {
+                $ids = $this->getEvents_reference_field();
+                foreach ($add as $document) {
+                    $ids[] = $document->getId();
+                }
+                foreach ($remove as $document) {
+                    if (false !== $key = array_search($document->getId(), $ids)) {
+                        unset($ids[$key]);
+                    }
+                }
+                $this->setEvents_reference_field($ids ? array_values($ids) : null);
             }
         }
-
-        return $this->data['embeddedsMany']['events'];
     }
 
     /**
-     * Adds documents to the "events" embeddeds many.
-     *
-     * @param mixed $documents A document or an array or documents.
-     *
-     * @return \Application\Entity\Stream The document (fluent interface).
+     * Save the references.
      */
-    public function addEvents($documents)
+    public function saveReferences()
     {
-        $this->getEvents()->add($documents);
-
-        return $this;
-    }
-
-    /**
-     * Removes documents to the "events" embeddeds many.
-     *
-     * @param mixed $documents A document or an array or documents.
-     *
-     * @return \Application\Entity\Stream The document (fluent interface).
-     */
-    public function removeEvents($documents)
-    {
-        $this->getEvents()->remove($documents);
-
-        return $this;
+        if (isset($this->data['referencesMany']['events'])) {
+            $group = $this->data['referencesMany']['events'];
+            $documents = array();
+            foreach ($group->getAdd() as $document) {
+                $documents[] = $document;
+            }
+            if ($group->isSavedInitialized()) {
+                foreach ($group->getSaved() as $document) {
+                    $documents[] = $document;
+                }
+            }
+            if ($documents) {
+                $this->getMandango()->getRepository('Application\Entity\Event')->save($documents);
+            }
+        }
     }
 
     /**
@@ -218,8 +336,8 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
      */
     public function resetGroups()
     {
-        if (isset($this->data['embeddedsMany']['events'])) {
-            $this->data['embeddedsMany']['events']->reset();
+        if (isset($this->data['referencesMany']['events'])) {
+            $this->data['referencesMany']['events']->reset();
         }
     }
 
@@ -238,6 +356,9 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
         if ('activity' == $name) {
             return $this->setActivity($value);
         }
+        if ('events_reference_field' == $name) {
+            return $this->setEvents_reference_field($value);
+        }
 
         throw new \InvalidArgumentException(sprintf('The document data "%s" is not valid.', $name));
     }
@@ -255,6 +376,9 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
     {
         if ('activity' == $name) {
             return $this->getActivity();
+        }
+        if ('events_reference_field' == $name) {
+            return $this->getEvents_reference_field();
         }
         if ('events' == $name) {
             return $this->getEvents();
@@ -275,13 +399,12 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
         if (isset($array['activity'])) {
             $this->setActivity($array['activity']);
         }
+        if (isset($array['events_reference_field'])) {
+            $this->setEvents_reference_field($array['events_reference_field']);
+        }
         if (isset($array['events'])) {
-            $embeddeds = array();
-            foreach ($array['events'] as $documentData) {
-                $embeddeds[] = $embedded = new \Application\Entity\Event($this->getMandango());
-                $embedded->setDocumentData($documentData);
-            }
-            $this->getEvents()->replace($embeddeds);
+            $this->removeEvents($this->getEvents()->all());
+            $this->addEvents($array['events']);
         }
 
         return $this;
@@ -299,6 +422,9 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
         $array = array();
 
         $array['activity'] = $this->getActivity();
+        if ($withReferenceFields) {
+            $array['events_reference_field'] = $this->getEvents_reference_field();
+        }
 
         return $array;
     }
@@ -332,6 +458,9 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
                 if (isset($this->data['fields']['activity'])) {
                     $query['activity'] = (string) $this->data['fields']['activity'];
                 }
+                if (isset($this->data['fields']['events_reference_field'])) {
+                    $query['events'] = $this->data['fields']['events_reference_field'];
+                }
                 unset($query);
                 $query = $rootQuery;
             } else {
@@ -348,42 +477,21 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
                         }
                     }
                 }
+                if (isset($this->data['fields']['events_reference_field']) || array_key_exists('events_reference_field', $this->data['fields'])) {
+                    $value = $this->data['fields']['events_reference_field'];
+                    $originalValue = $this->getOriginalFieldValue('events_reference_field');
+                    if ($value !== $originalValue) {
+                        if (null !== $value) {
+                            $query['$set'][$documentPath.'.events'] = $this->data['fields']['events_reference_field'];
+                        } else {
+                            $query['$unset'][$documentPath.'.events'] = 1;
+                        }
+                    }
+                }
             }
         }
         if (true === $reset) {
             $reset = 'deep';
-        }
-        if (isset($this->data['embeddedsMany'])) {
-            if ($isNew) {
-                if (isset($this->data['embeddedsMany']['events'])) {
-                    foreach ($this->data['embeddedsMany']['events']->getAdd() as $document) {
-                        $query = $document->queryForSave($query, $isNew);
-                    }
-                }
-            } else {
-                if (isset($this->data['embeddedsMany']['events'])) {
-                    $group = $this->data['embeddedsMany']['events'];
-                    foreach ($group->getSaved() as $document) {
-                        $query = $document->queryForSave($query, $isNew);
-                    }
-                    $groupRap = $group->getRootAndPath();
-                    foreach ($group->getAdd() as $document) {
-                        $q = $document->queryForSave(array(), true);
-                        $rap = $document->getRootAndPath();
-                        foreach (explode('.', $rap['path']) as $name) {
-                            if (0 === strpos($name, '_add')) {
-                                $name = substr($name, 4);
-                            }
-                            $q = $q[$name];
-                        }
-                        $query['$pushAll'][$groupRap['path']][] = $q;
-                    }
-                    foreach ($group->getRemove() as $document) {
-                        $rap = $document->getRootAndPath();
-                        $query['$unset'][$rap['path']] = 1;
-                    }
-                }
-            }
         }
 
         return $query;

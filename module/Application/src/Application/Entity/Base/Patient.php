@@ -67,13 +67,9 @@ abstract class Patient extends \Mandango\Document\Document
             $this->data['fields']['doctor_reference_field'] = null;
         }
         if (isset($data['schedule'])) {
-            $embedded = $this->getMandango()->create('Application\Entity\Schedule');
-            $embedded->setRootAndPath($this, 'schedule');
-            if (isset($data['_fields']['schedule'])) {
-                $data['schedule']['_fields'] = $data['_fields']['schedule'];
-            }
-            $embedded->setDocumentData($data['schedule']);
-            $this->data['embeddedsOne']['schedule'] = $embedded;
+            $this->data['fields']['schedule_reference_field'] = $data['schedule'];
+        } elseif (isset($data['_fields']['schedule'])) {
+            $this->data['fields']['schedule_reference_field'] = null;
         }
 
         return $this;
@@ -451,6 +447,68 @@ abstract class Patient extends \Mandango\Document\Document
         return $this->data['fields']['doctor_reference_field'];
     }
 
+    /**
+     * Set the "schedule_reference_field" field.
+     *
+     * @param mixed $value The value.
+     *
+     * @return \Application\Entity\Patient The document (fluent interface).
+     */
+    public function setSchedule_reference_field($value)
+    {
+        if (!isset($this->data['fields']['schedule_reference_field'])) {
+            if (!$this->isNew()) {
+                $this->getSchedule_reference_field();
+                if ($this->isFieldEqualTo('schedule_reference_field', $value)) {
+                    return $this;
+                }
+            } else {
+                if (null === $value) {
+                    return $this;
+                }
+                $this->fieldsModified['schedule_reference_field'] = null;
+                $this->data['fields']['schedule_reference_field'] = $value;
+                return $this;
+            }
+        } elseif ($this->isFieldEqualTo('schedule_reference_field', $value)) {
+            return $this;
+        }
+
+        if (!isset($this->fieldsModified['schedule_reference_field']) && !array_key_exists('schedule_reference_field', $this->fieldsModified)) {
+            $this->fieldsModified['schedule_reference_field'] = $this->data['fields']['schedule_reference_field'];
+        } elseif ($this->isFieldModifiedEqualTo('schedule_reference_field', $value)) {
+            unset($this->fieldsModified['schedule_reference_field']);
+        }
+
+        $this->data['fields']['schedule_reference_field'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Returns the "schedule_reference_field" field.
+     *
+     * @return mixed The $name field.
+     */
+    public function getSchedule_reference_field()
+    {
+        if (!isset($this->data['fields']['schedule_reference_field'])) {
+            if ($this->isNew()) {
+                $this->data['fields']['schedule_reference_field'] = null;
+            } elseif (!isset($this->data['fields']) || !array_key_exists('schedule_reference_field', $this->data['fields'])) {
+                $this->addFieldCache('schedule');
+                $data = $this->getRepository()->getCollection()->findOne(array('_id' => $this->getId()), array('schedule' => 1));
+                if (isset($data['schedule'])) {
+                    $this->data['fields']['schedule_reference_field'] = $data['schedule'];
+                } else {
+                    $this->data['fields']['schedule_reference_field'] = null;
+                }
+            }
+        }
+
+        return $this->data['fields']['schedule_reference_field'];
+    }
+
     private function isFieldEqualTo($field, $otherValue)
     {
         $value = $this->data['fields'][$field];
@@ -610,6 +668,51 @@ abstract class Patient extends \Mandango\Document\Document
     }
 
     /**
+     * Set the "schedule" reference.
+     *
+     * @param \Application\Entity\Schedule|null $value The reference, or null.
+     *
+     * @return \Application\Entity\Patient The document (fluent interface).
+     *
+     * @throws \InvalidArgumentException If the class is not an instance of Application\Entity\Schedule.
+     */
+    public function setSchedule($value)
+    {
+        if (null !== $value && !$value instanceof \Application\Entity\Schedule) {
+            throw new \InvalidArgumentException('The "schedule" reference is not an instance of Application\Entity\Schedule.');
+        }
+
+        $this->setSchedule_reference_field((null === $value || $value->isNew()) ? null : $value->getId());
+
+        $this->data['referencesOne']['schedule'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Returns the "schedule" reference.
+     *
+     * @return \Application\Entity\Schedule|null The reference or null if it does not exist.
+     */
+    public function getSchedule()
+    {
+        if (!isset($this->data['referencesOne']['schedule'])) {
+            if (!$this->isNew()) {
+                $this->addReferenceCache('schedule');
+            }
+            if (!$id = $this->getSchedule_reference_field()) {
+                return null;
+            }
+            if (!$document = $this->getMandango()->getRepository('Application\Entity\Schedule')->findOneById($id)) {
+                throw new \RuntimeException('The reference "schedule" does not exist.');
+            }
+            $this->data['referencesOne']['schedule'] = $document;
+        }
+
+        return $this->data['referencesOne']['schedule'];
+    }
+
+    /**
      * Process onDelete.
      */
     public function processOnDelete()
@@ -644,8 +747,8 @@ abstract class Patient extends \Mandango\Document\Document
         if (isset($this->data['referencesOne']['doctor']) && !isset($this->data['fields']['doctor_reference_field'])) {
             $this->setDoctor_reference_field($this->data['referencesOne']['doctor']->getId());
         }
-        if (isset($this->data['embeddedsOne']['schedule'])) {
-            $this->data['embeddedsOne']['schedule']->updateReferenceFields();
+        if (isset($this->data['referencesOne']['schedule']) && !isset($this->data['fields']['schedule_reference_field'])) {
+            $this->setSchedule_reference_field($this->data['referencesOne']['schedule']->getId());
         }
     }
 
@@ -663,77 +766,8 @@ abstract class Patient extends \Mandango\Document\Document
         if (isset($this->data['referencesOne']['doctor'])) {
             $this->data['referencesOne']['doctor']->save();
         }
-        if (isset($this->data['embeddedsOne']['schedule'])) {
-            $this->data['embeddedsOne']['schedule']->saveReferences();
-        }
-    }
-
-    /**
-     * Set the "schedule" embedded one.
-     *
-     * @param \Application\Entity\Schedule|null $value The "schedule" embedded one.
-     *
-     * @return \Application\Entity\Patient The document (fluent interface).
-     *
-     * @throws \InvalidArgumentException If the value is not an instance of Application\Entity\Schedule or null.
-     */
-    public function setSchedule($value)
-    {
-        if (null !== $value && !$value instanceof \Application\Entity\Schedule) {
-            throw new \InvalidArgumentException('The "schedule" embedded one is not an instance of Application\Entity\Schedule.');
-        }
-        if (null !== $value) {
-            if ($this instanceof \Mandango\Document\Document) {
-                $value->setRootAndPath($this, 'schedule');
-            } elseif ($rap = $this->getRootAndPath()) {
-                $value->setRootAndPath($rap['root'], $rap['path'].'.schedule');
-            }
-        }
-
-        if (!\Mandango\Archive::has($this, 'embedded_one.schedule')) {
-            $originalValue = isset($this->data['embeddedsOne']['schedule']) ? $this->data['embeddedsOne']['schedule'] : null;
-            \Mandango\Archive::set($this, 'embedded_one.schedule', $originalValue);
-        } elseif (\Mandango\Archive::get($this, 'embedded_one.schedule') === $value) {
-            \Mandango\Archive::remove($this, 'embedded_one.schedule');
-        }
-
-        $this->data['embeddedsOne']['schedule'] = $value;
-
-        return $this;
-    }
-
-    /**
-     * Returns the "schedule" embedded one.
-     *
-     * @return \Application\Entity\Schedule|null The "schedule" embedded one.
-     */
-    public function getSchedule()
-    {
-        if (!isset($this->data['embeddedsOne']['schedule'])) {
-            if ($this->isNew()) {
-                $this->data['embeddedsOne']['schedule'] = null;
-            } elseif (!isset($this->data['embeddedsOne']) || !array_key_exists('schedule', $this->data['embeddedsOne'])) {
-                $exists = $this->getRepository()->getCollection()->findOne(array('_id' => $this->getId(), 'schedule' => array('$exists' => 1)));
-                if ($exists) {
-                    $embedded = new \Application\Entity\Schedule($this->getMandango());
-                    $embedded->setRootAndPath($this, 'schedule');
-                    $this->data['embeddedsOne']['schedule'] = $embedded;
-                } else {
-                    $this->data['embeddedsOne']['schedule'] = null;
-                }
-            }
-        }
-
-        return $this->data['embeddedsOne']['schedule'];
-    }
-
-    /**
-     * Resets the groups of the document.
-     */
-    public function resetGroups()
-    {
-        if (isset($this->data['embeddedsOne']['schedule'])) {
-            $this->data['embeddedsOne']['schedule']->resetGroups();
+        if (isset($this->data['referencesOne']['schedule'])) {
+            $this->data['referencesOne']['schedule']->save();
         }
     }
 
@@ -766,6 +800,9 @@ abstract class Patient extends \Mandango\Document\Document
         }
         if ('doctor_reference_field' == $name) {
             return $this->setDoctor_reference_field($value);
+        }
+        if ('schedule_reference_field' == $name) {
+            return $this->setSchedule_reference_field($value);
         }
         if ('user' == $name) {
             return $this->setUser($value);
@@ -811,6 +848,9 @@ abstract class Patient extends \Mandango\Document\Document
         }
         if ('doctor_reference_field' == $name) {
             return $this->getDoctor_reference_field();
+        }
+        if ('schedule_reference_field' == $name) {
+            return $this->getSchedule_reference_field();
         }
         if ('user' == $name) {
             return $this->getUser();
@@ -858,6 +898,9 @@ abstract class Patient extends \Mandango\Document\Document
         if (isset($array['doctor_reference_field'])) {
             $this->setDoctor_reference_field($array['doctor_reference_field']);
         }
+        if (isset($array['schedule_reference_field'])) {
+            $this->setSchedule_reference_field($array['schedule_reference_field']);
+        }
         if (isset($array['user'])) {
             $this->setUser($array['user']);
         }
@@ -868,9 +911,7 @@ abstract class Patient extends \Mandango\Document\Document
             $this->setDoctor($array['doctor']);
         }
         if (isset($array['schedule'])) {
-            $embedded = new \Application\Entity\Schedule($this->getMandango());
-            $embedded->fromArray($array['schedule']);
-            $this->setSchedule($embedded);
+            $this->setSchedule($array['schedule']);
         }
 
         return $this;
@@ -898,6 +939,9 @@ abstract class Patient extends \Mandango\Document\Document
         }
         if ($withReferenceFields) {
             $array['doctor_reference_field'] = $this->getDoctor_reference_field();
+        }
+        if ($withReferenceFields) {
+            $array['schedule_reference_field'] = $this->getSchedule_reference_field();
         }
 
         return $array;
@@ -931,6 +975,9 @@ abstract class Patient extends \Mandango\Document\Document
                 }
                 if (isset($this->data['fields']['doctor_reference_field'])) {
                     $query['doctor'] = $this->data['fields']['doctor_reference_field'];
+                }
+                if (isset($this->data['fields']['schedule_reference_field'])) {
+                    $query['schedule'] = $this->data['fields']['schedule_reference_field'];
                 }
             } else {
                 if (isset($this->data['fields']['firstname']) || array_key_exists('firstname', $this->data['fields'])) {
@@ -999,22 +1046,21 @@ abstract class Patient extends \Mandango\Document\Document
                         }
                     }
                 }
+                if (isset($this->data['fields']['schedule_reference_field']) || array_key_exists('schedule_reference_field', $this->data['fields'])) {
+                    $value = $this->data['fields']['schedule_reference_field'];
+                    $originalValue = $this->getOriginalFieldValue('schedule_reference_field');
+                    if ($value !== $originalValue) {
+                        if (null !== $value) {
+                            $query['$set']['schedule'] = $this->data['fields']['schedule_reference_field'];
+                        } else {
+                            $query['$unset']['schedule'] = 1;
+                        }
+                    }
+                }
             }
         }
         if (true === $reset) {
             $reset = 'deep';
-        }
-        if (isset($this->data['embeddedsOne'])) {
-            $originalValue = $this->getOriginalEmbeddedOneValue('schedule');
-            if (isset($this->data['embeddedsOne']['schedule'])) {
-                $resetValue = $reset ? $reset : (!$isNew && $this->data['embeddedsOne']['schedule'] !== $originalValue);
-                $query = $this->data['embeddedsOne']['schedule']->queryForSave($query, $isNew, $resetValue);
-            } elseif (array_key_exists('schedule', $this->data['embeddedsOne'])) {
-                if ($originalValue) {
-                    $rap = $originalValue->getRootAndPath();
-                    $query['$unset'][$rap['path']] = 1;
-                }
-            }
         }
 
         return $query;

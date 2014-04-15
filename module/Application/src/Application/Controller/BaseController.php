@@ -19,7 +19,12 @@ abstract class BaseController extends AbstractActionController {
         $config = $this->getServiceLocator()->get('config');
         $paramsMethod = $config['params_method'];
         $params = null;
-        if($paramsMethod == 'post'){
+        if($paramsMethod == 'any'){
+            $params = $this->params()->fromPost();
+            if(count($params) <= 0) {
+                $params = $this->params()->fromQuery();
+            }
+        } else if($paramsMethod == 'post'){
             $params = $this->params()->fromPost();
         } else if($paramsMethod == 'get') {
             $params = $this->params()->fromQuery();

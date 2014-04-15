@@ -2,18 +2,22 @@
 
 require_once 'ControllerTestCase.php';
 
-class UserControllerTest extends ControllerTestCase {
+class Test2UserControllerTest extends ControllerTestCase {
     
     public function testAddDoctor() {
+        return;
         $addedJson = $this->addDoctor();
         $getJson = $this->getDoctor($addedJson->data->id);
         $this->assertEquals($getJson, $addedJson);
+        ControllerTestCase::$doctor = $addedJson;
     }
     
-    public function testAddUser() {
+    public function testAddPatient() {
+        return;
         $addedJson = $this->addPatient();
         $getJson = $this->getPatient($addedJson->data->id);
         $this->assertEquals($getJson, $addedJson);
+        ControllerTestCase::$patient = $addedJson;
     }
     
     protected function addDoctor() {
@@ -21,7 +25,7 @@ class UserControllerTest extends ControllerTestCase {
             'login' => 'testdoctor',
             'password' => '12341234',
             'group' => 'doctor',
-            'institution' => $this->getInstitutionId(),
+            'institution' => ControllerTestCase::$institution->data->id,
             'firstname' => 'Test',
             'lastname' => 'Doctor',
             'email' => 'test@email.com',
@@ -47,8 +51,8 @@ class UserControllerTest extends ControllerTestCase {
             'login' => 'testpatient',
             'password' => '12341234',
             'group' => 'patient',
-            'institution' => $this->getInstitutionId(),
-            'doctor' => $this->getDoctorId(),
+            'institution' => ControllerTestCase::$institution->data->id,
+            'doctor' => ControllerTestCase::$doctor->data->id,
             'firstname' => 'Test',
             'lastname' => 'Patient',
             'email' => 'test@email.com',

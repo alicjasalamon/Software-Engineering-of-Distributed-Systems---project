@@ -77,7 +77,6 @@ abstract class PatientRepository extends \Mandango\Repository
                 $document->clearModified();
                 $identityMap[(string) $data['_id']] = $document;
 
-                $document->resetGroups();
             }
         }
 
@@ -87,7 +86,6 @@ abstract class PatientRepository extends \Mandango\Repository
                 $query = $document->queryForSave();
                 $collection->update(array('_id' => $this->idToMongo($document->getId())), $query, $updateOptions);
                 $document->clearModified();
-                $document->resetGroups();
             }
         }
     }
@@ -178,6 +176,22 @@ abstract class PatientRepository extends \Mandango\Repository
 
                 if ($idsDiff = array_diff($ids, $referenceIds)) {
                     $this->remove(array('doctor' => array('$in' => $idsDiff)), array('multiple' => 1));
+                }
+            }
+
+            $skip += $documentsPerBatch;
+        } while(count($ids));
+        $skip = 0;
+        do {
+            $cursor = $this->getCollection()->find(array('schedule' => array('$exists' => 1)), array('schedule' => 1))->limit($documentsPerBatch)->skip($skip);
+            $ids = array_unique(array_values(array_map(function ($result) { return $result['schedule']; }, iterator_to_array($cursor))));
+            if (count($ids)) {
+                $collection = $this->getMandango()->getRepository('Application\Entity\Schedule')->getCollection();
+                $referenceCursor = $collection->find(array('_id' => array('$in' => $ids)), array('_id' => 1));
+                $referenceIds =  array_values(array_map(function ($result) { return $result['_id']; }, iterator_to_array($referenceCursor)));
+
+                if ($idsDiff = array_diff($ids, $referenceIds)) {
+                    $this->remove(array('schedule' => array('$in' => $idsDiff)), array('multiple' => 1));
                 }
             }
 

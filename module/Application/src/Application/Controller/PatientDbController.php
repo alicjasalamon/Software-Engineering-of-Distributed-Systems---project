@@ -1,9 +1,10 @@
 <?php
 
 namespace Application\Controller;
+
 use Application\Controller\DbController;
 
-class PatientController extends DbController {
+class PatientDbController extends DbController {
     
     public function indexAction() {
         $params = $this->getParams();
@@ -22,7 +23,7 @@ class PatientController extends DbController {
             $patients = $this->patientModel()->getAll();
             $patientsJson = [];
             foreach($patients as $patient) {
-                $json = $patient->toArray();
+                $json = $patient->toArray(true);
                 array_push($patientsJson, $json);
             }
             $json = $this->generateJSONViewModel(0, '', $patientsJson);

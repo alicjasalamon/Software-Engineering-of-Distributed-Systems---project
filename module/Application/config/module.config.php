@@ -41,6 +41,19 @@ return array(
                     ),
                 ),
             ),
+            'schedule' => array(
+               'type' => 'segment',
+               'options' => array(
+                   'route' => '/schedule[/:action]',
+                   'constraints' => array(
+                       'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                   ),
+                   'defaults' => array(
+                       'controller' => 'Application\Controller\Schedule',
+                       'action' => 'index',
+                   ),
+               ),
+            ),            
             'auth' => array(
                 'type' => 'segment',
                 'options' => array(
@@ -50,32 +63,6 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'Application\Controller\Auth',
-                        'action' => 'index',
-                    ),
-                ),
-            ),
-            'data' => array(
-                'type' => 'segment',
-                'options' => array(
-                    'route' => '/data[/:action]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'Application\Controller\Data',
-                        'action' => 'index',
-                    ),
-                ),
-            ),
-            'db' => array(
-                'type' => 'segment',
-                'options' => array(
-                    'route' => '/db[/:action]',
-                    'constraints' => array(
-                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'Application\Controller\Db',
                         'action' => 'index',
                     ),
                 ),
@@ -93,7 +80,33 @@ return array(
                     ),
                 ),
             ),
-            'user' => array(
+            'data' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/data[/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\DataDb',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
+            'db' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/db[/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Db',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
+            'userdb' => array(
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/db/user[/:action]',
@@ -101,12 +114,12 @@ return array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
-                        'controller' => 'Application\Controller\User',
+                        'controller' => 'Application\Controller\UserDb',
                         'action' => 'index',
                     ),
                 ),
             ),
-            'doctor' => array(
+            'doctordb' => array(
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/db/doctor[/:action]',
@@ -114,12 +127,12 @@ return array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Doctor',
+                        'controller' => 'Application\Controller\DoctorDb',
                         'action' => 'index',
                     ),
                 ),
             ),
-            'patient' => array(
+            'patientdb' => array(
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/db/patient[/:action]',
@@ -127,12 +140,12 @@ return array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Patient',
+                        'controller' => 'Application\Controller\PatientDb',
                         'action' => 'index',
                     ),
                 ),
             ),
-            'day' => array(
+            'daydb' => array(
                'type' => 'segment',
                'options' => array(
                    'route' => '/db/day[/:action]',
@@ -140,12 +153,12 @@ return array(
                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                    ),
                    'defaults' => array(
-                       'controller' => 'Application\Controller\Day',
+                       'controller' => 'Application\Controller\DayDb',
                        'action' => 'index',
                    ),
                ),
             ),
-            'schedule' => array(
+            'scheduledb' => array(
                'type' => 'segment',
                'options' => array(
                    'route' => '/db/schedule[/:action]',
@@ -153,12 +166,12 @@ return array(
                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                    ),
                    'defaults' => array(
-                       'controller' => 'Application\Controller\Schedule',
+                       'controller' => 'Application\Controller\ScheduleDb',
                        'action' => 'index',
                    ),
                ),
             ),
-            'institution' => array(
+            'institutiondb' => array(
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/db/institution[/:action]',
@@ -166,12 +179,12 @@ return array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Institution',
+                        'controller' => 'Application\Controller\InstitutionDb',
                         'action' => 'index',
                     ),
                 ),
             ),
-            'event' => array(
+            'eventdb' => array(
                 'type' => 'segment',
                 'options' => array(
                     'route' => '/db/event[/:action]',
@@ -179,7 +192,7 @@ return array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
-                        'controller' => 'Application\Controller\Event',
+                        'controller' => 'Application\Controller\EventDb',
                         'action' => 'index',
                     ),
                 ),
@@ -217,14 +230,15 @@ return array(
             'Application\Controller\Auth' => 'Application\Controller\AuthController',
             'Application\Controller\Admin' => 'Application\Controller\AdminController',            
             'Application\Controller\Db' => 'Application\Controller\DbController',
-            'Application\Controller\Data' => 'Application\Controller\DataController',
-            'Application\Controller\Institution' => 'Application\Controller\InstitutionController',
-            'Application\Controller\Doctor' => 'Application\Controller\DoctorController',
-            'Application\Controller\Patient' => 'Application\Controller\PatientController',
+            'Application\Controller\DataDb' => 'Application\Controller\DataDbController',
+            'Application\Controller\InstitutionDb' => 'Application\Controller\InstitutionDbController',
+            'Application\Controller\DoctorDb' => 'Application\Controller\DoctorDbController',
+            'Application\Controller\PatientDb' => 'Application\Controller\PatientDbController',
+            'Application\Controller\ScheduleDb' => 'Application\Controller\ScheduleDbController',
             'Application\Controller\Schedule' => 'Application\Controller\ScheduleController',
-            'Application\Controller\User' => 'Application\Controller\UserController',
-            'Application\Controller\Event' => 'Application\Controller\EventController',
-            'Application\Controller\Day' => 'Application\Controller\DayController',
+            'Application\Controller\UserDb' => 'Application\Controller\UserDbController',
+            'Application\Controller\EventDb' => 'Application\Controller\EventDbController',
+            'Application\Controller\DayDb' => 'Application\Controller\DayDbController',
         ),
     ),
     'view_manager' => array(

@@ -2,7 +2,7 @@
 
 namespace Application\Controller;
 
-class EventController extends DbController {
+class EventDbController extends DbController {
     
     public function addAction() {
         $params = $this->getParams();

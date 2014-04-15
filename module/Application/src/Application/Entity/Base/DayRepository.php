@@ -52,6 +52,8 @@ abstract class DayRepository extends \Mandango\Repository
         $inserts = array();
         $updates = array();
         foreach ($documents as $document) {
+            $document->saveReferences();
+            $document->updateReferenceFields();
             if ($document->isNew()) {
                 $inserts[spl_object_hash($document)] = $document;
             } else {
@@ -62,6 +64,9 @@ abstract class DayRepository extends \Mandango\Repository
         // insert
         if ($inserts) {
             foreach ($inserts as $oid => $document) {
+                if (!$document->isModified()) {
+                    continue;
+                }
                 $data = $document->queryForSave();
                 $data['_id'] = new \MongoId();
 

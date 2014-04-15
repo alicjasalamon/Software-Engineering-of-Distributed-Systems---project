@@ -2,20 +2,18 @@
 
 namespace Application\Controller;
 
-class DayController extends DbController
-{
-
+class ScheduleDbController extends DbController {
+    
     public function indexAction() {
         $params = $this->getParams();
         try {
-            $day = $this->patientModel()->getDay($params);
-            $dayJson = $day ? $day->toArray(true) : [];
-            $json = $this->generateJSONViewModel(0, '', $dayJson);
+            $schedule = $this->scheduleModel()->get($params);
+            $scheduleJson = $schedule ? $schedule->toArray(true) : [];
+            $json = $this->generateJSONViewModel(0, '', $scheduleJson);
         } catch (Exception $ex) {
             $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);
         }
         return $json;
     }
-
+    
 }
-

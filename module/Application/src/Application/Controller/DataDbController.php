@@ -2,7 +2,7 @@
 
 namespace Application\Controller;
 
-class DataController extends DbController
+class DataDbController extends DbController
 {
     
     public function indexAction() {
@@ -112,6 +112,9 @@ class DataController extends DbController
             $this->patientModel()->clear();
             $this->userModel()->clear();
             $this->institutionModel()->clear();
+            $this->eventModel()->clear();
+            $this->dayModel()->clear();
+            $this->scheduleModel()->clear();
             $json = $this->generateJSONViewModel(0, 'Database cleared!', []);
         } catch (Exception $ex) {
             $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);

@@ -5,40 +5,36 @@ use Zend\Json\Json;
 
 class ControllerTestCase extends AbstractHttpControllerTestCase {
     
+    /*
+     * @var Application\Entity\Institution
+     */
+    protected static $institution;
+    
+    /*
+     * @var Application\Entity\Doctor
+     */
+    protected static $doctor;
+    
+    /*
+     * @var Application\Entity\Patient
+     */
+    protected static $patient;
+    
+    /*
+     * @var Application\Entity\Event
+     */
+    protected static $event;
+
     protected $traceError = true;
+    protected $config = [
+        'date' => '20140413',
+    ];
     
     public function setUp() {
         $this->setApplicationConfig(
             include 'C:\xampp\htdocs\IOSR\config\application.config.php'
         );
         parent::setUp();
-    }
-    
-    protected function getInstitutionId() {
-        $this->dispatch('/db/institution/all', 'POST', []);
-        $this->assertResponseStatusCode(200);
-        $institutions = $this->getResponseAsArray();
-        $firstInstitution = $institutions->data[0];
-        $firstInstitutionId = $firstInstitution->id;
-        return $firstInstitutionId;
-    }
-    
-    protected function getDoctorId() {
-        $this->dispatch('/db/doctor/all', 'POST', []);
-        $this->assertResponseStatusCode(200);
-        $doctors = $this->getResponseAsArray();
-        $firstDoctor = $doctors->data[0];
-        $firstDoctorId = $firstDoctor->id;
-        return $firstDoctorId;
-    }
-    
-    protected function getPatientId() {
-        $this->dispatch('/db/patient/all', 'POST', []);
-        $this->assertResponseStatusCode(200);
-        $patients = $this->getResponseAsArray();
-        $firstPatient = $patients->data[0];
-        $firstPatientId = $firstPatient->id;
-        return $firstPatientId;
     }
     
     protected function getResponseAsArray() {

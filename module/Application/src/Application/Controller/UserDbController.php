@@ -1,7 +1,8 @@
 <?php
 
 namespace Application\Controller;
-class UserController extends DbController {
+
+class UserDbController extends DbController {
     
     public function addAction() {
         $params = $this->getParams();

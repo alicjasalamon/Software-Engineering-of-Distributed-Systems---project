@@ -6,6 +6,9 @@ use Application\Model\InstitutionModel;
 use Application\Model\UserModel;
 use Application\Model\DoctorModel;
 use Application\Model\PatientModel;
+use Application\Model\EventModel;
+use Application\Model\DayModel;
+use Application\Model\ScheduleModel;
 
 class DbController extends BaseController {
    
@@ -28,6 +31,21 @@ class DbController extends BaseController {
      * @var PatientModel
      */
     private $patientModel;
+    
+    /**
+     * @var EventModel
+     */
+    private $eventModel;
+    
+    /**
+     * @var DayModel
+     */
+    private $dayModel;
+    
+    /**
+     * @var ScheduleModel
+     */
+    private $scheduleModel;
     
     protected function mandango() {
         return $this->getServiceLocator()->get('mandango');
@@ -68,9 +86,44 @@ class DbController extends BaseController {
      */
     protected function patientModel() {
         if(!$this->patientModel) {
-            $this->patientModel = new PatientModel($this->mandango());
+            $this->patientModel =
+                new PatientModel(
+                    $this->mandango(), 
+                    $this->dayModel(), 
+                    $this->eventModel()
+                );
         }
         return $this->patientModel;
+    }
+    
+    /**
+     * @var EventModel
+     */
+    protected function eventModel() {
+        if(!$this->eventModel) {
+            $this->eventModel = new EventModel($this->mandango());
+        }
+        return $this->eventModel;
+    }
+    
+    /**
+     * @var DayModel
+     */
+    protected function dayModel() {
+        if(!$this->dayModel) {
+            $this->dayModel = new DayModel($this->mandango());
+        }
+        return $this->dayModel;
+    }
+    
+    /**
+     * @var scheduleModel
+     */
+    protected function scheduleModel() {
+        if(!$this->scheduleModel) {
+            $this->scheduleModel = new ScheduleModel($this->mandango());
+        }
+        return $this->scheduleModel;
     }
     
 }

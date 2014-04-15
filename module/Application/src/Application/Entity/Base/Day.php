@@ -158,6 +158,31 @@ abstract class Day extends \Mandango\Document\Document
     }
 
     /**
+     * Update the value of the reference fields.
+     */
+    public function updateReferenceFields()
+    {
+        if (isset($this->data['embeddedsMany']['streams'])) {
+            $group = $this->data['embeddedsMany']['streams'];
+            foreach ($group->all() as $document) {
+                $document->updateReferenceFields();
+            }
+        }
+    }
+
+    /**
+     * Save the references.
+     */
+    public function saveReferences()
+    {
+        if (isset($this->data['embeddedsMany']['streams'])) {
+            foreach ($this->data['embeddedsMany']['streams'] as $embedded) {
+                $embedded->saveReferences();
+            }
+        }
+    }
+
+    /**
      * Returns the "streams" embedded many.
      *
      * @return \Mandango\Group\EmbeddedGroup The "streams" embedded many.

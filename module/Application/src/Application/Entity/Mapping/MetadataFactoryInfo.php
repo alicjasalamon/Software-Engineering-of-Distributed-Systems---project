@@ -221,6 +221,11 @@ class MetadataFactoryInfo
                     'dbName' => 'doctor',
                     'referenceField' => true,
                 ),
+                'schedule_reference_field' => array(
+                    'type' => 'raw',
+                    'dbName' => 'schedule',
+                    'referenceField' => true,
+                ),
             ),
             '_has_references' => true,
             'referencesOne' => array(
@@ -236,14 +241,16 @@ class MetadataFactoryInfo
                     'class' => 'Application\\Entity\\Doctor',
                     'field' => 'doctor_reference_field',
                 ),
+                'schedule' => array(
+                    'class' => 'Application\\Entity\\Schedule',
+                    'field' => 'schedule_reference_field',
+                ),
             ),
             'referencesMany' => array(
 
             ),
             'embeddedsOne' => array(
-                'schedule' => array(
-                    'class' => 'Application\\Entity\\Schedule',
-                ),
+
             ),
             'embeddedsMany' => array(
 
@@ -272,7 +279,10 @@ class MetadataFactoryInfo
     public function getApplicationEntityScheduleClass()
     {
         return array(
-            'isEmbedded' => true,
+            'isEmbedded' => false,
+            'mandango' => null,
+            'connection' => '',
+            'collection' => 'application_entity_schedule',
             'inheritable' => false,
             'inheritance' => false,
             'fields' => array(
@@ -296,6 +306,18 @@ class MetadataFactoryInfo
 
             ),
             'embeddedsMany' => array(
+
+            ),
+            'relationsOne' => array(
+
+            ),
+            'relationsManyOne' => array(
+
+            ),
+            'relationsManyMany' => array(
+
+            ),
+            'relationsManyThrough' => array(
 
             ),
             'indexes' => array(
@@ -322,7 +344,7 @@ class MetadataFactoryInfo
                     'dbName' => 'date',
                 ),
             ),
-            '_has_references' => false,
+            '_has_references' => true,
             'referencesOne' => array(
 
             ),
@@ -369,21 +391,27 @@ class MetadataFactoryInfo
                     'type' => 'string',
                     'dbName' => 'activity',
                 ),
+                'events_reference_field' => array(
+                    'type' => 'raw',
+                    'dbName' => 'events',
+                    'referenceField' => true,
+                ),
             ),
-            '_has_references' => false,
+            '_has_references' => true,
             'referencesOne' => array(
 
             ),
             'referencesMany' => array(
-
+                'events' => array(
+                    'class' => 'Application\\Entity\\Event',
+                    'field' => 'events_reference_field',
+                ),
             ),
             'embeddedsOne' => array(
 
             ),
             'embeddedsMany' => array(
-                'events' => array(
-                    'class' => 'Application\\Entity\\Event',
-                ),
+
             ),
             'indexes' => array(
 
@@ -397,7 +425,10 @@ class MetadataFactoryInfo
     public function getApplicationEntityEventClass()
     {
         return array(
-            'isEmbedded' => true,
+            'isEmbedded' => false,
+            'mandango' => null,
+            'connection' => '',
+            'collection' => 'application_entity_event',
             'inheritable' => false,
             'inheritance' => false,
             'fields' => array(
@@ -433,6 +464,18 @@ class MetadataFactoryInfo
 
             ),
             'embeddedsMany' => array(
+
+            ),
+            'relationsOne' => array(
+
+            ),
+            'relationsManyOne' => array(
+
+            ),
+            'relationsManyMany' => array(
+
+            ),
+            'relationsManyThrough' => array(
 
             ),
             'indexes' => array(

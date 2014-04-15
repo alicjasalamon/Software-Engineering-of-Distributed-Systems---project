@@ -2,10 +2,13 @@
 
 namespace Application\Model;
 
+use Application\Entity\InstitutionRepository;
 use Application\Entity\UserRepository;
 use Application\Entity\DoctorRepository;
 use Application\Entity\PatientRepository;
-use Application\Entity\InstitutionRepository;
+use Application\Entity\ScheduleRepository;
+use Application\Entity\DayRepository;
+use Application\Entity\EventRepository;
 
 abstract class EntityModel {
     
@@ -13,6 +16,16 @@ abstract class EntityModel {
      * @var Mandango
      */
     protected $mandango;
+    
+    /**
+     * @var InstitutionRepository
+     */
+    private $institutionRepository;
+    
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
     
     /**
      * @var DoctorRepository
@@ -25,17 +38,42 @@ abstract class EntityModel {
     private $patientRepository;
     
     /**
+     * @var ScheduleRepository
+     */
+    private $scheduleRepository;
+    
+    /**
+     * @var DayRepository
+     */
+    private $dayRepository;
+    
+    /**
+     * @var EventRepository
+     */
+    private $eventRepository;
+    
+    function __construct($mandango) {
+        $this->mandango = $mandango;
+    }
+    
+    /**
      * @var InstitutionRepository
      */
-    private $institutionRepository;
+    protected function institutionRepository() {
+        if(!$this->institutionRepository) {
+            $this->institutionRepository = new InstitutionRepository($this->mandango);
+        }
+        return $this->institutionRepository;
+    }
     
     /**
      * @var UserRepository
      */
-    private $userRepository;
-    
-    function __construct($mandango) {
-        $this->mandango = $mandango;
+    protected function userRepository() {
+        if(!$this->userRepository) {
+            $this->userRepository = new UserRepository($this->mandango);
+        }
+        return $this->userRepository;
     }
     
     /**
@@ -57,25 +95,35 @@ abstract class EntityModel {
         }
         return $this->patientRepository;
     }
-
+    
     /**
-     * @var InstitutionRepository
+     * @var ScheduleRepository
      */
-    protected function institutionRepository() {
-        if(!$this->institutionRepository) {
-            $this->institutionRepository = new InstitutionRepository($this->mandango);
+    protected function scheduleRepository() {
+        if(!$this->scheduleRepository) {
+            $this->scheduleRepository = new ScheduleRepository($this->mandango);
         }
-        return $this->institutionRepository;
+        return $this->scheduleRepository;
     }
     
     /**
-     * @var UserRepository
+     * @var DayRepository
      */
-    protected function userRepository() {
-        if(!$this->userRepository) {
-            $this->userRepository = new UserRepository($this->mandango);
+    protected function dayRepository() {
+        if(!$this->dayRepository) {
+            $this->dayRepository = new DayRepository($this->mandango);
         }
-        return $this->userRepository;
+        return $this->dayRepository;
+    }
+    
+    /**
+     * @var EventRepository
+     */
+    protected function eventRepository() {
+        if(!$this->eventRepository) {
+            $this->eventRepository = new EventRepository($this->mandango);
+        }
+        return $this->eventRepository;
     }
     
 }

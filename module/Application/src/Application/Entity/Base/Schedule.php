@@ -5,7 +5,7 @@ namespace Application\Entity\Base;
 /**
  * Base class of Application\Entity\Schedule document.
  */
-abstract class Schedule extends \Mandango\Document\EmbeddedDocument
+abstract class Schedule extends \Mandango\Document\Document
 {
     /**
      * Initializes the document defaults.
@@ -29,6 +29,13 @@ abstract class Schedule extends \Mandango\Document\EmbeddedDocument
             $this->fieldsModified = array();
         }
 
+        if (isset($data['_query_hash'])) {
+            $this->addQueryHash($data['_query_hash']);
+        }
+        if (isset($data['_id'])) {
+            $this->setId($data['_id']);
+            $this->setIsNew(false);
+        }
         if (isset($data['days'])) {
             $this->data['fields']['days_reference_field'] = $data['days'];
         } elseif (isset($data['_fields']['days'])) {
@@ -48,7 +55,7 @@ abstract class Schedule extends \Mandango\Document\EmbeddedDocument
     public function setDays_reference_field($value)
     {
         if (!isset($this->data['fields']['days_reference_field'])) {
-            if (($rap = $this->getRootAndPath()) && !$rap['root']->isNew()) {
+            if (!$this->isNew()) {
                 $this->getDays_reference_field();
                 if ($this->isFieldEqualTo('days_reference_field', $value)) {
                     return $this;
@@ -84,32 +91,16 @@ abstract class Schedule extends \Mandango\Document\EmbeddedDocument
     public function getDays_reference_field()
     {
         if (!isset($this->data['fields']['days_reference_field'])) {
-            if (
-                (!isset($this->data['fields']) || !array_key_exists('days_reference_field', $this->data['fields']))
-                &&
-                ($rap = $this->getRootAndPath())
-                &&
-                !$this->isEmbeddedOneChangedInParent()
-                &&
-                !$this->isEmbeddedManyNew()
-            ) {
-                $field = $rap['path'].'.days';
-                $rap['root']->addFieldCache($field);
-                $collection = $this->getMandango()->getRepository(get_class($rap['root']))->getCollection();
-                $data = $collection->findOne(array('_id' => $rap['root']->getId()), array($field => 1));
-                foreach (explode('.', $field) as $key) {
-                    if (!isset($data[$key])) {
-                        $data = null;
-                        break;
-                    }
-                    $data = $data[$key];
-                }
-                if (null !== $data) {
-                    $this->data['fields']['days_reference_field'] = $data;
-                }
-            }
-            if (!isset($this->data['fields']['days_reference_field'])) {
+            if ($this->isNew()) {
                 $this->data['fields']['days_reference_field'] = null;
+            } elseif (!isset($this->data['fields']) || !array_key_exists('days_reference_field', $this->data['fields'])) {
+                $this->addFieldCache('days');
+                $data = $this->getRepository()->getCollection()->findOne(array('_id' => $this->getId()), array('days' => 1));
+                if (isset($data['days'])) {
+                    $this->data['fields']['days_reference_field'] = $data['days'];
+                } else {
+                    $this->data['fields']['days_reference_field'] = null;
+                }
             }
         }
 
@@ -147,6 +138,9 @@ abstract class Schedule extends \Mandango\Document\EmbeddedDocument
     public function getDays()
     {
         if (!isset($this->data['referencesMany']['days'])) {
+            if (!$this->isNew()) {
+                $this->addReferenceCache('days');
+            }
             $this->data['referencesMany']['days'] = new \Mandango\Group\ReferenceGroup('Application\Entity\Day', $this, 'days_reference_field');
         }
 
@@ -307,6 +301,9 @@ abstract class Schedule extends \Mandango\Document\EmbeddedDocument
      */
     public function fromArray(array $array)
     {
+        if (isset($array['id'])) {
+            $this->setId($array['id']);
+        }
         if (isset($array['days_reference_field'])) {
             $this->setDays_reference_field($array['days_reference_field']);
         }
@@ -327,7 +324,7 @@ abstract class Schedule extends \Mandango\Document\EmbeddedDocument
      */
     public function toArray($withReferenceFields = false)
     {
-        $array = array();
+        $array = array('id' => $this->getId());
 
         if ($withReferenceFields) {
             $array['days_reference_field'] = $this->getDays_reference_field();
@@ -339,45 +336,26 @@ abstract class Schedule extends \Mandango\Document\EmbeddedDocument
     /**
      * Query for save.
      */
-    public function queryForSave($query, $isNew, $reset = false)
+    public function queryForSave()
     {
+        $isNew = $this->isNew();
+        $query = array();
+        $reset = false;
+
         if (isset($this->data['fields'])) {
             if ($isNew || $reset) {
-                $rootQuery = $query;
-                $query =& $rootQuery;
-                $rap = $this->getRootAndPath();
-                if (true === $reset) {
-                    $path = array('$set', $rap['path']);
-                } elseif ('deep' == $reset) {
-                    $path = explode('.', '$set.'.$rap['path']);
-                } else {
-                    $path = explode('.', $rap['path']);
-                }
-                foreach ($path as $name) {
-                    if (0 === strpos($name, '_add')) {
-                        $name = substr($name, 4);
-                    }
-                    if (!isset($query[$name])) {
-                        $query[$name] = array();
-                    }
-                    $query =& $query[$name];
-                }
                 if (isset($this->data['fields']['days_reference_field'])) {
                     $query['days'] = $this->data['fields']['days_reference_field'];
                 }
-                unset($query);
-                $query = $rootQuery;
             } else {
-                $rap = $this->getRootAndPath();
-                $documentPath = $rap['path'];
                 if (isset($this->data['fields']['days_reference_field']) || array_key_exists('days_reference_field', $this->data['fields'])) {
                     $value = $this->data['fields']['days_reference_field'];
                     $originalValue = $this->getOriginalFieldValue('days_reference_field');
                     if ($value !== $originalValue) {
                         if (null !== $value) {
-                            $query['$set'][$documentPath.'.days'] = $this->data['fields']['days_reference_field'];
+                            $query['$set']['days'] = $this->data['fields']['days_reference_field'];
                         } else {
-                            $query['$unset'][$documentPath.'.days'] = 1;
+                            $query['$unset']['days'] = 1;
                         }
                     }
                 }

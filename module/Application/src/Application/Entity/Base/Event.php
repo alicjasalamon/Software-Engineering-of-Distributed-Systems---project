@@ -5,7 +5,7 @@ namespace Application\Entity\Base;
 /**
  * Base class of Application\Entity\Event document.
  */
-abstract class Event extends \Mandango\Document\EmbeddedDocument
+abstract class Event extends \Mandango\Document\Document
 {
     /**
      * Initializes the document defaults.
@@ -29,6 +29,13 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
             $this->fieldsModified = array();
         }
 
+        if (isset($data['_query_hash'])) {
+            $this->addQueryHash($data['_query_hash']);
+        }
+        if (isset($data['_id'])) {
+            $this->setId($data['_id']);
+            $this->setIsNew(false);
+        }
         if (isset($data['title'])) {
             $this->data['fields']['title'] = (string) $data['title'];
         } elseif (isset($data['_fields']['title'])) {
@@ -68,7 +75,7 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
     public function setTitle($value)
     {
         if (!isset($this->data['fields']['title'])) {
-            if (($rap = $this->getRootAndPath()) && !$rap['root']->isNew()) {
+            if (!$this->isNew()) {
                 $this->getTitle();
                 if ($this->isFieldEqualTo('title', $value)) {
                     return $this;
@@ -104,32 +111,16 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
     public function getTitle()
     {
         if (!isset($this->data['fields']['title'])) {
-            if (
-                (!isset($this->data['fields']) || !array_key_exists('title', $this->data['fields']))
-                &&
-                ($rap = $this->getRootAndPath())
-                &&
-                !$this->isEmbeddedOneChangedInParent()
-                &&
-                !$this->isEmbeddedManyNew()
-            ) {
-                $field = $rap['path'].'.title';
-                $rap['root']->addFieldCache($field);
-                $collection = $this->getMandango()->getRepository(get_class($rap['root']))->getCollection();
-                $data = $collection->findOne(array('_id' => $rap['root']->getId()), array($field => 1));
-                foreach (explode('.', $field) as $key) {
-                    if (!isset($data[$key])) {
-                        $data = null;
-                        break;
-                    }
-                    $data = $data[$key];
-                }
-                if (null !== $data) {
-                    $this->data['fields']['title'] = (string) $data;
-                }
-            }
-            if (!isset($this->data['fields']['title'])) {
+            if ($this->isNew()) {
                 $this->data['fields']['title'] = null;
+            } elseif (!isset($this->data['fields']) || !array_key_exists('title', $this->data['fields'])) {
+                $this->addFieldCache('title');
+                $data = $this->getRepository()->getCollection()->findOne(array('_id' => $this->getId()), array('title' => 1));
+                if (isset($data['title'])) {
+                    $this->data['fields']['title'] = (string) $data['title'];
+                } else {
+                    $this->data['fields']['title'] = null;
+                }
             }
         }
 
@@ -146,7 +137,7 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
     public function setDetails($value)
     {
         if (!isset($this->data['fields']['details'])) {
-            if (($rap = $this->getRootAndPath()) && !$rap['root']->isNew()) {
+            if (!$this->isNew()) {
                 $this->getDetails();
                 if ($this->isFieldEqualTo('details', $value)) {
                     return $this;
@@ -182,32 +173,16 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
     public function getDetails()
     {
         if (!isset($this->data['fields']['details'])) {
-            if (
-                (!isset($this->data['fields']) || !array_key_exists('details', $this->data['fields']))
-                &&
-                ($rap = $this->getRootAndPath())
-                &&
-                !$this->isEmbeddedOneChangedInParent()
-                &&
-                !$this->isEmbeddedManyNew()
-            ) {
-                $field = $rap['path'].'.details';
-                $rap['root']->addFieldCache($field);
-                $collection = $this->getMandango()->getRepository(get_class($rap['root']))->getCollection();
-                $data = $collection->findOne(array('_id' => $rap['root']->getId()), array($field => 1));
-                foreach (explode('.', $field) as $key) {
-                    if (!isset($data[$key])) {
-                        $data = null;
-                        break;
-                    }
-                    $data = $data[$key];
-                }
-                if (null !== $data) {
-                    $this->data['fields']['details'] = (string) $data;
-                }
-            }
-            if (!isset($this->data['fields']['details'])) {
+            if ($this->isNew()) {
                 $this->data['fields']['details'] = null;
+            } elseif (!isset($this->data['fields']) || !array_key_exists('details', $this->data['fields'])) {
+                $this->addFieldCache('details');
+                $data = $this->getRepository()->getCollection()->findOne(array('_id' => $this->getId()), array('details' => 1));
+                if (isset($data['details'])) {
+                    $this->data['fields']['details'] = (string) $data['details'];
+                } else {
+                    $this->data['fields']['details'] = null;
+                }
             }
         }
 
@@ -224,7 +199,7 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
     public function setTime($value)
     {
         if (!isset($this->data['fields']['time'])) {
-            if (($rap = $this->getRootAndPath()) && !$rap['root']->isNew()) {
+            if (!$this->isNew()) {
                 $this->getTime();
                 if ($this->isFieldEqualTo('time', $value)) {
                     return $this;
@@ -260,32 +235,16 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
     public function getTime()
     {
         if (!isset($this->data['fields']['time'])) {
-            if (
-                (!isset($this->data['fields']) || !array_key_exists('time', $this->data['fields']))
-                &&
-                ($rap = $this->getRootAndPath())
-                &&
-                !$this->isEmbeddedOneChangedInParent()
-                &&
-                !$this->isEmbeddedManyNew()
-            ) {
-                $field = $rap['path'].'.time';
-                $rap['root']->addFieldCache($field);
-                $collection = $this->getMandango()->getRepository(get_class($rap['root']))->getCollection();
-                $data = $collection->findOne(array('_id' => $rap['root']->getId()), array($field => 1));
-                foreach (explode('.', $field) as $key) {
-                    if (!isset($data[$key])) {
-                        $data = null;
-                        break;
-                    }
-                    $data = $data[$key];
-                }
-                if (null !== $data) {
-                    $this->data['fields']['time'] = (string) $data;
-                }
-            }
-            if (!isset($this->data['fields']['time'])) {
+            if ($this->isNew()) {
                 $this->data['fields']['time'] = null;
+            } elseif (!isset($this->data['fields']) || !array_key_exists('time', $this->data['fields'])) {
+                $this->addFieldCache('time');
+                $data = $this->getRepository()->getCollection()->findOne(array('_id' => $this->getId()), array('time' => 1));
+                if (isset($data['time'])) {
+                    $this->data['fields']['time'] = (string) $data['time'];
+                } else {
+                    $this->data['fields']['time'] = null;
+                }
             }
         }
 
@@ -302,7 +261,7 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
     public function setDuration($value)
     {
         if (!isset($this->data['fields']['duration'])) {
-            if (($rap = $this->getRootAndPath()) && !$rap['root']->isNew()) {
+            if (!$this->isNew()) {
                 $this->getDuration();
                 if ($this->isFieldEqualTo('duration', $value)) {
                     return $this;
@@ -338,32 +297,16 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
     public function getDuration()
     {
         if (!isset($this->data['fields']['duration'])) {
-            if (
-                (!isset($this->data['fields']) || !array_key_exists('duration', $this->data['fields']))
-                &&
-                ($rap = $this->getRootAndPath())
-                &&
-                !$this->isEmbeddedOneChangedInParent()
-                &&
-                !$this->isEmbeddedManyNew()
-            ) {
-                $field = $rap['path'].'.duration';
-                $rap['root']->addFieldCache($field);
-                $collection = $this->getMandango()->getRepository(get_class($rap['root']))->getCollection();
-                $data = $collection->findOne(array('_id' => $rap['root']->getId()), array($field => 1));
-                foreach (explode('.', $field) as $key) {
-                    if (!isset($data[$key])) {
-                        $data = null;
-                        break;
-                    }
-                    $data = $data[$key];
-                }
-                if (null !== $data) {
-                    $this->data['fields']['duration'] = (int) $data;
-                }
-            }
-            if (!isset($this->data['fields']['duration'])) {
+            if ($this->isNew()) {
                 $this->data['fields']['duration'] = null;
+            } elseif (!isset($this->data['fields']) || !array_key_exists('duration', $this->data['fields'])) {
+                $this->addFieldCache('duration');
+                $data = $this->getRepository()->getCollection()->findOne(array('_id' => $this->getId()), array('duration' => 1));
+                if (isset($data['duration'])) {
+                    $this->data['fields']['duration'] = (int) $data['duration'];
+                } else {
+                    $this->data['fields']['duration'] = null;
+                }
             }
         }
 
@@ -380,7 +323,7 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
     public function setState($value)
     {
         if (!isset($this->data['fields']['state'])) {
-            if (($rap = $this->getRootAndPath()) && !$rap['root']->isNew()) {
+            if (!$this->isNew()) {
                 $this->getState();
                 if ($this->isFieldEqualTo('state', $value)) {
                     return $this;
@@ -416,32 +359,16 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
     public function getState()
     {
         if (!isset($this->data['fields']['state'])) {
-            if (
-                (!isset($this->data['fields']) || !array_key_exists('state', $this->data['fields']))
-                &&
-                ($rap = $this->getRootAndPath())
-                &&
-                !$this->isEmbeddedOneChangedInParent()
-                &&
-                !$this->isEmbeddedManyNew()
-            ) {
-                $field = $rap['path'].'.state';
-                $rap['root']->addFieldCache($field);
-                $collection = $this->getMandango()->getRepository(get_class($rap['root']))->getCollection();
-                $data = $collection->findOne(array('_id' => $rap['root']->getId()), array($field => 1));
-                foreach (explode('.', $field) as $key) {
-                    if (!isset($data[$key])) {
-                        $data = null;
-                        break;
-                    }
-                    $data = $data[$key];
-                }
-                if (null !== $data) {
-                    $this->data['fields']['state'] = (string) $data;
-                }
-            }
-            if (!isset($this->data['fields']['state'])) {
+            if ($this->isNew()) {
                 $this->data['fields']['state'] = null;
+            } elseif (!isset($this->data['fields']) || !array_key_exists('state', $this->data['fields'])) {
+                $this->addFieldCache('state');
+                $data = $this->getRepository()->getCollection()->findOne(array('_id' => $this->getId()), array('state' => 1));
+                if (isset($data['state'])) {
+                    $this->data['fields']['state'] = (string) $data['state'];
+                } else {
+                    $this->data['fields']['state'] = null;
+                }
             }
         }
 
@@ -562,6 +489,9 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
      */
     public function fromArray(array $array)
     {
+        if (isset($array['id'])) {
+            $this->setId($array['id']);
+        }
         if (isset($array['title'])) {
             $this->setTitle($array['title']);
         }
@@ -590,7 +520,7 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
      */
     public function toArray($withReferenceFields = false)
     {
-        $array = array();
+        $array = array('id' => $this->getId());
 
         $array['title'] = $this->getTitle();
         $array['details'] = $this->getDetails();
@@ -604,29 +534,14 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
     /**
      * Query for save.
      */
-    public function queryForSave($query, $isNew, $reset = false)
+    public function queryForSave()
     {
+        $isNew = $this->isNew();
+        $query = array();
+        $reset = false;
+
         if (isset($this->data['fields'])) {
             if ($isNew || $reset) {
-                $rootQuery = $query;
-                $query =& $rootQuery;
-                $rap = $this->getRootAndPath();
-                if (true === $reset) {
-                    $path = array('$set', $rap['path']);
-                } elseif ('deep' == $reset) {
-                    $path = explode('.', '$set.'.$rap['path']);
-                } else {
-                    $path = explode('.', $rap['path']);
-                }
-                foreach ($path as $name) {
-                    if (0 === strpos($name, '_add')) {
-                        $name = substr($name, 4);
-                    }
-                    if (!isset($query[$name])) {
-                        $query[$name] = array();
-                    }
-                    $query =& $query[$name];
-                }
                 if (isset($this->data['fields']['title'])) {
                     $query['title'] = (string) $this->data['fields']['title'];
                 }
@@ -642,19 +557,15 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
                 if (isset($this->data['fields']['state'])) {
                     $query['state'] = (string) $this->data['fields']['state'];
                 }
-                unset($query);
-                $query = $rootQuery;
             } else {
-                $rap = $this->getRootAndPath();
-                $documentPath = $rap['path'];
                 if (isset($this->data['fields']['title']) || array_key_exists('title', $this->data['fields'])) {
                     $value = $this->data['fields']['title'];
                     $originalValue = $this->getOriginalFieldValue('title');
                     if ($value !== $originalValue) {
                         if (null !== $value) {
-                            $query['$set'][$documentPath.'.title'] = (string) $this->data['fields']['title'];
+                            $query['$set']['title'] = (string) $this->data['fields']['title'];
                         } else {
-                            $query['$unset'][$documentPath.'.title'] = 1;
+                            $query['$unset']['title'] = 1;
                         }
                     }
                 }
@@ -663,9 +574,9 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
                     $originalValue = $this->getOriginalFieldValue('details');
                     if ($value !== $originalValue) {
                         if (null !== $value) {
-                            $query['$set'][$documentPath.'.details'] = (string) $this->data['fields']['details'];
+                            $query['$set']['details'] = (string) $this->data['fields']['details'];
                         } else {
-                            $query['$unset'][$documentPath.'.details'] = 1;
+                            $query['$unset']['details'] = 1;
                         }
                     }
                 }
@@ -674,9 +585,9 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
                     $originalValue = $this->getOriginalFieldValue('time');
                     if ($value !== $originalValue) {
                         if (null !== $value) {
-                            $query['$set'][$documentPath.'.time'] = (string) $this->data['fields']['time'];
+                            $query['$set']['time'] = (string) $this->data['fields']['time'];
                         } else {
-                            $query['$unset'][$documentPath.'.time'] = 1;
+                            $query['$unset']['time'] = 1;
                         }
                     }
                 }
@@ -685,9 +596,9 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
                     $originalValue = $this->getOriginalFieldValue('duration');
                     if ($value !== $originalValue) {
                         if (null !== $value) {
-                            $query['$set'][$documentPath.'.duration'] = (int) $this->data['fields']['duration'];
+                            $query['$set']['duration'] = (int) $this->data['fields']['duration'];
                         } else {
-                            $query['$unset'][$documentPath.'.duration'] = 1;
+                            $query['$unset']['duration'] = 1;
                         }
                     }
                 }
@@ -696,9 +607,9 @@ abstract class Event extends \Mandango\Document\EmbeddedDocument
                     $originalValue = $this->getOriginalFieldValue('state');
                     if ($value !== $originalValue) {
                         if (null !== $value) {
-                            $query['$set'][$documentPath.'.state'] = (string) $this->data['fields']['state'];
+                            $query['$set']['state'] = (string) $this->data['fields']['state'];
                         } else {
-                            $query['$unset'][$documentPath.'.state'] = 1;
+                            $query['$unset']['state'] = 1;
                         }
                     }
                 }

@@ -22,8 +22,7 @@ class Patient extends \Application\Entity\Base\Patient
         $array['doctor'] = (string)$this->getDoctor_reference_field();
 
         //embeddeds
-        $schedule = $this->getSchedule();
-        $array['schedule'] = $schedule ? $schedule->toArray() : [];
+        $array['schedule'] = (string)$this->getSchedule_reference_field();
 
         return $array;
     }

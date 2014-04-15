@@ -4,7 +4,7 @@ namespace Application\Controller;
 
 use Application\Controller\DbController;
 
-class DoctorController extends DbController {
+class DoctorDbController extends DbController {
 
     public function indexAction() {
         $params = $this->getParams();

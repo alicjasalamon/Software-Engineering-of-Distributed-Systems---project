@@ -9,9 +9,9 @@ class MetadataFactory extends \Mandango\MetadataFactory
         'Application\\Entity\\Institution' => false,
         'Application\\Entity\\Doctor' => false,
         'Application\\Entity\\Patient' => false,
-        'Application\\Entity\\Schedule' => true,
+        'Application\\Entity\\Schedule' => false,
         'Application\\Entity\\Day' => false,
         'Application\\Entity\\Stream' => true,
-        'Application\\Entity\\Event' => true,
+        'Application\\Entity\\Event' => false,
     );
 }
