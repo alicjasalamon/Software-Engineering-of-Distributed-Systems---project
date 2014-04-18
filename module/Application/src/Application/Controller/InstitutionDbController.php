@@ -3,7 +3,8 @@
 namespace Application\Controller;
 
 use Application\Controller\DbController;
-use Application\Controller\Validators\InstitutionValidator;
+use Application\Utilities\Validators\InstitutionValidator;
+use Application\Utilities\Exceptions\InvalidParameterException;
 
 class InstitutionDbController extends DbController {
     

@@ -1,8 +1,8 @@
 <?php
 
-namespace Application\Controller\Validators;
+namespace Application\Utilities\Validators;
 
-use Application\Utilities\InvalidParameterException;
+use Application\Utilities\Exceptions\InvalidParameterException;
 
 abstract class Validator {
         

@@ -2,8 +2,8 @@
 
 namespace Application\Controller;
 
-use Application\Controller\Validators\DayValidator;
-use Application\Utilities\InvalidParameterException;
+use Application\Utilities\Validators\DayValidator;
+use Application\Utilities\Exceptions\InvalidParameterException;
 
 class DayDbController extends DbController
 {

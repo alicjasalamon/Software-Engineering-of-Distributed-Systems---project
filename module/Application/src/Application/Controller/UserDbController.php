@@ -2,7 +2,8 @@
 
 namespace Application\Controller;
 
-use Application\Controller\Validators\UserValidator;
+use Application\Utilities\Validators\UserValidator;
+use Application\Utilities\Exceptions\InvalidParameterException;
 
 class UserDbController extends DbController {
     

@@ -3,7 +3,8 @@
 namespace Application\Controller;
 
 use Application\Controller\DbController;
-use Application\Controller\Validators\PatientValidator;
+use Application\Utilities\Validators\PatientValidator;
+use Application\Utilities\Exceptions\InvalidParameterException;
 
 class PatientDbController extends DbController {
     

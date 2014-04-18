@@ -4,6 +4,7 @@ namespace Application\Controller;
 
 use Zend\View\Model\JsonModel;
 use Application\Model\Model;
+use Application\Utilities\Exceptions\InvalidParameterException;
 
 class DbController extends BaseController {
    

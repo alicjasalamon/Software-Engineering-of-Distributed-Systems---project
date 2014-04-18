@@ -1,8 +1,8 @@
 <?php
 
-namespace Application\Controller\Validators;
+namespace Application\Utilities\Validators;
 
-use Application\Controller\Validators\Validator;
+use Application\Utilities\Validators\Validator;
 
 class ScheduleValidator extends Validator {
     

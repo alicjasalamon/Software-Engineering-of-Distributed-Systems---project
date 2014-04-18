@@ -30,10 +30,7 @@ class Test0ControllerTest extends ControllerTestCase {
         $this->assertEventInDay($patient1, $date2, $event4);
         $this->assertEventInDay($patient1, $date2, $event5);
         
-        print "\n";
-        print "=====================================\n";
-        print "=== All tests passed successfully ===\n";
-        print "=====================================\n";
+        $this->success();
     }
     
     protected function addInstitution() {

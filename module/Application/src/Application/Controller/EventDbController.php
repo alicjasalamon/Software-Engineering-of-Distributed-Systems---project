@@ -2,7 +2,8 @@
 
 namespace Application\Controller;
 
-use Application\Controller\Validators\EventValidator;
+use Application\Utilities\Validators\EventValidator;
+use Application\Utilities\Exceptions\InvalidParameterException;
 
 class EventDbController extends DbController {
     

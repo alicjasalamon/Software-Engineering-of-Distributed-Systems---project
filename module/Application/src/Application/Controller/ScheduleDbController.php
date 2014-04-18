@@ -2,7 +2,8 @@
 
 namespace Application\Controller;
 
-use Application\Controller\Validators\ScheduleValidator;
+use Application\Utilities\Validators\ScheduleValidator;
+use Application\Utilities\Exceptions\InvalidParameterException;
 
 class ScheduleDbController extends DbController {
     

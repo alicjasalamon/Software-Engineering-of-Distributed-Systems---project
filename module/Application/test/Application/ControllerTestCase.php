@@ -49,4 +49,11 @@ class ControllerTestCase extends AbstractHttpControllerTestCase {
         return $prefix ? "$prefix $generated" : $generated;
     }
     
+    protected function success() {
+        print "\n";
+        print "=====================================\n";
+        print "=== All tests passed successfully ===\n";
+        print "=====================================\n";
+    }
+    
 }

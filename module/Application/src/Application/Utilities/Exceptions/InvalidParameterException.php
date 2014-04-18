@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Utilities;
+namespace Application\Utilities\Exceptions;
 
 class InvalidParameterException extends \Exception {
     
