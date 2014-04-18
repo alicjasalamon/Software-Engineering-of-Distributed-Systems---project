@@ -2,128 +2,61 @@
 
 namespace Application\Controller;
 
-use Application\Model\InstitutionModel;
-use Application\Model\UserModel;
-use Application\Model\DoctorModel;
-use Application\Model\PatientModel;
-use Application\Model\EventModel;
-use Application\Model\DayModel;
-use Application\Model\ScheduleModel;
+use Zend\View\Model\JsonModel;
+use Application\Model\Model;
 
 class DbController extends BaseController {
    
     /**
-     * @var InstitutionModel
+     * @var Model;
      */
-    private $institutionModel;
-    
-    /**
-     * @var UserModel
-     */
-    private $userModel;
-    
-    /**
-     * @var DoctorModel
-     */
-    private $doctorModel;
-    
-    /**
-     * @var PatientModel
-     */
-    private $patientModel;
-    
-    /**
-     * @var EventModel
-     */
-    private $eventModel;
-    
-    /**
-     * @var DayModel
-     */
-    private $dayModel;
-    
-    /**
-     * @var ScheduleModel
-     */
-    private $scheduleModel;
-    
+    protected $model;
+   
     protected function mandango() {
         return $this->getServiceLocator()->get('mandango');
     }
     
     /**
-     * @var InstitutionModel
+     * @var Model
      */
-    protected function institutionModel() {
-        if(!$this->institutionModel) {
-            $this->institutionModel = new InstitutionModel($this->mandango());
+    protected function model() {
+        if(!$this->model) {
+            $this->model = new Model($this->mandango());
         }
-        return $this->institutionModel;
+        return $this->model;
     }
     
-    /**
-     * @var UserModel
-     */
-    protected function userModel() {
-        if(!$this->userModel) {
-            $this->userModel = new UserModel($this->mandango());
+    protected function getParams() {
+        $config = $this->getServiceLocator()->get('config');
+        $paramsMethod = $config['params_method'];
+        $params = null;
+        if($paramsMethod == 'any'){
+            $params = $this->params()->fromPost();
+            if(count($params) <= 0) {
+                $params = $this->params()->fromQuery();
+            }
+        } else if($paramsMethod == 'post'){
+            $params = $this->params()->fromPost();
+        } else if($paramsMethod == 'get') {
+            $params = $this->params()->fromQuery();
         }
-        return $this->userModel;
+        return $params;
     }
     
-    /**
-     * @var DoctorModel
-     */
-    protected function doctorModel() {
-        if(!$this->doctorModel) {
-            $this->doctorModel = new DoctorModel($this->mandango());
-        }
-        return $this->doctorModel;
+    protected function generateJSONViewModel($code = -1, $message = "", $data = null) {
+        $jsonModel = new JsonModel();
+        $jsonModel->setVariable('code', $code);
+        $jsonModel->setVariable('message', $message);
+        $jsonModel->setVariable('data', $data);
+        return $jsonModel;
     }
     
-    /**
-     * @var PatientModel
-     */
-    protected function patientModel() {
-        if(!$this->patientModel) {
-            $this->patientModel =
-                new PatientModel(
-                    $this->mandango(), 
-                    $this->dayModel(), 
-                    $this->eventModel()
-                );
-        }
-        return $this->patientModel;
-    }
+    protected function generateFailedJSONViewModel(Exception $ex) {
+        return $this->generateJSONViewModel(1, $ex->getMessage());
+    }    
     
-    /**
-     * @var EventModel
-     */
-    protected function eventModel() {
-        if(!$this->eventModel) {
-            $this->eventModel = new EventModel($this->mandango());
-        }
-        return $this->eventModel;
-    }
-    
-    /**
-     * @var DayModel
-     */
-    protected function dayModel() {
-        if(!$this->dayModel) {
-            $this->dayModel = new DayModel($this->mandango());
-        }
-        return $this->dayModel;
-    }
-    
-    /**
-     * @var scheduleModel
-     */
-    protected function scheduleModel() {
-        if(!$this->scheduleModel) {
-            $this->scheduleModel = new ScheduleModel($this->mandango());
-        }
-        return $this->scheduleModel;
+    protected function generateInvalidParamsJSONViewModel(InvalidParameterException $ex) {
+        return $this->generateJSONViewModel('101', $ex->toString());
     }
     
 }

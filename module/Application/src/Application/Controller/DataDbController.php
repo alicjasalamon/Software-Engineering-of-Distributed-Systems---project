@@ -8,12 +8,12 @@ class DataDbController extends DbController
     public function indexAction() {
         try {
             /* institutions */
-            $institutionModel = $this->institutionModel();
+            $institutionModel = $this->model()->institutionModel();
             $krakow = $institutionModel->add(['name' => 'Szpital wojewódzki w Krakowie']);
             $tarnow = $institutionModel->add(['name' => 'Centrum medyczne w Tarnowie']);
             $kk = $institutionModel->add(['name' => 'Placówka medyczna w Kędzierzynie-Koźlu']);
 
-            $userModel = $this->userModel();
+            $userModel = $this->model()->userModel();
 
             /* doctors */
             $doc1 = $userModel->add([
@@ -101,23 +101,23 @@ class DataDbController extends DbController
             
             $json = $this->generateJSONViewModel(0, 'Data generated!', []);
         } catch (Exception $ex) {
-            $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);
+            $json = $this->generateFailedJSONViewModel($ex);
         }
         return $json;
     }
     
     public function clearAction() {
         try {
-            $this->doctorModel()->clear();
-            $this->patientModel()->clear();
-            $this->userModel()->clear();
-            $this->institutionModel()->clear();
-            $this->eventModel()->clear();
-            $this->dayModel()->clear();
-            $this->scheduleModel()->clear();
+            $this->model()->doctorModel()->clear();
+            $this->model()->patientModel()->clear();
+            $this->model()->userModel()->clear();
+            $this->model()->institutionModel()->clear();
+            $this->model()->eventModel()->clear();
+            $this->model()->dayModel()->clear();
+            $this->model()->scheduleModel()->clear();
             $json = $this->generateJSONViewModel(0, 'Database cleared!', []);
         } catch (Exception $ex) {
-            $json = $this->generateJSONViewModel(1, $ex->getMessage(), null);
+            $json = $this->generateFailedJSONViewModel($ex);
         }
         return $json;
     }
