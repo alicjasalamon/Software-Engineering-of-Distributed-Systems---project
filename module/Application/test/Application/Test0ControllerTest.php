@@ -5,18 +5,40 @@ require_once 'ControllerTestCase.php';
 class Test0ControllerTest extends ControllerTestCase {
     
     public function testCase1() {
-        $institution = $this->addInstitution();
-        $doctor = $this->addDoctor($institution);
-        $patient = $this->addPatient($institution, $doctor);
-        $event = $this->addEvent($patient);
+        $institution1 = $this->addInstitution();
         
-        $day = $this->getDay($patient);
-        $this->assertEventInDay($patient, $event);
+        $doctor1 = $this->addDoctor($institution1);
+        $doctor2 = $this->addDoctor($institution1);
+        
+        $patient1 = $this->addPatient($institution1, $doctor1);
+        $patient2 = $this->addPatient($institution1, $doctor1);
+        $patient3 = $this->addPatient($institution1, $doctor2);
+        $patient4 = $this->addPatient($institution1, $doctor2);
+        
+        $date1 = '20140418';
+        $date2 = '20140419';
+        
+        $event1 = $this->addEvent($patient1, $date1, '08:00');
+        $event2 = $this->addEvent($patient1, $date1, '10:00');
+        $event3 = $this->addEvent($patient1, $date1, '14:00');
+        $event4 = $this->addEvent($patient1, $date2, '18:00');
+        $event5 = $this->addEvent($patient1, $date2, '20:00');
+        
+        $this->assertEventInDay($patient1, $date1, $event1);
+        $this->assertEventInDay($patient1, $date1, $event2);
+        $this->assertEventInDay($patient1, $date1, $event3);
+        $this->assertEventInDay($patient1, $date2, $event4);
+        $this->assertEventInDay($patient1, $date2, $event5);
+        
+        print "\n";
+        print "=====================================\n";
+        print "=== All tests passed successfully ===\n";
+        print "=====================================\n";
     }
     
     protected function addInstitution() {
         $insertData = [
-            'name' => 'Placowka testowa',
+            'name' => $this->getRandomString('Placowka testowa'),
         ];
         $this->dispatch('/db/institution/add', 'POST', $insertData);
         $this->assertResponseStatusCode(200);
@@ -30,8 +52,8 @@ class Test0ControllerTest extends ControllerTestCase {
             'password' => '12341234',
             'group' => 'doctor',
             'institution' => $institution->data->id,
-            'firstname' => 'Test',
-            'lastname' => 'Doctor',
+            'firstname' => $this->getRandomString('John'),
+            'lastname' => $this->getRandomString('Doctor'),
             'email' => 'test@email.com',
         ];
         $this->dispatch('/db/user/add', 'POST', $insertData);
@@ -47,9 +69,9 @@ class Test0ControllerTest extends ControllerTestCase {
             'group' => 'patient',
             'institution' => $institution->data->id,
             'doctor' => $doctor->data->id,
-            'firstname' => 'Test',
-            'lastname' => 'Patient',
-            'email' => 'test@email.com',
+            'firstname' => $this->getRandomString('John'),
+            'lastname' => $this->getRandomString('Patient'),
+            'email' => $this->getRandomString() . '@email.com',
         ];
         $this->dispatch('/db/user/add', 'POST', $insertData);
         $this->assertResponseStatusCode(200);
@@ -57,14 +79,14 @@ class Test0ControllerTest extends ControllerTestCase {
         return $addedPatient;
     }
     
-    protected function addEvent($patient) {
+    protected function addEvent($patient, $date, $time) {
         $insertData = [
             'patientid' => $patient->data->id,
-            'date' => $this->config['date'],
+            'date' => $date,
             'activity' => 'diet',
-            'title' => 'test',
-            'details' => 'asdasdad',
-            'time' => '12:00',
+            'title' => $this->getRandomString(),
+            'details' => $this->getRandomString(),
+            'time' => $time,
             'duration' => 60,
         ];
         $this->dispatch('/db/event/add', 'POST', $insertData);
@@ -73,10 +95,10 @@ class Test0ControllerTest extends ControllerTestCase {
         return $addedEvent;
     }
     
-    protected function getDay($patient) {
+    protected function getDay($patient, $date) {
         $getData = [
             'patientid' => $patient->data->id,
-            'date' => $this->config['date'],
+            'date' => $date,
         ];
         $this->dispatch('/db/day', 'POST', $getData);
         $this->assertResponseStatusCode(200);
@@ -84,9 +106,9 @@ class Test0ControllerTest extends ControllerTestCase {
         return $getJson;
     }
     
-    protected function assertEventInDay($patient, $event) {
-        $getJson = $this->getDay($patient);
-        $this->assertEquals($this->config['date'], $getJson->data->date);
+    protected function assertEventInDay($patient, $date, $event) {
+        $getJson = $this->getDay($patient, $date);
+        $this->assertEquals($date, $getJson->data->date);
         //$this->assertEmpty($getJson->data->streams);
         
         $eventTime = $event->data->time;

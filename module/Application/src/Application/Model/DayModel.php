@@ -17,6 +17,7 @@ class DayModel extends EntityModel {
             $schedule = $this->mandango->create('Application\Entity\Schedule');
             $patient->setSchedule($schedule);
             $schedule->save();
+            $patient->save();
         }
         $days = $schedule->getDays()->all();
         $foundDay = null;
