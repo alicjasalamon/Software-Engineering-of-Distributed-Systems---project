@@ -2,9 +2,7 @@
 
 namespace Application\Controller\Db;
 
-use Application\Controller\DbController;
 use Application\Utilities\Validators\DoctorValidator;
-use Application\Utilities\Exceptions\InvalidParameterException;
 
 class DoctorDbController extends DbController {
 
@@ -18,33 +16,18 @@ class DoctorDbController extends DbController {
     }
     
     public function indexAction() {
-        $params = $this->getParams();
-        try {
+        return $this->wrapSingleResultAction(function ($params) {
             $this->validator->validateGet($params);
             $doctor = $this->model()->doctorModel()->get($params);
-            $doctorJson = $doctor ? $doctor->toArray(true) : [];
-            $json = $this->generateDataJSONViewModel($doctorJson);
-        } catch (InvalidParameterException $ex) {
-            $json = $this->generateInvalidParamsJSONViewModel($ex);
-        } catch (Exception $ex) {
-            $json = $this->generateFailedJSONViewModel($ex);
-        }
-        return $json;
+            return $doctor;
+        });
     }
     
     public function allAction() {
-        try {
+        return $this->wrapMultipleResultsAction(function ($params) {
             $doctors = $this->model()->doctorModel()->getAll();
-            $doctorsJson = [];
-            foreach($doctors as $doctor) {
-                $json = $doctor->toArray();
-                array_push($doctorsJson, $json);
-            }
-            $json = $this->generateDataJSONViewModel($doctorsJson);
-        } catch (Exception $ex) {
-            $json = $this->generateFailedJSONViewModel($ex);
-        }
-        return $json;
+            return $doctors;
+        });
     }
     
 }

@@ -3,7 +3,6 @@
 namespace Application\Controller\Db;
 
 use Application\Utilities\Validators\InstitutionValidator;
-use Application\Utilities\Exceptions\InvalidParameterException;
 
 class InstitutionDbController extends DbController {
     
@@ -17,46 +16,26 @@ class InstitutionDbController extends DbController {
     }
     
     public function indexAction() {
-        $params = $this->getParams();
-        try{
+        return $this->wrapSingleResultAction(function($params) {
             $this->validator->validateGet($params);
             $institution = $this->model()->institutionModel()->get($params);
-            $institutionJson = $institution ? $institution->toArray() : [];
-            $json = $this->generateDataJSONViewModel($institutionJson);
-        } catch (Exception $ex) {
-            $json = $this->generateFailedJSONViewModel($ex);
-        }
-        return $json;
+            return $institution;
+        });
     }
     
     public function allAction() {
-        try {
+        return $this->wrapMultipleResultsAction(function($params) {
             $institutions = $this->model()->institutionModel()->getAll();
-            $institutionsJson = [];
-            foreach($institutions as $institution) {
-                $json = $institution->toArray();
-                array_push($institutionsJson, $json);
-            }
-            $json = $this->generateDataJSONViewModel($institutionsJson);
-        } catch (Exception $ex) {
-            $json = $this->generateFailedJSONViewModel($ex);
-        }
-        return $json;
+            return $institutions;
+        });
     }
     
     public function addAction() {
-        $params = $this->getParams();
-        try {
+        return $this->wrapSingleResultAction(function($params) {
             $this->validator->validateAdd($params);
             $institution = $this->model()->institutionModel()->add($params);
-            $institutionJson = $institution ? $institution->toArray() : [];
-            $json = $this->generateDataJSONViewModel($institutionJson);
-        } catch (InvalidParameterException $ex) {
-            $json = $this->generateInvalidParamsJSONViewModel($ex);
-        } catch (Exception $ex) {
-            $json = $this->generateFailedJSONViewModel($ex);
-        }
-        return $json;
+            return $institution;
+        });
     }
     
 }

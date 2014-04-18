@@ -3,7 +3,6 @@
 namespace Application\Controller\Db;
 
 use Application\Utilities\Validators\UserValidator;
-use Application\Utilities\Exceptions\InvalidParameterException;
 
 class UserDbController extends DbController {
     
@@ -17,18 +16,11 @@ class UserDbController extends DbController {
     }
     
     public function addAction() {
-        $params = $this->getParams();
-        try {
+        return $this->wrapSingleResultAction(function ($params) {
             $this->validator->validateAdd($params);
             $user = $this->model()->userModel()->add($params);
-            $userJson = $user ? $user->toArray(true) : [];
-            $json = $this->generateDataJSONViewModel($userJson);
-        } catch (InvalidParameterException $ex) {
-            $json = $this->generateInvalidParamsJSONViewModel($ex);
-        } catch (Exception $ex) {
-            $json = $this->generateFailedJSONViewModel($ex);
-        }
-        return $json;
+            return $user;
+        });
     }
 
 }

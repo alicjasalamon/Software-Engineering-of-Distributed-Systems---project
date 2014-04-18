@@ -3,7 +3,6 @@
 namespace Application\Controller\Db;
 
 use Application\Utilities\Validators\ScheduleValidator;
-use Application\Utilities\Exceptions\InvalidParameterException;
 
 class ScheduleDbController extends DbController {
     
@@ -17,18 +16,11 @@ class ScheduleDbController extends DbController {
     }
     
     public function indexAction() {
-        $params = $this->getParams();
-        try {
+        $this->wrapSingleResultAction(function($params){
             $this->validator->validateGet($params);
             $schedule = $this->model()->scheduleModel()->get($params);
-            $scheduleJson = $schedule ? $schedule->toArray(true) : [];
-            $json = $this->generateDataJSONViewModel($scheduleJson);
-        } catch (InvalidParameterException $ex) {
-            $json = $this->generateInvalidParamsJSONViewModel($ex);
-        } catch (Exception $ex) {
-            $json = $this->generateFailedJSONViewModel($ex);
-        }
-        return $json;
+            return $schedule;
+        });
     }
     
 }
