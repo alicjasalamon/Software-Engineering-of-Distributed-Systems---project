@@ -1,28 +1,28 @@
 <?php
 
-namespace Application\Controller;
+namespace Application\Controller\Db;
 
-use Application\Utilities\Validators\ScheduleValidator;
+use Application\Utilities\Validators\DayValidator;
 use Application\Utilities\Exceptions\InvalidParameterException;
 
-class ScheduleDbController extends DbController {
-    
-    /**
-     * @var ScheduleValidator
+class DayDbController extends DbController
+{
+    /*
+     * @var DayValidator
      */
     protected $validator;
     
     public function __construct() {
-        $this->validator = new ScheduleValidator();
+        $this->validator = new DayValidator();
     }
-    
+
     public function indexAction() {
         $params = $this->getParams();
         try {
             $this->validator->validateGet($params);
-            $schedule = $this->model()->scheduleModel()->get($params);
-            $scheduleJson = $schedule ? $schedule->toArray(true) : [];
-            $json = $this->generateJSONViewModel(0, '', $scheduleJson);
+            $day = $this->model()->patientModel()->getDay($params);
+            $dayJson = $day ? $day->toArray(true) : [];
+            $json = $this->generateDataJSONViewModel($dayJson);
         } catch (InvalidParameterException $ex) {
             $json = $this->generateInvalidParamsJSONViewModel($ex);
         } catch (Exception $ex) {
@@ -30,5 +30,6 @@ class ScheduleDbController extends DbController {
         }
         return $json;
     }
-    
+
 }
+

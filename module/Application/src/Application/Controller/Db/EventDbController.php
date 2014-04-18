@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Controller;
+namespace Application\Controller\Db;
 
 use Application\Utilities\Validators\EventValidator;
 use Application\Utilities\Exceptions\InvalidParameterException;
@@ -22,7 +22,7 @@ class EventDbController extends DbController {
             $this->validator->validateAdd($params);
             $event = $this->model()->patientModel()->addEvent($params);
             $eventJson = $event ? $event->toArray(true) : [];
-            $json = $this->generateJSONViewModel(0, '', $eventJson);
+            $json = $this->generateDataJSONViewModel($eventJson);
         } catch (InvalidParameterException $ex) {
             $json = $this->generateInvalidParamsJSONViewModel($ex);
         } catch (Exception $ex) {

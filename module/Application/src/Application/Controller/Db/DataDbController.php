@@ -1,6 +1,6 @@
 <?php
 
-namespace Application\Controller;
+namespace Application\Controller\Db;
 
 class DataDbController extends DbController
 {
@@ -99,7 +99,7 @@ class DataDbController extends DbController
                 'institution' => $kk->getId(), 'doctor' => $doc6->getId(),
             ]);
             
-            $json = $this->generateJSONViewModel(0, 'Data generated!', []);
+            $json = $this->generateDataJSONViewModel([], 'Data generated!');
         } catch (Exception $ex) {
             $json = $this->generateFailedJSONViewModel($ex);
         }
@@ -115,7 +115,7 @@ class DataDbController extends DbController
             $this->model()->eventModel()->clear();
             $this->model()->dayModel()->clear();
             $this->model()->scheduleModel()->clear();
-            $json = $this->generateJSONViewModel(0, 'Database cleared!', []);
+            $json = $this->generateDataJSONViewModel([], 'Database cleared!');
         } catch (Exception $ex) {
             $json = $this->generateFailedJSONViewModel($ex);
         }

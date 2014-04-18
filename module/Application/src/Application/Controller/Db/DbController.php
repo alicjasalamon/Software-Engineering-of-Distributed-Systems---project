@@ -1,8 +1,9 @@
 <?php
 
-namespace Application\Controller;
+namespace Application\Controller\Db;
 
 use Zend\View\Model\JsonModel;
+use Application\Controller\BaseController;
 use Application\Model\Model;
 use Application\Utilities\Exceptions\InvalidParameterException;
 
@@ -50,6 +51,10 @@ class DbController extends BaseController {
         $jsonModel->setVariable('message', $message);
         $jsonModel->setVariable('data', $data);
         return $jsonModel;
+    }
+    
+    protected function generateDataJSONViewModel($json, $message = '') {
+        return $this->generateJSONViewModel(0, $message, $json);
     }
     
     protected function generateFailedJSONViewModel(Exception $ex) {

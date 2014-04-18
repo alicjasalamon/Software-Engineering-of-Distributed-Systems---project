@@ -1,29 +1,29 @@
 <?php
 
-namespace Application\Controller;
+namespace Application\Controller\Db;
 
 use Application\Controller\DbController;
-use Application\Utilities\Validators\DoctorValidator;
+use Application\Utilities\Validators\PatientValidator;
 use Application\Utilities\Exceptions\InvalidParameterException;
 
-class DoctorDbController extends DbController {
-
+class PatientDbController extends DbController {
+    
     /**
-     * @var DoctorValidator
+     * @var PatientValidator;
      */
     protected $validator;
     
     public function __construct() {
-        $this->validator = new DoctorValidator();
+        $this->validator = new PatientValidator();
     }
     
     public function indexAction() {
         $params = $this->getParams();
         try {
             $this->validator->validateGet($params);
-            $doctor = $this->model()->doctorModel()->get($params);
-            $doctorJson = $doctor ? $doctor->toArray(true) : [];
-            $json = $this->generateJSONViewModel(0, '', $doctorJson);
+            $patient = $this->model()->patientModel()->get($params);
+            $patientJson = $patient ? $patient->toArray(true) : [];
+            $json = $this->generateDataJSONViewModel($patientJson);
         } catch (InvalidParameterException $ex) {
             $json = $this->generateInvalidParamsJSONViewModel($ex);
         } catch (Exception $ex) {
@@ -34,13 +34,13 @@ class DoctorDbController extends DbController {
     
     public function allAction() {
         try {
-            $doctors = $this->model()->doctorModel()->getAll();
-            $doctorsJson = [];
-            foreach($doctors as $doctor) {
-                $json = $doctor->toArray();
-                array_push($doctorsJson, $json);
+            $patients = $this->model()->patientModel()->getAll();
+            $patientsJson = [];
+            foreach($patients as $patient) {
+                $json = $patient->toArray(true);
+                array_push($patientsJson, $json);
             }
-            $json = $this->generateJSONViewModel(0, '', $doctorsJson);
+            $json = $this->generateDataJSONViewModel($patientsJson);
         } catch (Exception $ex) {
             $json = $this->generateFailedJSONViewModel($ex);
         }
