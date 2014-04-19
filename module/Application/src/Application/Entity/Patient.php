@@ -20,8 +20,6 @@ class Patient extends \Application\Entity\Base\Patient
         $array['user'] = (string)$this->getUser_reference_field();
         $array['institution'] = (string)$this->getInstitution_reference_field();
         $array['doctor'] = (string)$this->getDoctor_reference_field();
-
-        //embeddeds
         $array['schedule'] = (string)$this->getSchedule_reference_field();
 
         return $array;

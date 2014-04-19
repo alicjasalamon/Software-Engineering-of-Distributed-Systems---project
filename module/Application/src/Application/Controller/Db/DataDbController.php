@@ -6,7 +6,7 @@ class DataDbController extends DbController
 {
     
     public function indexAction() {
-        return $this->wrapSingleResultAction(function ($params) {
+        try {
             /* institutions */
             $institutionModel = $this->model()->institutionModel();
             $krakow = $institutionModel->add(['name' => 'Szpital wojewódzki w Krakowie']);
@@ -98,7 +98,11 @@ class DataDbController extends DbController
                 'firstname' => 'Bronisław', 'lastname' => 'Łyżeczka', 'email' => 'lyzeczka@o2.pl',
                 'institution' => $kk->getId(), 'doctor' => $doc6->getId(),
             ]);
-        });
+            $json = $this->generateDataJSONViewModel([], 'Database populated with generated data!');
+        } catch (Exception $ex) {
+            $json = $this->generateFailedJSONViewModel($ex);
+        }
+        return $json;
     }
     
     public function clearAction() {

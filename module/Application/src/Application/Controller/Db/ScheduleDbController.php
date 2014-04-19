@@ -16,7 +16,7 @@ class ScheduleDbController extends DbController {
     }
     
     public function indexAction() {
-        $this->wrapSingleResultAction(function($params){
+        return $this->wrapSingleResultAction(function($params){
             $this->validator->validateGet($params);
             $schedule = $this->model()->scheduleModel()->get($params);
             return $schedule;

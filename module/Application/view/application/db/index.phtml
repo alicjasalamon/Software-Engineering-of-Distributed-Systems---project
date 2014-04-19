@@ -133,6 +133,7 @@
     var schedule = {
         name: "Schedule",
         fields: [
+            {name:"id", type:"string"},
             {name:"days", type:"string[] (ids)"},
         ],
         interfaces: [
@@ -179,6 +180,7 @@
     var event = {
         name: "Event",
         fields: [
+            {name:"id", type:"string"},
             {name:"title", type:"string"},
             {name:"details", type:"string"},
             {name:"time", type:"string"},
@@ -197,6 +199,13 @@
                     {name:"details", type:"string"},
                     {name:"time", type:"string"},
                     {name:"duration", type:"integer"},
+                ],
+            },
+            {
+                name: "Set state",
+                url: "/db/event/state",
+                parameters: [
+                    {name:"id", type:"string (id)"},
                     {name:"state", type:"string"},
                 ],
             },

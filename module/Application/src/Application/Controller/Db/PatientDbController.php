@@ -16,7 +16,7 @@ class PatientDbController extends DbController {
     }
     
     public function indexAction() {
-        $this->wrapSingleResultAction(function($params) {
+        return $this->wrapSingleResultAction(function($params) {
             $this->validator->validateGet($params);
             $patient = $this->model()->patientModel()->get($params);
             return $patient;
@@ -24,7 +24,7 @@ class PatientDbController extends DbController {
     }
     
     public function allAction() {
-        $this->wrapMultipleResultsAction(function($params) {
+        return $this->wrapMultipleResultsAction(function($params) {
             $patients = $this->model()->patientModel()->getAll();
             return $patients;
         });

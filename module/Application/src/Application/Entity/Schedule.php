@@ -10,16 +10,15 @@ class Schedule extends \Application\Entity\Base\Schedule
     
     public function toArray($withReferenceFields = false)
     {
-        $array = array();
+        $array = array('id' => (string)$this->getId());
 
         $days = $this->getDays()->createQuery()->all();
         $daysIds = [];
-        foreach ($days as $dayReference) {
-            $day = (string)$dayReference->getId();
-            array_push($daysIds, $day);
+        foreach ($days as $day) {
+            $dayId = (string)$day->getId();
+            array_push($daysIds, $dayId);
         }
         $array['days'] = $daysIds;
-                
 
         return $array;
     }

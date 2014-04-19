@@ -21,7 +21,6 @@ class UserModel extends EntityModel {
     
     public function add($params) {
         $user = $this->buildUser($params);
-        $user->save();
         $subUser = $this->createSubUser($user, $params);
         $subUser->save();
         return $subUser;

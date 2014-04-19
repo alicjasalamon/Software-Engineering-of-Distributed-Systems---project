@@ -45,6 +45,41 @@ class DbController extends BaseController {
         return $params;
     }
     
+    protected function wrapSingleResultAction($action) {
+        return $this->wrapAction($action, function($value) {
+            return $value 
+                ? (is_array($value) 
+                    ? $value
+                    : $value->toArray(true))
+                : [];
+        });
+    }
+    
+    protected function wrapMultipleResultsAction($action) {
+        return $this->wrapAction($action, function($value) {
+            $actionJson = [];
+            foreach($value as $val) {
+                $json = $val->toArray(true);
+                array_push($actionJson, $json);
+            }
+            return $actionJson;
+        });
+    }
+    
+    protected function wrapAction($action, $serialize) {
+        try {
+            $params = $this->getParams();
+            $returnValue = $action($params);
+            $actionJson = $serialize($returnValue);
+            $json = $this->generateDataJSONViewModel($actionJson);
+        } catch (InvalidParameterException $ex) {
+            $json = $this->generateInvalidParamsJSONViewModel($ex);
+        } catch (Exception $ex) {
+            $json = $this->generateFailedJSONViewModel($ex);
+        }
+        return $json;
+    }
+    
     protected function generateJSONViewModel($code = -1, $message = "", $data = null) {
         $jsonModel = new JsonModel();
         $jsonModel->setVariable('code', $code);
@@ -64,5 +99,6 @@ class DbController extends BaseController {
     protected function generateInvalidParamsJSONViewModel(InvalidParameterException $ex) {
         return $this->generateJSONViewModel('101', $ex->toString());
     }
+    
     
 }

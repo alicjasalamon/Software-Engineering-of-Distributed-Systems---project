@@ -10,7 +10,7 @@ class InvalidParameterException extends \Exception {
         $this->message = 'Invalid parameter: ' . $message;
     }
     
-    public function __toString() {
+    public function toString() {
         return $this->getMessage();
     }
         

@@ -28,9 +28,8 @@ class EventModel extends EntityModel {
         $streams = $day->getStreams()->all();
         $foundStream = $this->findStream($streams, $params);
         $event = $this->buildEvent($params);
-        $event->save();
         $foundStream->addEvents($event);
-        $day->save();
+        $event->save();
         return $event;
     }
     

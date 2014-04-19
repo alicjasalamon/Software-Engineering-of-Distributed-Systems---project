@@ -16,7 +16,7 @@ class EventDbController extends DbController {
     }
 
     public function addAction() {
-        $this->wrapSingleResultAction(function($params){
+        return $this->wrapSingleResultAction(function($params){
             $this->validator->validateAdd($params);
             $event = $this->model()->patientModel()->addEvent($params);
             return $event;
