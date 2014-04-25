@@ -140,8 +140,11 @@ function generateDocs(config) {
 	
 	div.append(ul);
 	$('body').append(div);
-        jQuery("textarea[class*=expand]").toggle();
-        jQuery("textarea[class*=expand]").TextAreaExpander();
+        $(document).ready(function(){
+            jQuery("textarea[class*=expand]").toggle();
+            jQuery("textarea[class*=expand]").TextAreaExpander();
+        });
+        
         
 
 }
