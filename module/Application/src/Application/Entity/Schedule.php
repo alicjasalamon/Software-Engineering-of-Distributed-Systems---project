@@ -12,13 +12,7 @@ class Schedule extends \Application\Entity\Base\Schedule
     {
         $array = array('id' => (string)$this->getId());
 
-        $days = $this->getDays()->createQuery()->all();
-        $daysIds = [];
-        foreach ($days as $day) {
-            $dayId = (string)$day->getId();
-            array_push($daysIds, $dayId);
-        }
-        $array['days'] = $daysIds;
+        $array['days'] = $this->getDays_reference_field();
 
         return $array;
     }

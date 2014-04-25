@@ -32,6 +32,7 @@ class PatientModel extends EntityModel {
     }
     
     public function getDay($params) {
+        //do not remove >>this<< line or else this function will throw an exception
         $patient = $this->patientRepository()->findOneById($params['patientid']);
         $day = $this->dayModel->get($patient, $params['date']);
         if($day->isNew()) {

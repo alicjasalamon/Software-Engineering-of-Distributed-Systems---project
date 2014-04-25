@@ -9,7 +9,7 @@ class Test0ControllerTest extends ControllerTestCase {
         
         $doctor1 = $this->addDoctor($institution1);
         $doctor2 = $this->addDoctor($institution1);
-        
+                
         $patient1 = $this->addPatient($institution1, $doctor1);
         $patient2 = $this->addPatient($institution1, $doctor1);
         $patient3 = $this->addPatient($institution1, $doctor2);
@@ -24,6 +24,10 @@ class Test0ControllerTest extends ControllerTestCase {
         $event4 = $this->addEvent($patient1, $date2, '18:00');
         $event5 = $this->addEvent($patient1, $date2, '20:00');
         
+        $this->assertEventInDay($patient1, $date1, $event1);
+        $this->getDay($patient1, $date1);
+        $this->assertEventInDay($patient1, $date1, $event1);
+        $this->getDay($patient1, $date1);
         $this->assertEventInDay($patient1, $date1, $event1);
         $this->assertEventInDay($patient1, $date1, $event2);
         $this->assertEventInDay($patient1, $date1, $event3);
@@ -45,7 +49,7 @@ class Test0ControllerTest extends ControllerTestCase {
     
     protected function addDoctor($institution) {
         $insertData = [
-            'login' => 'testdoctor',
+            'login' => $this->getRandomString('testdoctor'),
             'password' => '12341234',
             'group' => 'doctor',
             'institution' => $institution->data->id,
@@ -61,7 +65,7 @@ class Test0ControllerTest extends ControllerTestCase {
     
     protected function addPatient($institution, $doctor) {
         $insertData = [
-            'login' => 'testpatient',
+            'login' => $this->getRandomString('testpatient'),
             'password' => '12341234',
             'group' => 'patient',
             'institution' => $institution->data->id,
@@ -114,9 +118,12 @@ class Test0ControllerTest extends ControllerTestCase {
             if($found) break;
             foreach($stream->events as $event) {
                 $found = $event->time == $eventTime;
-                if($found) break;
+                if($found) {
+                    break;
+                }
             }
         }
+        
         $this->assertTrue($found);
     }
     

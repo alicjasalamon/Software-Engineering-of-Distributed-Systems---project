@@ -1,4 +1,46 @@
+var exampleid = 0;
+
 function generateDocs(config) {
+        function getExample(sample) {
+            var li = $('<li/>');
+            var currentid = exampleid;
+            var textarea = $('<textarea/>', {
+                id: "code" + exampleid++,
+                class: "expand",
+            });
+            textarea.css('width', '100%');
+            textarea.text(sample);
+
+            
+            var button = $('<button/>');
+            button.css('margin-bottom', '10px');
+            button.html('Run!');
+            button.attr('data-code-id', currentid);
+            button.on('click', function() {
+                var code = $('#code' + button.attr('data-code-id')).val();
+                eval(code);
+            });
+            
+            var buttonVisibility = $('<button/>');
+            buttonVisibility.html('Toggle code');
+            //buttonVisibility.css('float', 'right');
+            buttonVisibility.css('margin-bottom', '10px');
+            buttonVisibility.css('margin-left', '10px');
+            buttonVisibility.attr('data-code-id', currentid);
+            buttonVisibility.on('click', function() {
+                var code = $('#code' + buttonVisibility.attr('data-code-id'));
+                code.toggle();
+                code.TextAreaExpander();
+            });
+            
+            li.append(button);
+            li.append(buttonVisibility);
+            li.append(textarea);
+            
+            
+            return li;
+        }
+    
 	var div = $('<div/>');
 	
 	var h2 = $('<h2/>');
@@ -83,21 +125,7 @@ function generateDocs(config) {
                                                             }).append(interface.url)))
                                                     .append(
                                                             $('<ul/>')
-                                                                    .append(
-                                                                            interface.example ?
-                                                                            $('<li/>')
-                                                                            .append(
-                                                                                    $('<span/>', {
-                                                                                            class: "fg-grayLight"
-                                                                                    }).append(interface.example)) : '')
-                                                                    .append(
-                                                                            interface.example ? 
-                                                                            $('<li/>')
-                                                                            .append(
-
-                                                                                    $('<button>', {
-                                                                                            onclick: interface.example
-                                                                                    }).append(interface.name)) : '')
+                                                                    .append(interface.example ? getExample(interface.example) : '')
                                                     ))
                                     .append(
                                             $('<li/>', {
@@ -112,4 +140,8 @@ function generateDocs(config) {
 	
 	div.append(ul);
 	$('body').append(div);
+        jQuery("textarea[class*=expand]").toggle();
+        jQuery("textarea[class*=expand]").TextAreaExpander();
+        
+
 }

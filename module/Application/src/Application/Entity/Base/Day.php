@@ -42,10 +42,9 @@ abstract class Day extends \Mandango\Document\Document
             $this->data['fields']['date'] = null;
         }
         if (isset($data['streams'])) {
-            $embedded = new \Mandango\Group\EmbeddedGroup('Application\Entity\Stream');
-            $embedded->setRootAndPath($this, 'streams');
-            $embedded->setSavedData($data['streams']);
-            $this->data['embeddedsMany']['streams'] = $embedded;
+            $this->data['fields']['streams_reference_field'] = $data['streams'];
+        } elseif (isset($data['_fields']['streams'])) {
+            $this->data['fields']['streams_reference_field'] = null;
         }
 
         return $this;
@@ -113,6 +112,68 @@ abstract class Day extends \Mandango\Document\Document
         return $this->data['fields']['date'];
     }
 
+    /**
+     * Set the "streams_reference_field" field.
+     *
+     * @param mixed $value The value.
+     *
+     * @return \Application\Entity\Day The document (fluent interface).
+     */
+    public function setStreams_reference_field($value)
+    {
+        if (!isset($this->data['fields']['streams_reference_field'])) {
+            if (!$this->isNew()) {
+                $this->getStreams_reference_field();
+                if ($this->isFieldEqualTo('streams_reference_field', $value)) {
+                    return $this;
+                }
+            } else {
+                if (null === $value) {
+                    return $this;
+                }
+                $this->fieldsModified['streams_reference_field'] = null;
+                $this->data['fields']['streams_reference_field'] = $value;
+                return $this;
+            }
+        } elseif ($this->isFieldEqualTo('streams_reference_field', $value)) {
+            return $this;
+        }
+
+        if (!isset($this->fieldsModified['streams_reference_field']) && !array_key_exists('streams_reference_field', $this->fieldsModified)) {
+            $this->fieldsModified['streams_reference_field'] = $this->data['fields']['streams_reference_field'];
+        } elseif ($this->isFieldModifiedEqualTo('streams_reference_field', $value)) {
+            unset($this->fieldsModified['streams_reference_field']);
+        }
+
+        $this->data['fields']['streams_reference_field'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Returns the "streams_reference_field" field.
+     *
+     * @return mixed The $name field.
+     */
+    public function getStreams_reference_field()
+    {
+        if (!isset($this->data['fields']['streams_reference_field'])) {
+            if ($this->isNew()) {
+                $this->data['fields']['streams_reference_field'] = null;
+            } elseif (!isset($this->data['fields']) || !array_key_exists('streams_reference_field', $this->data['fields'])) {
+                $this->addFieldCache('streams');
+                $data = $this->getRepository()->getCollection()->findOne(array('_id' => $this->getId()), array('streams' => 1));
+                if (isset($data['streams'])) {
+                    $this->data['fields']['streams_reference_field'] = $data['streams'];
+                } else {
+                    $this->data['fields']['streams_reference_field'] = null;
+                }
+            }
+        }
+
+        return $this->data['fields']['streams_reference_field'];
+    }
+
     private function isFieldEqualTo($field, $otherValue)
     {
         $value = $this->data['fields'][$field];
@@ -134,6 +195,51 @@ abstract class Day extends \Mandango\Document\Document
         }
 
         return $value === $otherValue;
+    }
+
+    /**
+     * Returns the "streams" reference.
+     *
+     * @return \Mandango\Group\ReferenceGroup The reference.
+     */
+    public function getStreams()
+    {
+        if (!isset($this->data['referencesMany']['streams'])) {
+            if (!$this->isNew()) {
+                $this->addReferenceCache('streams');
+            }
+            $this->data['referencesMany']['streams'] = new \Mandango\Group\ReferenceGroup('Application\Entity\Stream', $this, 'streams_reference_field');
+        }
+
+        return $this->data['referencesMany']['streams'];
+    }
+
+    /**
+     * Adds documents to the "streams" reference many.
+     *
+     * @param mixed $documents A document or an array or documents.
+     *
+     * @return \Application\Entity\Day The document (fluent interface).
+     */
+    public function addStreams($documents)
+    {
+        $this->getStreams()->add($documents);
+
+        return $this;
+    }
+
+    /**
+     * Removes documents to the "streams" reference many.
+     *
+     * @param mixed $documents A document or an array or documents.
+     *
+     * @return \Application\Entity\Day The document (fluent interface).
+     */
+    public function removeStreams($documents)
+    {
+        $this->getStreams()->remove($documents);
+
+        return $this;
     }
 
     /**
@@ -162,10 +268,21 @@ abstract class Day extends \Mandango\Document\Document
      */
     public function updateReferenceFields()
     {
-        if (isset($this->data['embeddedsMany']['streams'])) {
-            $group = $this->data['embeddedsMany']['streams'];
-            foreach ($group->all() as $document) {
-                $document->updateReferenceFields();
+        if (isset($this->data['referencesMany']['streams'])) {
+            $group = $this->data['referencesMany']['streams'];
+            $add = $group->getAdd();
+            $remove = $group->getRemove();
+            if ($add || $remove) {
+                $ids = $this->getStreams_reference_field();
+                foreach ($add as $document) {
+                    $ids[] = $document->getId();
+                }
+                foreach ($remove as $document) {
+                    if (false !== $key = array_search($document->getId(), $ids)) {
+                        unset($ids[$key]);
+                    }
+                }
+                $this->setStreams_reference_field($ids ? array_values($ids) : null);
             }
         }
     }
@@ -175,54 +292,21 @@ abstract class Day extends \Mandango\Document\Document
      */
     public function saveReferences()
     {
-        if (isset($this->data['embeddedsMany']['streams'])) {
-            foreach ($this->data['embeddedsMany']['streams'] as $embedded) {
-                $embedded->saveReferences();
+        if (isset($this->data['referencesMany']['streams'])) {
+            $group = $this->data['referencesMany']['streams'];
+            $documents = array();
+            foreach ($group->getAdd() as $document) {
+                $documents[] = $document;
+            }
+            if ($group->isSavedInitialized()) {
+                foreach ($group->getSaved() as $document) {
+                    $documents[] = $document;
+                }
+            }
+            if ($documents) {
+                $this->getMandango()->getRepository('Application\Entity\Stream')->save($documents);
             }
         }
-    }
-
-    /**
-     * Returns the "streams" embedded many.
-     *
-     * @return \Mandango\Group\EmbeddedGroup The "streams" embedded many.
-     */
-    public function getStreams()
-    {
-        if (!isset($this->data['embeddedsMany']['streams'])) {
-            $this->data['embeddedsMany']['streams'] = $embedded = new \Mandango\Group\EmbeddedGroup('Application\Entity\Stream');
-            $embedded->setRootAndPath($this, 'streams');
-        }
-
-        return $this->data['embeddedsMany']['streams'];
-    }
-
-    /**
-     * Adds documents to the "streams" embeddeds many.
-     *
-     * @param mixed $documents A document or an array or documents.
-     *
-     * @return \Application\Entity\Day The document (fluent interface).
-     */
-    public function addStreams($documents)
-    {
-        $this->getStreams()->add($documents);
-
-        return $this;
-    }
-
-    /**
-     * Removes documents to the "streams" embeddeds many.
-     *
-     * @param mixed $documents A document or an array or documents.
-     *
-     * @return \Application\Entity\Day The document (fluent interface).
-     */
-    public function removeStreams($documents)
-    {
-        $this->getStreams()->remove($documents);
-
-        return $this;
     }
 
     /**
@@ -230,17 +314,8 @@ abstract class Day extends \Mandango\Document\Document
      */
     public function resetGroups()
     {
-        if (isset($this->data['embeddedsMany']['streams'])) {
-            $group = $this->data['embeddedsMany']['streams'];
-            foreach (array_merge($group->getAdd(), $group->getRemove()) as $document) {
-                $document->resetGroups();
-            }
-            if ($group->isSavedInitialized()) {
-                foreach ($group->getSaved() as $document) {
-                    $document->resetGroups();
-                }
-            }
-            $group->reset();
+        if (isset($this->data['referencesMany']['streams'])) {
+            $this->data['referencesMany']['streams']->reset();
         }
     }
 
@@ -259,6 +334,9 @@ abstract class Day extends \Mandango\Document\Document
         if ('date' == $name) {
             return $this->setDate($value);
         }
+        if ('streams_reference_field' == $name) {
+            return $this->setStreams_reference_field($value);
+        }
 
         throw new \InvalidArgumentException(sprintf('The document data "%s" is not valid.', $name));
     }
@@ -276,6 +354,9 @@ abstract class Day extends \Mandango\Document\Document
     {
         if ('date' == $name) {
             return $this->getDate();
+        }
+        if ('streams_reference_field' == $name) {
+            return $this->getStreams_reference_field();
         }
         if ('streams' == $name) {
             return $this->getStreams();
@@ -299,13 +380,12 @@ abstract class Day extends \Mandango\Document\Document
         if (isset($array['date'])) {
             $this->setDate($array['date']);
         }
+        if (isset($array['streams_reference_field'])) {
+            $this->setStreams_reference_field($array['streams_reference_field']);
+        }
         if (isset($array['streams'])) {
-            $embeddeds = array();
-            foreach ($array['streams'] as $documentData) {
-                $embeddeds[] = $embedded = new \Application\Entity\Stream($this->getMandango());
-                $embedded->setDocumentData($documentData);
-            }
-            $this->getStreams()->replace($embeddeds);
+            $this->removeStreams($this->getStreams()->all());
+            $this->addStreams($array['streams']);
         }
 
         return $this;
@@ -323,6 +403,9 @@ abstract class Day extends \Mandango\Document\Document
         $array = array('id' => $this->getId());
 
         $array['date'] = $this->getDate();
+        if ($withReferenceFields) {
+            $array['streams_reference_field'] = $this->getStreams_reference_field();
+        }
 
         return $array;
     }
@@ -341,6 +424,9 @@ abstract class Day extends \Mandango\Document\Document
                 if (isset($this->data['fields']['date'])) {
                     $query['date'] = (string) $this->data['fields']['date'];
                 }
+                if (isset($this->data['fields']['streams_reference_field'])) {
+                    $query['streams'] = $this->data['fields']['streams_reference_field'];
+                }
             } else {
                 if (isset($this->data['fields']['date']) || array_key_exists('date', $this->data['fields'])) {
                     $value = $this->data['fields']['date'];
@@ -353,42 +439,21 @@ abstract class Day extends \Mandango\Document\Document
                         }
                     }
                 }
+                if (isset($this->data['fields']['streams_reference_field']) || array_key_exists('streams_reference_field', $this->data['fields'])) {
+                    $value = $this->data['fields']['streams_reference_field'];
+                    $originalValue = $this->getOriginalFieldValue('streams_reference_field');
+                    if ($value !== $originalValue) {
+                        if (null !== $value) {
+                            $query['$set']['streams'] = $this->data['fields']['streams_reference_field'];
+                        } else {
+                            $query['$unset']['streams'] = 1;
+                        }
+                    }
+                }
             }
         }
         if (true === $reset) {
             $reset = 'deep';
-        }
-        if (isset($this->data['embeddedsMany'])) {
-            if ($isNew) {
-                if (isset($this->data['embeddedsMany']['streams'])) {
-                    foreach ($this->data['embeddedsMany']['streams']->getAdd() as $document) {
-                        $query = $document->queryForSave($query, $isNew);
-                    }
-                }
-            } else {
-                if (isset($this->data['embeddedsMany']['streams'])) {
-                    $group = $this->data['embeddedsMany']['streams'];
-                    foreach ($group->getSaved() as $document) {
-                        $query = $document->queryForSave($query, $isNew);
-                    }
-                    $groupRap = $group->getRootAndPath();
-                    foreach ($group->getAdd() as $document) {
-                        $q = $document->queryForSave(array(), true);
-                        $rap = $document->getRootAndPath();
-                        foreach (explode('.', $rap['path']) as $name) {
-                            if (0 === strpos($name, '_add')) {
-                                $name = substr($name, 4);
-                            }
-                            $q = $q[$name];
-                        }
-                        $query['$pushAll'][$groupRap['path']][] = $q;
-                    }
-                    foreach ($group->getRemove() as $document) {
-                        $rap = $document->getRootAndPath();
-                        $query['$unset'][$rap['path']] = 1;
-                    }
-                }
-            }
         }
 
         return $query;

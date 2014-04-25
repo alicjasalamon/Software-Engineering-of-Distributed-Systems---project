@@ -18,7 +18,7 @@ class DayModel extends EntityModel {
             $patient->setSchedule($schedule);
             $schedule->save();
         }
-        $days = $schedule->getDays()->all();
+        $days = $schedule->getDays();
         $foundDay = null;
         foreach ($days as $day) {
             if($day->getDate() == $date) {
@@ -29,7 +29,7 @@ class DayModel extends EntityModel {
         if(!$foundDay) {
             $foundDay = $this->createDay($date);
             $schedule->addDays($foundDay);
-			$foundDay->save();
+            $foundDay->save();
         }
         return $foundDay;
     }
@@ -46,21 +46,22 @@ class DayModel extends EntityModel {
     protected function createDay($date) {
         $day = new Day($this->mandango);
         $day->setDate($date);
-        $streamDiet = new Stream($this->mandango);
-        $streamDiet->setActivity('diet');
-        $streamMedicines = new Stream($this->mandango);
-        $streamMedicines->setActivity('medicines');
-        $streamExercises = new Stream($this->mandango);
-        $streamExercises->setActivity('exercises');
-        $streamVisits = new Stream($this->mandango);
-        $streamVisits->setActivity('visits');
-        $day->addStreams([
-            $streamDiet,
-            $streamExercises,
-            $streamMedicines,
-            $streamVisits,
-        ]);
+        $streamDiet = $this->createStream('diet');
+        $streamExercises = $this->createStream('exercises');
+        $streamMedicines = $this->createStream('medicines');
+        $streamVisits = $this->createStream('visits');
+        $streams = [$streamDiet, $streamExercises, $streamMedicines, $streamVisits];
+        $day->addStreams($streams);
+        foreach ($streams as $stream) {
+            $stream->save();
+        }
         return $day;
+    }
+    
+    protected function createStream($activity) {
+        $stream= new Stream($this->mandango);
+        $stream->setActivity($activity);
+        return $stream;
     }
     
 }

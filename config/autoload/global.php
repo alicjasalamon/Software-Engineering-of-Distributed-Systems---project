@@ -84,14 +84,13 @@ return array(
             'fields' => [
                 'date'          => 'string',
             ],
-            'embeddedsMany' => [
+            'referencesMany' => [
                 'streams' => [
                     'class' => 'Application\Entity\Stream',
                 ],
             ],
         ],
         'Application\Entity\Stream' => [
-            'isEmbedded' => true,
             'fields' => [
                 'activity'      => 'string', // diet, exercises, medicines, visits
             ],

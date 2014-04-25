@@ -5,7 +5,7 @@ namespace Application\Entity\Base;
 /**
  * Base class of Application\Entity\Stream document.
  */
-abstract class Stream extends \Mandango\Document\EmbeddedDocument
+abstract class Stream extends \Mandango\Document\Document
 {
     /**
      * Initializes the document defaults.
@@ -29,6 +29,13 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
             $this->fieldsModified = array();
         }
 
+        if (isset($data['_query_hash'])) {
+            $this->addQueryHash($data['_query_hash']);
+        }
+        if (isset($data['_id'])) {
+            $this->setId($data['_id']);
+            $this->setIsNew(false);
+        }
         if (isset($data['activity'])) {
             $this->data['fields']['activity'] = (string) $data['activity'];
         } elseif (isset($data['_fields']['activity'])) {
@@ -53,7 +60,7 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
     public function setActivity($value)
     {
         if (!isset($this->data['fields']['activity'])) {
-            if (($rap = $this->getRootAndPath()) && !$rap['root']->isNew()) {
+            if (!$this->isNew()) {
                 $this->getActivity();
                 if ($this->isFieldEqualTo('activity', $value)) {
                     return $this;
@@ -89,32 +96,16 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
     public function getActivity()
     {
         if (!isset($this->data['fields']['activity'])) {
-            if (
-                (!isset($this->data['fields']) || !array_key_exists('activity', $this->data['fields']))
-                &&
-                ($rap = $this->getRootAndPath())
-                &&
-                !$this->isEmbeddedOneChangedInParent()
-                &&
-                !$this->isEmbeddedManyNew()
-            ) {
-                $field = $rap['path'].'.activity';
-                $rap['root']->addFieldCache($field);
-                $collection = $this->getMandango()->getRepository(get_class($rap['root']))->getCollection();
-                $data = $collection->findOne(array('_id' => $rap['root']->getId()), array($field => 1));
-                foreach (explode('.', $field) as $key) {
-                    if (!isset($data[$key])) {
-                        $data = null;
-                        break;
-                    }
-                    $data = $data[$key];
-                }
-                if (null !== $data) {
-                    $this->data['fields']['activity'] = (string) $data;
-                }
-            }
-            if (!isset($this->data['fields']['activity'])) {
+            if ($this->isNew()) {
                 $this->data['fields']['activity'] = null;
+            } elseif (!isset($this->data['fields']) || !array_key_exists('activity', $this->data['fields'])) {
+                $this->addFieldCache('activity');
+                $data = $this->getRepository()->getCollection()->findOne(array('_id' => $this->getId()), array('activity' => 1));
+                if (isset($data['activity'])) {
+                    $this->data['fields']['activity'] = (string) $data['activity'];
+                } else {
+                    $this->data['fields']['activity'] = null;
+                }
             }
         }
 
@@ -131,7 +122,7 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
     public function setEvents_reference_field($value)
     {
         if (!isset($this->data['fields']['events_reference_field'])) {
-            if (($rap = $this->getRootAndPath()) && !$rap['root']->isNew()) {
+            if (!$this->isNew()) {
                 $this->getEvents_reference_field();
                 if ($this->isFieldEqualTo('events_reference_field', $value)) {
                     return $this;
@@ -167,32 +158,16 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
     public function getEvents_reference_field()
     {
         if (!isset($this->data['fields']['events_reference_field'])) {
-            if (
-                (!isset($this->data['fields']) || !array_key_exists('events_reference_field', $this->data['fields']))
-                &&
-                ($rap = $this->getRootAndPath())
-                &&
-                !$this->isEmbeddedOneChangedInParent()
-                &&
-                !$this->isEmbeddedManyNew()
-            ) {
-                $field = $rap['path'].'.events';
-                $rap['root']->addFieldCache($field);
-                $collection = $this->getMandango()->getRepository(get_class($rap['root']))->getCollection();
-                $data = $collection->findOne(array('_id' => $rap['root']->getId()), array($field => 1));
-                foreach (explode('.', $field) as $key) {
-                    if (!isset($data[$key])) {
-                        $data = null;
-                        break;
-                    }
-                    $data = $data[$key];
-                }
-                if (null !== $data) {
-                    $this->data['fields']['events_reference_field'] = $data;
-                }
-            }
-            if (!isset($this->data['fields']['events_reference_field'])) {
+            if ($this->isNew()) {
                 $this->data['fields']['events_reference_field'] = null;
+            } elseif (!isset($this->data['fields']) || !array_key_exists('events_reference_field', $this->data['fields'])) {
+                $this->addFieldCache('events');
+                $data = $this->getRepository()->getCollection()->findOne(array('_id' => $this->getId()), array('events' => 1));
+                if (isset($data['events'])) {
+                    $this->data['fields']['events_reference_field'] = $data['events'];
+                } else {
+                    $this->data['fields']['events_reference_field'] = null;
+                }
             }
         }
 
@@ -230,6 +205,9 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
     public function getEvents()
     {
         if (!isset($this->data['referencesMany']['events'])) {
+            if (!$this->isNew()) {
+                $this->addReferenceCache('events');
+            }
             $this->data['referencesMany']['events'] = new \Mandango\Group\ReferenceGroup('Application\Entity\Event', $this, 'events_reference_field');
         }
 
@@ -396,6 +374,9 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
      */
     public function fromArray(array $array)
     {
+        if (isset($array['id'])) {
+            $this->setId($array['id']);
+        }
         if (isset($array['activity'])) {
             $this->setActivity($array['activity']);
         }
@@ -419,7 +400,7 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
      */
     public function toArray($withReferenceFields = false)
     {
-        $array = array();
+        $array = array('id' => $this->getId());
 
         $array['activity'] = $this->getActivity();
         if ($withReferenceFields) {
@@ -432,48 +413,29 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
     /**
      * Query for save.
      */
-    public function queryForSave($query, $isNew, $reset = false)
+    public function queryForSave()
     {
+        $isNew = $this->isNew();
+        $query = array();
+        $reset = false;
+
         if (isset($this->data['fields'])) {
             if ($isNew || $reset) {
-                $rootQuery = $query;
-                $query =& $rootQuery;
-                $rap = $this->getRootAndPath();
-                if (true === $reset) {
-                    $path = array('$set', $rap['path']);
-                } elseif ('deep' == $reset) {
-                    $path = explode('.', '$set.'.$rap['path']);
-                } else {
-                    $path = explode('.', $rap['path']);
-                }
-                foreach ($path as $name) {
-                    if (0 === strpos($name, '_add')) {
-                        $name = substr($name, 4);
-                    }
-                    if (!isset($query[$name])) {
-                        $query[$name] = array();
-                    }
-                    $query =& $query[$name];
-                }
                 if (isset($this->data['fields']['activity'])) {
                     $query['activity'] = (string) $this->data['fields']['activity'];
                 }
                 if (isset($this->data['fields']['events_reference_field'])) {
                     $query['events'] = $this->data['fields']['events_reference_field'];
                 }
-                unset($query);
-                $query = $rootQuery;
             } else {
-                $rap = $this->getRootAndPath();
-                $documentPath = $rap['path'];
                 if (isset($this->data['fields']['activity']) || array_key_exists('activity', $this->data['fields'])) {
                     $value = $this->data['fields']['activity'];
                     $originalValue = $this->getOriginalFieldValue('activity');
                     if ($value !== $originalValue) {
                         if (null !== $value) {
-                            $query['$set'][$documentPath.'.activity'] = (string) $this->data['fields']['activity'];
+                            $query['$set']['activity'] = (string) $this->data['fields']['activity'];
                         } else {
-                            $query['$unset'][$documentPath.'.activity'] = 1;
+                            $query['$unset']['activity'] = 1;
                         }
                     }
                 }
@@ -482,9 +444,9 @@ abstract class Stream extends \Mandango\Document\EmbeddedDocument
                     $originalValue = $this->getOriginalFieldValue('events_reference_field');
                     if ($value !== $originalValue) {
                         if (null !== $value) {
-                            $query['$set'][$documentPath.'.events'] = $this->data['fields']['events_reference_field'];
+                            $query['$set']['events'] = $this->data['fields']['events_reference_field'];
                         } else {
-                            $query['$unset'][$documentPath.'.events'] = 1;
+                            $query['$unset']['events'] = 1;
                         }
                     }
                 }

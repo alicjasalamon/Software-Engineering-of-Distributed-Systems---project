@@ -14,12 +14,17 @@ class Day extends \Application\Entity\Base\Day
 
         $array['date'] = $this->getDate();
         
-        $streams = $this->getStreams()->all();
-        $streamsArray = [];
-        foreach($streams as $stream) {
-            array_push($streamsArray, $stream->toArray(true));
+        $mandango = $this->getMandango();
+        $streamRepository = new StreamRepository($mandango);
+        $streamsReferences = $this->getStreams_reference_field();
+        $streams = [];
+        if($streamsReferences) {
+            foreach ($streamsReferences as $streamReference) {
+                $stream = $streamRepository->findOneById($streamReference);
+                array_push($streams, $stream->toArray(true));
+            }
         }
-        $array['streams'] = $streamsArray;
+        $array['streams'] = $streams;
 
         return $array;
     }

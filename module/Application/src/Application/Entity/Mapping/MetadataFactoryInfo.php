@@ -343,21 +343,27 @@ class MetadataFactoryInfo
                     'type' => 'string',
                     'dbName' => 'date',
                 ),
+                'streams_reference_field' => array(
+                    'type' => 'raw',
+                    'dbName' => 'streams',
+                    'referenceField' => true,
+                ),
             ),
             '_has_references' => true,
             'referencesOne' => array(
 
             ),
             'referencesMany' => array(
-
+                'streams' => array(
+                    'class' => 'Application\\Entity\\Stream',
+                    'field' => 'streams_reference_field',
+                ),
             ),
             'embeddedsOne' => array(
 
             ),
             'embeddedsMany' => array(
-                'streams' => array(
-                    'class' => 'Application\\Entity\\Stream',
-                ),
+
             ),
             'relationsOne' => array(
 
@@ -383,7 +389,10 @@ class MetadataFactoryInfo
     public function getApplicationEntityStreamClass()
     {
         return array(
-            'isEmbedded' => true,
+            'isEmbedded' => false,
+            'mandango' => null,
+            'connection' => '',
+            'collection' => 'application_entity_stream',
             'inheritable' => false,
             'inheritance' => false,
             'fields' => array(
@@ -411,6 +420,18 @@ class MetadataFactoryInfo
 
             ),
             'embeddedsMany' => array(
+
+            ),
+            'relationsOne' => array(
+
+            ),
+            'relationsManyOne' => array(
+
+            ),
+            'relationsManyMany' => array(
+
+            ),
+            'relationsManyThrough' => array(
 
             ),
             'indexes' => array(

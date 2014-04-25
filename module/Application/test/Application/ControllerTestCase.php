@@ -46,7 +46,7 @@ class ControllerTestCase extends AbstractHttpControllerTestCase {
     
     protected function getRandomString($prefix = null) {
         $generated = substr(rtrim(base64_encode(md5(microtime())),"="), 0, 6);
-        return $prefix ? "$prefix $generated" : $generated;
+        return $prefix ? "$prefix$generated" : $generated;
     }
     
     protected function success() {
