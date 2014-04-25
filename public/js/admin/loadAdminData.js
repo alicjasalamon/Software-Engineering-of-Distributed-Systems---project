@@ -21,9 +21,10 @@ $(document).ready(function() {
     /**
      * ******************** DOCTORS ******************
      */
+    var doctors;
     var doctorsTable = $('.fillWithDoctorsTable');
     $.ajax('/db/doctor/all').success(function(data) {
-        var doctors = data.data;
+        doctors = data.data;
         for (var i = 0; i < doctors.length; i++) {
 
             var doctor = doctors[i];
@@ -50,22 +51,6 @@ $(document).ready(function() {
 
             doctorsTable.append(row);
         }
-    });
-
-    var selectD = $('.fillWithDoctors');
-    $.ajax('/db/doctor/all').success(function(data) {
-        var doctors = data.data;
-        for (var i = 0; i < doctors.length; i++) {
-            var doctor = doctors[i];
-
-            var option = $('<option/>');
-            option.html(doctor.firstname + " " + doctor.lastname);
-            option.val(doctor.id.$id);
-
-            selectD.append(option);
-        }
-    });
-
     /**
      * ******************** PATIENTS ******************
      */
@@ -94,11 +79,38 @@ $(document).ready(function() {
             var tdEmail = $('<td/>');
             tdEmail.html(patient.email);
             row.append(tdEmail);
+            
+            var tdDoctor = $('<td/>');
+            for (var j = 0; j < doctors.length; j++) {
+                var doctor = doctors[j];
+                if(patient.doctor === doctor.id)
+                 tdDoctor.html(doctor.firstname + " " + doctor.lastname);
+            }
+            row.append(tdDoctor);           
 
-
+            
             patientsTable.append(row);
         }
     });
+        
+    });
+
+    var selectD = $('.fillWithDoctors');
+    $.ajax('/db/doctor/all').success(function(data) {
+        var doctors = data.data;
+        for (var i = 0; i < doctors.length; i++) {
+            var doctor = doctors[i];
+
+            var option = $('<option/>');
+            option.html(doctor.firstname + " " + doctor.lastname);
+            option.val(doctor.id.$id);
+
+            selectD.append(option);
+        }
+        
+    });
+
+
 
     var selectP = $('.fillWithPatients');
     $.ajax('/db/patient/all').success(function(data) {
@@ -116,10 +128,3 @@ $(document).ready(function() {
 
 
 });
-
-
-/*
- $('<option/>', {
- //     class: 'po nm',
- });
- */

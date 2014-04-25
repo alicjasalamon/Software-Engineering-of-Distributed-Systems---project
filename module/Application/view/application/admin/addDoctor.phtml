@@ -1,15 +1,27 @@
 <div id='addDoctorForm'>
     <form class="user-input margin20 test">
 
+        <label>Login:</label>
+        <div class="input-control text">
+            <input name="login" type="text" value="" placeholder="input doctor login"/>
+            <button class="btn-clear"></button>
+        </div>
+        
+        <label>Password:</label>
+        <div class="input-control password">
+            <input type="password" value="" placeholder="input password"/>
+            <button class="btn-reveal"></button>
+        </div>
+
         <label>Name:</label>
         <div class="input-control text">
-            <input type="text" value="" placeholder="input doctor name"/>
+            <input name="firstname" type="text" value="" placeholder="input doctor name"/>
             <button class="btn-clear"></button>
         </div>
 
         <label>Surname:</label>
         <div class="input-control text">
-            <input type="text" value="" placeholder="input doctor surname"/>
+            <input name="lastname" type="text" value="" placeholder="input doctor surname"/>
             <button class="btn-clear"></button>
         </div>
 
@@ -21,18 +33,21 @@
 
         <label>Institution:</label>
         <div class="input-control select">
-            <select class="fillWithInstitutions">
+            <select name="institution" class="fillWithInstitutions">
                 <option disabled selected style='display: none' class="fg-blue">
                     Select institution</option>
             </select>
         </div>
 
+        <input name="group" value="doctor" style="display: none">
+
         <div class="margin20"></div>
 
         <div class="form-actions centeredButton">
-            <button class="button success">Add</button>
+            <button type="button" class="button success submit-add-doctor-button">Add</button>
             <button class="button" type="button" onclick="$.Dialog.close()">Cancel</button> 
         </div>
+
     </form>
 
 </div>
