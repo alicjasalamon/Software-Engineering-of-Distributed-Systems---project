@@ -6,8 +6,8 @@ use Application\Utilities\Exceptions\InvalidParameterException;
 
 abstract class Validator {
         
-    protected function throwException($name) {
-        throw new InvalidParameterException($name);
+    protected function throwException($name, $value = NULL) {
+        throw new InvalidParameterException($name, $value);
     }
     
     protected function validateParamExists($params, $name) {
@@ -23,8 +23,9 @@ abstract class Validator {
     }
     
     protected function validateRegex($regex, $params, $name) {
-        if(!preg_match($regex, $params[$name])) {
-            $this->throwException($name);
+        $string = $params[$name];
+        if(!preg_match($regex, $string)) {
+            $this->throwException($name, $string);
         }
     }
     
@@ -41,7 +42,7 @@ abstract class Validator {
         $isHTML = $this->isHTML($string);
         $isTooLong = strlen($string) > $maxLength;
         if($isHTML || $isTooLong) {
-            $this->throwException($name);
+            $this->throwException($name, $string);
         }
     }
     
