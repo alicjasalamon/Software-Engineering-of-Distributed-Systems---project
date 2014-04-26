@@ -183,7 +183,6 @@
     var schedule = {
         name: "Schedule",
         fields: [
-            {name:"id", type:"string"},
             {name:"days", type:"Day[]"},
         ],
     };
@@ -192,7 +191,6 @@
     var day = {
         name: "Day",
         fields: [
-            {name:"id", type:"string"},
             {name:"date", type:"string"},
             {name:"streams", type:"Stream[]"},
         ],
@@ -201,7 +199,7 @@
                 name: "Get day",
                 url: "/db/day",
                 parameters: [
-                    {name:"patientid", type:"string"},
+                    {name:"patientid", type:"string (id)"},
                     {name:"date", type:"string"},
                 ],
                 example:

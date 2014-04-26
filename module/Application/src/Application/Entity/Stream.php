@@ -10,7 +10,8 @@ class Stream extends \Application\Entity\Base\Stream
     
     public function toArray($withReferenceFields = false)
     {
-        $array = array('id' => (string)$this->getId());
+        $array = [];
+        //$array = array('id' => (string)$this->getId());
 
         $array['activity'] = $this->getActivity();
         

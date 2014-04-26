@@ -10,7 +10,8 @@ class Day extends \Application\Entity\Base\Day
     
     public function toArray($withReferenceFields = false)
     {
-        $array = array('id' => (string)$this->getId());
+        $array = [];
+        //$array = array('id' => (string)$this->getId());
 
         $array['date'] = $this->getDate();
         
