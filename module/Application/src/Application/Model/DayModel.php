@@ -5,6 +5,7 @@ namespace Application\Model;
 use Application\Entity\Day;
 use Application\Entity\Patient;
 use Application\Entity\Stream;
+use Application\Entity\Schedule;
 
 class DayModel extends EntityModel {
    
@@ -14,7 +15,7 @@ class DayModel extends EntityModel {
     public function get(Patient $patient, $date) {
         $schedule = $patient->getSchedule();
         if(!$schedule) {
-            $schedule = $this->mandango->create('Application\Entity\Schedule');
+            $schedule = new Schedule($this->mandango);
             $patient->setSchedule($schedule);
             $schedule->save();
         }

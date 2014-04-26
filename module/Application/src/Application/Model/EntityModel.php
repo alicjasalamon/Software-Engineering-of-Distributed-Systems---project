@@ -7,6 +7,7 @@ use Application\Entity\UserRepository;
 use Application\Entity\DoctorRepository;
 use Application\Entity\PatientRepository;
 use Application\Entity\ScheduleRepository;
+use Application\Entity\StreamRepository;
 use Application\Entity\DayRepository;
 use Application\Entity\EventRepository;
 
@@ -41,6 +42,11 @@ abstract class EntityModel {
      * @var ScheduleRepository
      */
     private $scheduleRepository;
+    
+    /**
+     * @var StreamRepository
+     */
+    private $streamRepository;
     
     /**
      * @var DayRepository
@@ -104,6 +110,16 @@ abstract class EntityModel {
             $this->scheduleRepository = new ScheduleRepository($this->mandango);
         }
         return $this->scheduleRepository;
+    }
+    
+    /**
+     * @var StreamRepository
+     */
+    protected function streamRepository() {
+        if(!$this->streamRepository) {
+            $this->streamRepository = new StreamRepository($this->mandango);
+        }
+        return $this->streamRepository;
     }
     
     /**

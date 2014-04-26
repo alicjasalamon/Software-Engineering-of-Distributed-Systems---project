@@ -158,19 +158,6 @@ return array(
                    ),
                ),
             ),
-            'scheduledb' => array(
-               'type' => 'segment',
-               'options' => array(
-                   'route' => '/db/schedule[/:action]',
-                   'constraints' => array(
-                       'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                   ),
-                   'defaults' => array(
-                       'controller' => 'Application\Controller\Db\ScheduleDb',
-                       'action' => 'index',
-                   ),
-               ),
-            ),
             'institutiondb' => array(
                 'type' => 'segment',
                 'options' => array(
@@ -235,7 +222,6 @@ return array(
             'Application\Controller\Db\InstitutionDb' => 'Application\Controller\Db\InstitutionDbController',
             'Application\Controller\Db\DoctorDb' => 'Application\Controller\Db\DoctorDbController',
             'Application\Controller\Db\PatientDb' => 'Application\Controller\Db\PatientDbController',
-            'Application\Controller\Db\ScheduleDb' => 'Application\Controller\Db\ScheduleDbController',
             'Application\Controller\Db\UserDb' => 'Application\Controller\Db\UserDbController',
             'Application\Controller\Db\EventDb' => 'Application\Controller\Db\EventDbController',
             'Application\Controller\Db\DayDb' => 'Application\Controller\Db\DayDbController',

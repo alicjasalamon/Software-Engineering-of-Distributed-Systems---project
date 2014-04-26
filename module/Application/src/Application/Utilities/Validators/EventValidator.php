@@ -22,7 +22,7 @@ class EventValidator extends Validator {
         $this->validateId($params, 'id');
         $this->validateState($params, 'state');
     }
-
+    
     protected function validateActivity($params, $name) {
         $activity = $params[$name];
         $isValid = in_array($activity, ['diet', 'exercises', 'medicines', 'visits']);
@@ -37,7 +37,7 @@ class EventValidator extends Validator {
     
     protected function validateDuration($params, $name) {
         $duration = $params[$name];
-        $isValid = in_array($duration, [0, 20, 40, 60, 80, 100, 120], true);
+        $isValid = in_array($duration, [20, 40, 60, 80], true);
         if(!$isValid) {
             $this->throwException($name);
         }

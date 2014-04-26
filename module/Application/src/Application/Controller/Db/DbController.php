@@ -12,7 +12,7 @@ class DbController extends BaseController {
     /**
      * @var Model;
      */
-    protected $model;
+    private $model;
    
     protected function mandango() {
         return $this->getServiceLocator()->get('mandango');

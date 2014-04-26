@@ -41,6 +41,11 @@ class Model {
      */
     private $scheduleModel;
     
+    /**
+     * @var StreamModel
+     */
+    private $streamModel;
+    
     public function __construct($mandango) {
         $this->mandango = $mandango;
     }
@@ -111,13 +116,23 @@ class Model {
     }
     
     /**
-     * @var scheduleModel
+     * @var ScheduleModel
      */
     public function scheduleModel() {
         if(!$this->scheduleModel) {
             $this->scheduleModel = new ScheduleModel($this->mandango);
         }
         return $this->scheduleModel;
+    }
+    
+    /**
+     * @var StreamModel
+     */
+    public function streamModel() {
+        if(!$this->streamModel) {
+            $this->streamModel = new StreamModel($this->mandango);
+        }
+        return $this->streamModel;
     }
     
 }

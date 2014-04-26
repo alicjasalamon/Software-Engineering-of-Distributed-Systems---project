@@ -16,10 +16,18 @@ class EventDbController extends DbController {
     }
 
     public function addAction() {
-        return $this->wrapSingleResultAction(function($params){
+        return $this->wrapSingleResultAction(function($params) {
             $this->validator->validateAdd($params);
             $event = $this->model()->patientModel()->addEvent($params);
             return $event;
+        });
+    }
+    
+    public function stateAction() {
+        return $this->wrapSingleResultAction(function($params) {
+           $this->validator->validateChangeState($params);
+           $event = $this->model()->eventModel()->setState($params);
+           return $event;
         });
     }
 

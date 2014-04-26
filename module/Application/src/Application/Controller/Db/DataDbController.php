@@ -9,6 +9,7 @@ class DataDbController extends DbController
         try {
             /* institutions */
             $institutionModel = $this->model()->institutionModel();
+            $patientModel = $this->model()->patientModel();
             $krakow = $institutionModel->add(['name' => 'Szpital wojewódzki w Krakowie']);
             $tarnow = $institutionModel->add(['name' => 'Centrum medyczne w Tarnowie']);
             $kk = $institutionModel->add(['name' => 'Placówka medyczna w Kędzierzynie-Koźlu']);
@@ -53,6 +54,13 @@ class DataDbController extends DbController
                 'firstname' => 'Albert', 'lastname' => 'Szklanka', 'email' => 'szklanka@o2.pl',
                 'institution' => $krakow->getId(), 'doctor' => $doc1->getId(),
             ]);
+            $ev1 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => '20140418', 'activity' => 'diet',
+                'title' => 'Eat stuff', 'details' => '1 bowl of stuff', 'time' => '10:00', 
+                'duration' => 60,
+            ]);
+            
+            
             $pat2 = $userModel->add([
                 'login' => 'patient2', 'password' => '12341234', 'group' => 'patient',
                 'firstname' => 'Piotr', 'lastname' => 'Głośnik', 'email' => 'glosnik@o2.pl',
@@ -114,6 +122,7 @@ class DataDbController extends DbController
             $this->model()->eventModel()->clear();
             $this->model()->dayModel()->clear();
             $this->model()->scheduleModel()->clear();
+            $this->model()->streamModel()->clear();
             $json = $this->generateDataJSONViewModel([], 'Database cleared!');
         } catch (Exception $ex) {
             $json = $this->generateFailedJSONViewModel($ex);

@@ -50,7 +50,7 @@
 '$.ajax({ type: "POST", url: "db/user/add", data: { \n\
     "login": "user",\n\
     "password": "1234",\n\
-    "group": "admin", //doctor/patient/admin\n\
+    "group": "admin", //doctor, patient, admin\n\
     "firstname": "Jan",\n\
     "lastname": "Kowalski",\n\
     "email": "jankowalski@example.com"\n\
@@ -252,7 +252,7 @@
 '$.ajax({ type: "POST", url: "db/event/add", data: {\n\
     patientid: "PATIENTID",\n\
     date: "20140418",\n\
-    activity: "diet",\n\
+    activity: "diet", // diet, exercises, medicines, visits\n\
     title: "Test title!",\n\
     details: "Lorem ipsum details",\n\
     time: "08:00",\n\
@@ -271,7 +271,7 @@
                 example:
 '$.ajax({ type: "POST", url: "db/event/state", data: {\n\
     id: "EVENTID",\n\
-    state: "future",\n\
+    state: "future", //future, inprogress, done, undone\n\
 }}).success(function(data) { \n\
     console.log(JSON.stringify(data)); \n\
 });',

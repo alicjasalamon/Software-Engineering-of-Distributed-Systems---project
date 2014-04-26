@@ -8,7 +8,7 @@ use Application\Entity\Event;
 class EventModel extends EntityModel {
     
      /**
-     * @var \Application\Entity\Event
+     * @var Event
      */
     public function get($params) {
         $event = $this->eventRepository()->findOneById($params['id']);
@@ -29,6 +29,13 @@ class EventModel extends EntityModel {
         $foundStream = $this->findStream($streams, $params);
         $event = $this->buildEvent($params);
         $foundStream->addEvents($event);
+        $event->save();
+        return $event;
+    }
+    
+    public function setState($params) {
+        $event = $this->get($params);
+        $event->setState($params['state']);
         $event->save();
         return $event;
     }
