@@ -30,6 +30,10 @@
                 ->appendFile($this->basePath() . '/js/lib/metro.min.js')
                 ->appendFile($this->basePath() . '/js/lib/jquery.textarea-expander.js')
                 ->appendFile($this->basePath() . '/js/doc.js')
+                ->appendFile($this->basePath('js/admin/adminDialogs.js'))
+                ->appendFile($this->basePath('js/admin/loadAdminData.js'))
+                ->appendFile($this->basePath('js/schedule/eventClick.js'))
+            
          //       ->appendFile($this->basePath() . '/js/databasePopulating.js')
         ;
         ?>
@@ -64,9 +68,6 @@
         <?php echo $this->content; //print index.html ?>
         <?php
         echo $this->inlineScript()
-            ->appendFile($this->basePath('js/admin/adminDialogs.js'))
-            ->appendFile($this->basePath('js/admin/loadAdminData.js'))
-            ->appendFile($this->basePath('js/schedule/eventClick.js'))
             //->appendFile($this->basePath('js/hourPicker.js'))
             //->appendFile($this->basePath('js/plik2.js'))
             //->appendFile($this->basePath('js/plik3.js'))
