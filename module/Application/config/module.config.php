@@ -192,6 +192,20 @@ return array(
             'Zend\Log\LoggerAbstractServiceFactory',
         ),
         'factories' => array(
+            'AuthAdapter' => function($sm) {
+                return new \Application\Auth\AuthAdapter();
+            },
+            'AuthStorage' => function($sm) {
+                return new \Application\Auth\AuthStorage();
+            },
+            'Auth' => function($sm) {
+                $authService = new Zend\Authentication\AuthenticationService();
+                $adapter = $sm->get('AuthAdapter');
+                $authService->setAdapter($adapter);
+                $storage = $sm->get('AuthStorage');
+                $authService->setStorage($storage);
+                return $authService;
+            }
         ),
         'aliases' => array(
             'translator' => 'MvcTranslator',
@@ -199,6 +213,7 @@ return array(
         'services' => array(
             'mandango' => $mandango,
         ),
+        ''
     ),
     'translator' => array(
         'locale' => 'en_US',
