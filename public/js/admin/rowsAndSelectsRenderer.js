@@ -16,6 +16,7 @@ renderInstitution = function(institution) {
 renderPatient = function(patient, doctor) {
     var patientsTable = $('.fillWithPatientsTable');
     var row = $('<tr/>');
+    row.attr('data-institution', patient.institution);
     
     var tdFirstName = $('<td/>');
     tdFirstName.html(patient.firstname);
@@ -51,6 +52,7 @@ renderDoctor = function(doctor) {
 renderDoctorInTable = function(doctor) {
     var doctorsTable = $('.fillWithDoctorsTable');
     var row = $('<tr/>');
+    row.attr('data-institution', doctor.institution);  
 
     var tdFirstName = $('<td/>');
     tdFirstName.html(doctor.firstname);

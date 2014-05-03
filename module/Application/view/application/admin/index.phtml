@@ -4,11 +4,8 @@
         <div class="span4">               
 
             <div class="input-control select">
-                <select class="fillWithInstitutions">
-                    <option disabled selected class="firstSelect">
-                        Select institution
-                    </option>
-                    <option>All institutions</option>
+                <select class="fillWithInstitutions" id="filterUsers">
+                    <option value="all">All institutions</option>
                 </select>
             </div>
 
@@ -26,7 +23,7 @@
 
             <div class="frames">
                 <div class="frame" id="_page_1">
-                    <table class="table striped">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th class="text-left">Name</th>
@@ -36,13 +33,13 @@
                             </tr>
                         </thead>
 
-                        <tbody class="fillWithDoctorsTable">
+                        <tbody class="fillWithDoctorsTable" id="doctorsTable">
                         </tbody>
 
                     </table>
                 </div>
                 <div class="frame" id="_page_2">
-                    <table class="table striped">
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th class="text-left">Name</th>
@@ -53,7 +50,7 @@
                             </tr>
                         </thead>
 
-                        <tbody class="fillWithPatientsTable">
+                        <tbody class="fillWithPatientsTable" id="patientsTable">
                         </tbody>
 
                     </table>

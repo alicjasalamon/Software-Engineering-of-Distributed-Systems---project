@@ -32,5 +32,30 @@ $(document).ready(function() {
         });
         $.Dialog.close();
     });
+    
+    var filterRows = function (tableName, value){
+     
+        var usersTrs = $(tableName).find('tr');
+        
+        for(var i=0; i<usersTrs.length; i++)
+        {
+            var row = $(usersTrs[i]);
+            var institution = row.attr('data-institution');
+            if(institution !== value && value!=='all')
+            {
+                row.hide();
+            }
+            else 
+            {
+                row.show();
+            }
+        }
+    };
+    
+    $('select#filterUsers').on('change', function(){
+        var value = $(this).val();
+        filterRows('#patientsTable', value);
+        filterRows('#doctorsTable', value);
+    });
 
 });
