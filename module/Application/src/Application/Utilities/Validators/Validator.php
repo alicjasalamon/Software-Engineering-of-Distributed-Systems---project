@@ -47,7 +47,7 @@ abstract class Validator {
     }
     
     protected function validateEmail($params, $name) {
-        $this->validateRegex("/^[a-zA-Z][a-zA-Z0-9]{0,64}@[a-zA-Z0-9]{1,64}.[a-zA-Z0-9]{1,16}$/", $params, $name);
+        //$this->validateRegex("/^[a-zA-Z][a-zA-Z0-9]{0,64}@[a-zA-Z0-9]{1,64}.[a-zA-Z0-9]{1,16}$/", $params, $name);
     }
     
     private function isHTML($string) {

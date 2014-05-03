@@ -25,7 +25,10 @@ $(document).ready(function() {
         var serializedForm = form.serializeArray();
         $.ajax({type: "POST", url: "db/user/add", data: serializedForm}).success(function(data) {
             var patient = data.data;
-            renderPatient(patient, doctor);
+            var doctor = doctors.filter(function (d){
+                   return d.id===patient.doctor;
+               });
+            renderPatient(patient, doctor[0]);
         });
         $.Dialog.close();
     });

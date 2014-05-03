@@ -18,7 +18,7 @@ $(document).ready(function() {
      * ******************** DOCTORS ******************
      */
     $.ajax('/db/doctor/all').success(function(data) {
-        var doctors = data.data;
+        doctors = data.data;
         for (var i = 0; i < doctors.length; i++) {
             var doctor = doctors[i];
             renderDoctor(doctor);

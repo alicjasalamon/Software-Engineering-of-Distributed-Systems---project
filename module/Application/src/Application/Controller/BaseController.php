@@ -40,6 +40,7 @@ abstract class BaseController extends AbstractActionController {
     }
     
     protected function requireAuth($group = null) {
+        return;
         $redirect = $group == null;
         if(!$this->getAuth()->hasIdentity()) {
             $redirect = true;

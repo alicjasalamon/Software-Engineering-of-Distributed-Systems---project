@@ -9,7 +9,7 @@ use Application\Utilities\Exceptions\InvalidParameterException;
 class DbController extends BaseController {
     
     public function indexAction() {
-        $this->requireAuth('admin');
+        //$this->requireAuth('admin');
     }
     
     protected function wrapSingleResultAction($action) {
