@@ -6,7 +6,8 @@
             <div class="input-control select">
                 <select class="fillWithInstitutions">
                     <option disabled selected class="firstSelect">
-                        Select institution</option>
+                        Select institution
+                    </option>
                     <option>All institutions</option>
                 </select>
             </div>
@@ -63,9 +64,9 @@
     </div>
 
     <div class="row">
-        <button class="large" id="addNewIstitutionButton">Add institution</button>  
-        <button class="large" id="addNewDoctor">Add doctor</button>  
-        <button class="large" id="addNewPatient">Add patient</button>  
+        <button class="large" id="open-add-institution-dialog">Add institution</button>  
+        <button class="large" id="open-add-doctor-dialog">Add doctor</button>  
+        <button class="large" id="open-add-patient-dialog">Add patient</button>  
     </div>
 </div>
 
@@ -73,5 +74,4 @@
     <?= $this->addInstitution ?>
     <?= $this->addDoctor ?>
     <?= $this->addPatient ?>
-    <?= $this->createBinding ?>
 </div>

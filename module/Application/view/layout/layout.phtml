@@ -30,11 +30,10 @@
                 ->appendFile($this->basePath() . '/js/lib/metro.min.js')
                 ->appendFile($this->basePath() . '/js/lib/jquery.textarea-expander.js')
                 ->appendFile($this->basePath() . '/js/doc.js')
-                ->appendFile($this->basePath('js/admin/adminDialogs.js'))
+                ->appendFile($this->basePath('js/admin/adminDialogsRenderer.js'))
+                ->appendFile($this->basePath('js/admin/rowsAndSelectsRenderer.js'))
                 ->appendFile($this->basePath('js/admin/loadAdminData.js'))
-                ->appendFile($this->basePath('js/schedule/eventClick.js'))
-            
-         //       ->appendFile($this->basePath() . '/js/databasePopulating.js')
+                ->appendFile($this->basePath('js/admin/buttonsActions.js'))
         ;
         ?>
 

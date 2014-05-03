@@ -9,7 +9,7 @@
         
         <label>Password:</label>
         <div class="input-control password">
-            <input type="password" value="" placeholder="input password"/>
+            <input name="password" type="password" value="" placeholder="input password"/>
             <button class="btn-reveal"></button>
         </div>
 
@@ -27,7 +27,7 @@
 
         <label>E-mail:</label>
         <div class="input-control text">
-            <input type="email" data-transform="input-control" placeholder="input doctor e-mail"/>
+            <input name="email" type="email" data-transform="input-control" placeholder="input doctor e-mail"/>
             <button class="btn-clear"></button>
         </div>
 
@@ -44,7 +44,7 @@
         <div class="margin20"></div>
 
         <div class="form-actions centeredButton">
-            <button type="button" class="button success submit-add-doctor-button">Add</button>
+            <button type="button" class="button success" id="submit-add-doctor">Add</button>
             <button class="button" type="button" onclick="$.Dialog.close()">Cancel</button> 
         </div>
 

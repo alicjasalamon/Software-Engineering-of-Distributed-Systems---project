@@ -4,25 +4,25 @@
 
         <label>Name:</label>
         <div class="input-control text">
-            <input type="text" value="" placeholder="input patient name"/>
+            <input name="firstname" type="text" value="" placeholder="input patient name"/>
             <button class="btn-clear"></button>
         </div>
 
         <label>Surname:</label>
         <div class="input-control text">
-            <input type="text" value="" placeholder="input patient surname"/>
+            <input name="lastname" type="text" value="" placeholder="input patient surname"/>
             <button class="btn-clear"></button>
         </div>
 
         <label>E-mail:</label>
         <div class="input-control text">
-            <input type="email" data-transform="input-control" placeholder="input patient e-mail"/>
+            <input name="email" type="email" data-transform="input-control" placeholder="input patient e-mail"/>
             <button class="btn-clear"></button>
         </div>
 
         <label>Institution:</label>
         <div class="input-control select">
-            <select class="fillWithInstitutions">
+            <select name="institution" class="fillWithInstitutions">
                 <option disabled selected style='display: none'>
                     Select institution</option>
             </select>
@@ -30,16 +30,18 @@
 
         <label>Select doctor:</label>
         <div class="input-control select">
-            <select class="fillWithDoctors">
+            <select name="doctor" class="fillWithDoctors">
                 <option disabled selected class="firstSelect">
                     Select doctor</option>
             </select>
         </div>
+       
+        <input name="group" value="patients" style="display: none">
 
         <div class="margin20"></div>
 
         <div class="form-actions  centeredButton">
-            <button class="button success">Add</button>
+            <button class="button success" type="button" id="submit-add-patient">Add</button>
             <button class="button" type="button" onclick="$.Dialog.close()">Cancel</button> 
         </div>
     </form>
