@@ -37,9 +37,8 @@ class UserValidator extends Validator {
     }
     
     protected function validateCredential($params, $name) {
-//        $this->validateRegex("/^[a-zA-Z0-9]{4,32}$/", $params, $name);
-        //$this->validateText($params, $name, 32);
-     
+        $this->validateText($params, $name, 32);
+        //$this->validateRegex("/^[a-zA-Z0-9]{4,32}$/", $params, $name);
     }
     
     protected function validateGroup($params, $name) {

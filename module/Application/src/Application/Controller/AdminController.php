@@ -4,11 +4,11 @@ namespace Application\Controller;
 
 use Zend\View\Model\ViewModel;
 
-class AdminController extends BaseController  //dziedziczymy tu po zendowej klasce, 
-//ale zrobilem dodatkowa klase ktora dziedziczy po AbstractActionController 
-//i dodaje do niej kilka funkcjonalnosci {
-{
+class AdminController extends BaseController {
+    
     public function indexAction() {
+        $this->requireAuth('admin');
+        
         $viewModel = new ViewModel();
         $renderer = $this->getServiceLocator()->get('ViewRenderer');
         

@@ -6,13 +6,16 @@ use Application\Entity\User;
 use Application\Entity\Doctor;
 use Application\Entity\Patient;
 use Application\Entity\Schedule;
+use Application\Utilities\Auth\Encryption;
 
 class UserModel extends EntityModel {
     
     protected $groupActions;
-    
+    protected $encryption;
+            
     function __construct($mandango) {
         parent::__construct($mandango);
+        $this->encryption = new Encryption();
         $this->groupActions = [
             'patient'   => [$this, 'buildPatient'],
             'doctor'    => [$this, 'buildDoctor'],
@@ -30,10 +33,19 @@ class UserModel extends EntityModel {
         $this->userRepository()->remove();
     }
     
+    public function authenticate($login, $password) {
+        $user = $this->userRepository()->createQuery(['login' => $login])->one();
+        if(!$user) return false;
+        $encryptedPassword = $this->encryption->encrypt($password);
+        $user->setPassword($encryptedPassword);
+        return $encryptedPassword == $user->getPassword() ? $user : false;
+    }
+
     protected function buildUser($params) {
         $user = new User($this->mandango);
         $user->setLogin($params['login']);
-        $user->setPassword($params['password']); //TODO: sha1
+        $encryptedPassword = $this->encryption->encrypt($params['password']);
+        $user->setPassword($encryptedPassword);
         $user->setGroup($params['group']);        
         return $user;
     }

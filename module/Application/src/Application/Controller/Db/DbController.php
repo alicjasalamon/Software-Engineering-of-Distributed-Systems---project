@@ -4,45 +4,12 @@ namespace Application\Controller\Db;
 
 use Zend\View\Model\JsonModel;
 use Application\Controller\BaseController;
-use Application\Model\Model;
 use Application\Utilities\Exceptions\InvalidParameterException;
 
 class DbController extends BaseController {
-   
-    /**
-     * @var Model;
-     */
-    private $model;
-   
-    protected function mandango() {
-        return $this->getServiceLocator()->get('mandango');
-    }
     
-    /**
-     * @var Model
-     */
-    protected function model() {
-        if(!$this->model) {
-            $this->model = new Model($this->mandango());
-        }
-        return $this->model;
-    }
-    
-    protected function getParams() {
-        $config = $this->getServiceLocator()->get('config');
-        $paramsMethod = $config['params_method'];
-        $params = null;
-        if($paramsMethod == 'any'){
-            $params = $this->params()->fromPost();
-            if(count($params) <= 0) {
-                $params = $this->params()->fromQuery();
-            }
-        } else if($paramsMethod == 'post'){
-            $params = $this->params()->fromPost();
-        } else if($paramsMethod == 'get') {
-            $params = $this->params()->fromQuery();
-        }
-        return $params;
+    public function indexAction() {
+        $this->requireAuth('admin');
     }
     
     protected function wrapSingleResultAction($action) {
@@ -68,6 +35,7 @@ class DbController extends BaseController {
     
     protected function wrapAction($action, $serialize) {
         try {
+            $this->requireAuth();
             $params = $this->getParams();
             $returnValue = $action($params);
             $actionJson = $serialize($returnValue);

@@ -13,25 +13,27 @@
 
                 <div class="row"></div>
 
-                <div class="row no-margin">
-                    <label>Login:</label>
-                    <div class="input-control text">
-                        <input type="text" value="" placeholder="input login"/>
-                        <button class="btn-clear"></button>
+                <form action="auth/login" method="post">
+                    <div class="row no-margin">
+                        <label>Login:</label>
+                        <div class="input-control text">
+                            <input name="login" type="text" value="" placeholder="input login"/>
+                            <button class="btn-clear"></button>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row no-margin">
-                    <label>Password:</label>
-                    <div class="input-control password">
-                        <input type="password" value="" placeholder="input password"/>
-                        <button class="btn-reveal"></button>
+                    <div class="row no-margin">
+                        <label>Password:</label>
+                        <div class="input-control password">
+                            <input name="password" type="password" value="" placeholder="input password"/>
+                            <button class="btn-reveal"></button>
+                        </div>
                     </div>
-                </div>
 
-                <div class="row centeredButton margin5">
-                    <button class="info size2 large">Login</button>
-                </div>
+                    <div class="row centeredButton margin5">
+                        <button class="info size2 large">Login</button>
+                    </div>
+                </form>
 
             </div>
         </div>
