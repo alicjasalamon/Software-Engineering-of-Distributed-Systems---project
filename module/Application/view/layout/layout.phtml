@@ -34,6 +34,7 @@
                 ->appendFile($this->basePath('js/admin/rowsAndSelectsRenderer.js'))
                 ->appendFile($this->basePath('js/admin/loadAdminData.js'))
                 ->appendFile($this->basePath('js/admin/buttonsActions.js'))
+                ->appendFile($this->basePath('js/layout/layout.js'))
         ;
         ?>
 
@@ -57,10 +58,13 @@
 
                 <span class="element-divider place-right"></span>
 
-                <a class="element place-right" href="#"><span class="icon-printer"></span></a>
+                <a class="element place-right" href="#" id="printPage"><span class="icon-printer"></span></a>
                 <span class="element-divider place-right"></span>
                 <button class="element place-right">
-                    Adrian Leczniczy
+                    <?php 
+                        $children = $this->viewModel()->getCurrent()->getChildren();
+                        $child = $children[0];
+                    echo $child->name; //print index.html ?>
                 </button>
             </nav>
         </nav>
