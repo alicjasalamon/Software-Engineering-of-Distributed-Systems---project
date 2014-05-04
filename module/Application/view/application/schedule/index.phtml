@@ -6,18 +6,15 @@
         <div class="span3">               
 
 
-            <div class="input-control select">
-                <select class="fillWithPatients">
-                    <option disabled selected style='display: none'>Select your patient</option>
-                </select>
-            </div>
+            <?= $this->selectPatients ? $this->selectPatients : "" ?>
 
             <div class="input-control text" data-role="datepicker"
-                 data-date="01/01/2014"
+                 data-date="04/05/2014"
                  data-format="dd/mm/yyyy"
                  data-position="bottom"
-                 data-effect="slide">
-                <input type="text">
+                 data-effect="slide"
+                 >
+                <input type="text" id="schedulerDate">
                 <button class="btn-date"></button>
             </div>
 

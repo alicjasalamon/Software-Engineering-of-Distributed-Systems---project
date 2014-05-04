@@ -41,19 +41,32 @@ return array(
                     ),
                 ),
             ),
-            'schedule' => array(
+            'doctor' => array(
                'type' => 'segment',
                'options' => array(
-                   'route' => '/schedule[/:action]',
+                   'route' => '/doctor[/:action]',
                    'constraints' => array(
                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                    ),
                    'defaults' => array(
-                       'controller' => 'Application\Controller\Schedule',
+                       'controller' => 'Application\Controller\Doctor',
                        'action' => 'index',
                    ),
                ),
-            ),            
+            ),
+            'patient' => array(
+               'type' => 'segment',
+               'options' => array(
+                   'route' => '/patient[/:action]',
+                   'constraints' => array(
+                       'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                   ),
+                   'defaults' => array(
+                       'controller' => 'Application\Controller\Patient',
+                       'action' => 'index',
+                   ),
+               ),
+            ),
             'auth' => array(
                 'type' => 'segment',
                 'options' => array(
@@ -231,7 +244,8 @@ return array(
             'Application\Controller\Index' => 'Application\Controller\IndexController',
             'Application\Controller\Auth' => 'Application\Controller\AuthController',
             'Application\Controller\Admin' => 'Application\Controller\AdminController',            
-            'Application\Controller\Schedule' => 'Application\Controller\ScheduleController',
+            'Application\Controller\Patient' => 'Application\Controller\PatientController',
+            'Application\Controller\Doctor' => 'Application\Controller\DoctorController',
             'Application\Controller\Db\Db' => 'Application\Controller\Db\DbController',
             'Application\Controller\Db\DataDb' => 'Application\Controller\Db\DataDbController',
             'Application\Controller\Db\InstitutionDb' => 'Application\Controller\Db\InstitutionDbController',

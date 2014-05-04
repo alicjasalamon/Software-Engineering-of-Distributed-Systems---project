@@ -55,8 +55,8 @@ class AuthController extends BaseController {
 
     private function getRedirectRoute($group) {
         $array = [
-            'doctor'    => 'schedule',
-            'patient'   => 'schedule',
+            'doctor'    => 'doctor',
+            'patient'   => 'patient',
             'admin'     => 'admin',
         ];
         return $array[$group];
