@@ -14,6 +14,20 @@ renderInstitution = function(institution) {
 * ******************** PATIENTS ******************
 */
 renderPatient = function(patient, doctor) {
+    renderPatientInTable(patient, doctor);
+    renderPatientInSelects(patient);
+};
+
+renderPatientInSelects = function(patient) {
+    var selectsPatient = $('.fillWithPatients');
+    var option = $('<option/>');
+    option.html(patient.firstname + " " + patient.lastname);
+    option.val(patient.id);
+    option.attr('data-doctor', patient.doctor);
+    selectsPatient.append(option);
+};
+
+renderPatientInTable = function(patient, doctor) {
     var patientsTable = $('.fillWithPatientsTable');
     var row = $('<tr/>');
     row.attr('data-institution', patient.institution);
