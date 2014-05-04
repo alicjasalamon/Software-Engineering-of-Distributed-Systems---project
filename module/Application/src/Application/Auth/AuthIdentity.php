@@ -7,11 +7,13 @@ class AuthIdentity {
     protected $login;
     protected $group;
     protected $name;
+    protected $id;
     
-    public function __construct($login, $group, $name) {
+    public function __construct($login, $group, $subUser) {
         $this->login = $login;
         $this->group = $group;
-        $this->name = $name;
+        $this->name = $subUser->getFirstname() . ' ' . $subUser->getLastname();
+        $this->id = (string) $subUser->getId();
     }
     
     public function getLogin() {
@@ -24,6 +26,10 @@ class AuthIdentity {
     
     public function getName() {
         return $this->name;
+    }
+    
+    public function getId() {
+        return $this->id;
     }
     
 }

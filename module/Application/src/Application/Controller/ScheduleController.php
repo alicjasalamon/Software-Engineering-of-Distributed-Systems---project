@@ -7,9 +7,10 @@ use Zend\View\Model\ViewModel;
 class ScheduleController extends BaseController {
     
     public function indexAction() {
+        
         $this->requireAuth();
         
-        $viewModel = new ViewModel();
+        $viewModel = parent::indexAction();
         $viewModel->setTemplate('application/schedule/index');
         
         $renderer = $this->getServiceLocator()->get('ViewRenderer');

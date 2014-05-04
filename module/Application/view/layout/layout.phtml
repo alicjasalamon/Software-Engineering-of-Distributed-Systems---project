@@ -67,11 +67,12 @@
 
                 <a class="element place-right" href="#" id="printPage"><span class="icon-printer"></span></a>
                 <span class="element-divider place-right"></span>
-                <button class="element place-right">
-                    <?php 
-                        $children = $this->viewModel()->getCurrent()->getChildren();
-                        $child = $children[0];
-                    echo $child->name; //print index.html ?>
+                <?php
+                    $children = $this->viewModel()->getCurrent()->getChildren();
+                    $child = $children[0];
+                ?>
+                <button class="element place-right" data-id="<?=  $child->id; ?>">
+                    <?= $child->name; ?>
                 </button>
             </nav>
         </nav>

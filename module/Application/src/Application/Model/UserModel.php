@@ -20,6 +20,22 @@ class UserModel extends EntityModel {
             'patient'   => [$this, 'buildPatient'],
             'doctor'    => [$this, 'buildDoctor'],
         ];
+    }    
+    
+    public function getSubUser(User $user) {
+        if(!$user) return null;
+        $id = $user->getId();
+        $group = $user->getGroup();
+        if($group == 'admin') {
+            return [];
+        } else if($group == 'doctor') {
+            $doctor = $this->userRepository()->createQuery(['user' => $id])->one();
+            return $doctor;
+        } else if($group == 'patient') {
+            $patient = $this->patientRepository()->createQuery(['user' => $id])->one();
+            return $patient;
+        }
+        return null;
     }
     
     public function add($params) {

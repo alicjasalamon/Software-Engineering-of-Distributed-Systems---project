@@ -5,6 +5,7 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\Authentication\AuthenticationServiceInterface;
 use Application\Model\Model;
+use Zend\View\Model\ViewModel;
 
 abstract class BaseController extends AbstractActionController {
             
@@ -18,7 +19,20 @@ abstract class BaseController extends AbstractActionController {
      */
     private $model;
     
-    protected function mandango() {
+    public function indexAction() {
+        $viewModel = new ViewModel();
+        $identity = $this->getAuth()->getIdentity();
+        
+        $name = $identity->getName();
+        $viewModel->setVariable('name', $name);
+        
+        $id = $identity->getId();
+        $viewModel->setVariable('id', $id);
+        
+        return $viewModel;
+    }
+
+        protected function mandango() {
         return $this->getServiceLocator()->get('mandango');
     }
     

@@ -29,10 +29,15 @@ class AuthAdapter implements AdapterInterface {
     }
 
     public function authenticate() {
-        $result = $this->model->userModel()->authenticate($this->login, $this->password);
-        $code = $result ? Result::SUCCESS : Result::FAILURE;
-        $identity = $result ? new AuthIdentity($result->getLogin(), $result->getGroup(), $result->getLogin()) : null;
+        $user = $this->model->userModel()->authenticate($this->login, $this->password);
+        $code = $user ? Result::SUCCESS : Result::FAILURE;
+        $subUser = $user ? $this->model->userModel()->getSubUser($user) : null;
+        $identity = $user ? new AuthIdentity(
+                $user->getLogin(), 
+                $user->getGroup(),
+                $subUser) : null;
         return new Result($code, $identity);
     }
+
 
 }
