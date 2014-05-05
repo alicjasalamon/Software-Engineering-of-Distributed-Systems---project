@@ -32,7 +32,7 @@ abstract class BaseController extends AbstractActionController {
         return $viewModel;
     }
 
-        protected function mandango() {
+    protected function mandango() {
         return $this->getServiceLocator()->get('mandango');
     }
     
@@ -54,16 +54,14 @@ abstract class BaseController extends AbstractActionController {
     }
     
     protected function requireAuth($group = null) {
-        return;
-        $redirect = $group == null;
         if(!$this->getAuth()->hasIdentity()) {
-            $redirect = true;
-        } else if(!$redirect) {
-            $identity = $this->getAuth()->getIdentity();
-            $redirect = $group != $identity->getGroup();
-        }
-        if($redirect) {
             $this->redirect()->toRoute('auth');
+            return;
+        } else {
+            $identity = $this->getAuth()->getIdentity();
+            if($group != $identity->getGroup()) {
+                $this->redirect()->toRoute($identity->getGroup());
+            }
         }
     }
 

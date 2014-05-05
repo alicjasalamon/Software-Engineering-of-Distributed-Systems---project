@@ -15,8 +15,8 @@ class Test0ControllerTest extends ControllerTestCase {
         $patient3 = $this->addPatient($institution1, $doctor2);
         $patient4 = $this->addPatient($institution1, $doctor2);
         
-        $date1 = '20140418';
-        $date2 = '20140419';
+        $date1 = '18/04/2014';
+        $date2 = '19/04/2014';
         
         $event1 = $this->addEvent($patient1, $date1, '08:00');
         $event2 = $this->addEvent($patient1, $date1, '10:00');

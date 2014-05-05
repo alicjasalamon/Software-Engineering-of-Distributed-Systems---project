@@ -8,6 +8,8 @@ class DoctorController extends ScheduleController
 {
     
     public function indexAction() {
+        $this->requireAuth('doctor');
+        
         $viewModel = parent::indexAction();
         $renderer = $this->getServiceLocator()->get('ViewRenderer');
         $selectPatientsViewModel = new ViewModel();

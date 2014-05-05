@@ -23,9 +23,6 @@ class AdminController extends BaseController {
         $addPatientViewModel = new ViewModel();
         $addPatientViewModel->setTemplate('application/admin/addPatient');
         $addPatientHtml = $renderer->render($addPatientViewModel);
-
-
-        
         
         $viewModel->setVariable('addInstitution', $addInstitutionHtml);
         $viewModel->setVariable('addDoctor', $addDoctorHtml);
