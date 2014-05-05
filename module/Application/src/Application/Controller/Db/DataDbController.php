@@ -55,9 +55,19 @@ class DataDbController extends DbController
                 'institution' => $krakow->getId(), 'doctor' => $doc1->getId(),
             ]);
             $ev1 = $patientModel->addEvent([
-                'patientid' => $pat1->getId(), 'date' => '20140418', 'activity' => 'diet',
+                'patientid' => $pat1->getId(), 'date' => '18/04/2014', 'activity' => 'diet',
                 'title' => 'Eat stuff', 'details' => '1 bowl of stuff', 'time' => '10:00', 
                 'duration' => 60,
+            ]);
+            $ev2 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => '18/04/2014', 'activity' => 'medicines',
+                'title' => 'take drugs', 'details' => 'medicinal drugs', 'time' => '12:00', 
+                'duration' => 45,
+            ]);
+            $ev3 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => '18/04/2014', 'activity' => 'exercises',
+                'title' => 'Do stuff', 'details' => 'run!', 'time' => '14:00', 
+                'duration' => 30,
             ]);
             
             

@@ -10,6 +10,7 @@ class DbController extends BaseController {
     
     public function indexAction() {
         //$this->requireAuth('admin');
+        return parent::indexAction();
     }
     
     protected function wrapSingleResultAction($action) {

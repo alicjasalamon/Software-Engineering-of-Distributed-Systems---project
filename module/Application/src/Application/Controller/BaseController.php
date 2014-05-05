@@ -54,6 +54,7 @@ abstract class BaseController extends AbstractActionController {
     }
     
     protected function requireAuth($group = null) {
+        //return; //uncomment this line for unit tests babe
         if(!$this->getAuth()->hasIdentity()) {
             $this->redirect()->toRoute('auth');
             return;
