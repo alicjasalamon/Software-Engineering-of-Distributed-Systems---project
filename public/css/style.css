@@ -5,6 +5,7 @@ body.metro {
 #wrap
 {
 }
+
 .event {
     opacity: 0.7;
 }
@@ -30,4 +31,9 @@ body.metro {
     color: red !important;
     display: none !important;
     background-color: aquamarine;
+}
+
+.centerZiom{
+    width: 300px;
+    margin: 20px auto;
 }

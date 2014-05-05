@@ -3,6 +3,7 @@
     var dt = new Date();
     var minutes = Math.round(dt.getMinutes()/15)*15; 
     var time = dt.getHours() + ":" + minutes;
+    time  = "12:30";
     
     $.widget("metro.streamer", {
         version: "1.0.0",

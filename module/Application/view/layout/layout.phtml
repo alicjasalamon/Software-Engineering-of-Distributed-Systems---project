@@ -32,6 +32,7 @@
                 ->appendFile($this->basePath() . '/js/lib/jquery.widget.min.js')
                 ->appendFile($this->basePath() . '/js/lib/jquery.mousewheel.js')
                 ->appendFile($this->basePath() . '/js/lib/jquery.textarea-expander.js')
+                ->appendFile($this->basePath() . '/js/lib/metro-datepicker.js')
                 ->appendFile($this->basePath() . '/js/doc.js')
                 ->appendFile($this->basePath() . '/js/schedule/initialSettings.js')
                 ->appendFile($this->basePath() . '/js/schedule/patient/eventClick.js')
@@ -71,7 +72,7 @@
                     $children = $this->viewModel()->getCurrent()->getChildren();
                     $child = $children[0];
                 ?>
-                <button class="element place-right" data-id="<?=  $child->id; ?>">
+                <button class="element place-right" data-id="<?=  $child->id; ?>" id="credentials">
                     <?= $child->name; ?>
                 </button>
             </nav>
