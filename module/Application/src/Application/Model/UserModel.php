@@ -27,7 +27,7 @@ class UserModel extends EntityModel {
         $id = $user->getId();
         $group = $user->getGroup();
         if($group == 'admin') {
-            return [];
+            return null;
         } else if($group == 'doctor') {
             $doctor = $this->doctorRepository()->createQuery(['user' => $id])->one();
             return $doctor;
@@ -41,8 +41,11 @@ class UserModel extends EntityModel {
     public function add($params) {
         $user = $this->buildUser($params);
         $subUser = $this->createSubUser($user, $params);
-        $subUser->save();
-        return $subUser;
+        if($subUser) {
+            $subUser->save();
+            return $subUser;
+        }
+        return [];
     }
     
     public function clear() {

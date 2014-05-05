@@ -16,6 +16,12 @@ class DataDbController extends DbController
 
             $userModel = $this->model()->userModel();
 
+            /* admin */
+            $admin = $userModel->add([
+                'login' => 'admin', 'password' => 'admin', 'group' => 'admin',
+                'firstname' => 'Admin', 'lastname' => 'Admin', 'email' => 'admin@admin.pl'
+            ]);
+            
             /* doctors */
             $doc1 = $userModel->add([
                 'login' => 'doktor1', 'password' => '12341234', 'group' => 'doctor',
