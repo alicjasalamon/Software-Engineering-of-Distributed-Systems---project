@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    filterPatientsForDoctor();
+   // filterPatientsForDoctor();
     $('#selectPatientSchedule').change(updateStreamer);
 
 
@@ -11,11 +11,10 @@ $(document).ready(function() {
 
 });
 
-filterPatientsForDoctor = function() {
-
-};
-
 updateStreamer = function()
 {
-    alert('new streamer is incoming');
+    alert('new streamer is incoming ' 
+            + $('#credentials').attr("data-id") 
+            + "  "
+            + $('#selectPatientSchedule').val());
 };

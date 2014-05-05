@@ -29,7 +29,7 @@ class UserModel extends EntityModel {
         if($group == 'admin') {
             return [];
         } else if($group == 'doctor') {
-            $doctor = $this->userRepository()->createQuery(['user' => $id])->one();
+            $doctor = $this->doctorRepository()->createQuery(['user' => $id])->one();
             return $doctor;
         } else if($group == 'patient') {
             $patient = $this->patientRepository()->createQuery(['user' => $id])->one();

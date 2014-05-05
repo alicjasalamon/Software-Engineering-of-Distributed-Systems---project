@@ -1,6 +1,6 @@
 /**
-* ******************** INSTITUTIONS ******************
-*/
+ * ******************** INSTITUTIONS ******************
+ */
 renderInstitution = function(institution) {
 
     var select = $('.fillWithInstitutions');
@@ -11,8 +11,8 @@ renderInstitution = function(institution) {
 };
 
 /**
-* ******************** PATIENTS ******************
-*/
+ * ******************** PATIENTS ******************
+ */
 renderPatient = function(patient, doctor) {
     renderPatientInTable(patient, doctor);
     renderPatientInSelects(patient);
@@ -24,40 +24,48 @@ renderPatientInSelects = function(patient) {
     option.html(patient.firstname + " " + patient.lastname);
     option.val(patient.id);
     option.attr('data-doctor', patient.doctor);
-    selectsPatient.append(option);
+
+    var loggedDoctorID = $('#credentials').attr("data-id");
+    if (loggedDoctorID === patient.doctor)
+    {
+         selectsPatient.append(option);
+    }
+
+
+
 };
 
 renderPatientInTable = function(patient, doctor) {
     var patientsTable = $('.fillWithPatientsTable');
     var row = $('<tr/>');
     row.attr('data-institution', patient.institution);
-    
+
     var tdFirstName = $('<td/>');
     tdFirstName.html(patient.firstname);
     row.append(tdFirstName);
-    
+
     var tdLastName = $('<td/>');
     tdLastName.html(patient.lastname);
     row.append(tdLastName);
-    
+
     var tdLogin = $('<td/>');
     tdLogin.html(patient.login);
     row.append(tdLogin);
-    
+
     var tdEmail = $('<td/>');
     tdEmail.html(patient.email);
     row.append(tdEmail);
-    
+
     var tdDoctor = $('<td/>');
     tdDoctor.html(doctor.firstname + " " + doctor.lastname);
-    row.append(tdDoctor);   
-    
+    row.append(tdDoctor);
+
     patientsTable.append(row);
 };
 
 /**
-* ******************** DOCTORS ******************
-*/
+ * ******************** DOCTORS ******************
+ */
 renderDoctor = function(doctor) {
     renderDoctorInTable(doctor);
     renderDoctorInSelects(doctor);
@@ -66,7 +74,7 @@ renderDoctor = function(doctor) {
 renderDoctorInTable = function(doctor) {
     var doctorsTable = $('.fillWithDoctorsTable');
     var row = $('<tr/>');
-    row.attr('data-institution', doctor.institution);  
+    row.attr('data-institution', doctor.institution);
 
     var tdFirstName = $('<td/>');
     tdFirstName.html(doctor.firstname);
