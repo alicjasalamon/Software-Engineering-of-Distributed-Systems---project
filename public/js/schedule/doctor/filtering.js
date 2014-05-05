@@ -1,21 +1,21 @@
-$(document).ready(function (){
-   
+$(document).ready(function() {
     filterPatientsForDoctor();
-    $('#selectPatientSchedule').change(function ()
-    {
-        updateStreamer();
-    });
+    $('#selectPatientSchedule').change(updateStreamer);
 
-    //on patient change
-    //on date change
-    
+
+    $("#datepicker").datepicker({selected: function(dateString, dateObject) {
+        alert('date-selected');
+    }});
+
+    $('#schedulerDate').change(updateStreamer);
+
 });
 
-filterPatientsForDoctor = function (){
-    
+filterPatientsForDoctor = function() {
+
 };
 
-updateStreamer = function ()
+updateStreamer = function()
 {
     alert('new streamer is incoming');
 };
