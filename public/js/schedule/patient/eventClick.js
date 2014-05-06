@@ -17,7 +17,7 @@ $(document).ready(function() {
 
                     var patientEventDialog = $('#patientEventDialog');
 
-                    var detailsStreamer = $(target).find('.detailsStreamer');
+                    var detailsStreamer = $(target).find('.details');
                     var detailsDialog = patientEventDialog.find('.detailsDialog');
 
                     detailsDialog.html(detailsStreamer.html());
