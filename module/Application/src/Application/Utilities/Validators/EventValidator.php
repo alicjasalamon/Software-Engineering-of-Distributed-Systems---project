@@ -36,10 +36,10 @@ class EventValidator extends Validator {
     }
     
     protected function validateDuration($params, $name) {
-        $duration = $params[$name];
-        $isValid = in_array($duration, [20, 40, 60, 80], true);
+        $duration = (int)$params[$name];
+        $isValid = in_array($duration, [15, 30, 45, 60, 75, 90, 105, 120], true);
         if(!$isValid) {
-            $this->throwException($name);
+        $this->throwException($name);
         }
     }
     

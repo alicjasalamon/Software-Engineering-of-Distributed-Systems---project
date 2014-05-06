@@ -9,6 +9,6 @@ $(document).ready(function()
     }
 
     var dt = new Date();
-    $("#schedulerDate").val(convertDate(dt));
+    //$("#schedulerDate").val(convertDate(dt));
     
 });

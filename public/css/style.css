@@ -37,3 +37,13 @@ body.metro {
     width: 300px;
     margin: 20px auto;
 }
+
+.ziom
+{
+    width: 14500px !important;
+}
+
+.empty{
+    padding-left: 10px;
+    padding-top: 1px;
+}
