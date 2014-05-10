@@ -48,10 +48,6 @@ renderPatientInTable = function(patient, doctor) {
     tdLastName.html(patient.lastname);
     row.append(tdLastName);
 
-    var tdLogin = $('<td/>');
-    tdLogin.html(patient.login);
-    row.append(tdLogin);
-
     var tdEmail = $('<td/>');
     tdEmail.html(patient.email);
     row.append(tdEmail);
@@ -83,10 +79,6 @@ renderDoctorInTable = function(doctor) {
     var tdLastName = $('<td/>');
     tdLastName.html(doctor.lastname);
     row.append(tdLastName);
-
-    var tdLogin = $('<td/>');
-    tdLogin.html(doctor.login);
-    row.append(tdLogin);
 
     var tdEmail = $('<td/>');
     tdEmail.html(doctor.email);
