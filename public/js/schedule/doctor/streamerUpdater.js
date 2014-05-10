@@ -107,36 +107,14 @@ function fillEvent(eventDiv, event)
 
 function setColor(event, eventDiv, activity)
 {
-    if (activity === 'diet')
-    {
-        if (event.state !== 'done')
-            eventDiv.addClass('bg-teal');
-        else
-            eventDiv.addClass('ribbed-tead');
-    }
-    else if (activity === 'exercises')
-    {
-        if (event.state !== 'done')
-            eventDiv.addClass('bg-pink');
-        else
-            eventDiv.addClass('ribbed-pink');
-    }
-
-    else if (activity === 'medicines')
-    {
-        if (event.state !== 'done')
-            eventDiv.addClass('bg-green');
-        else
-            eventDiv.addClass('ribbed-green');
-    }
-
-    else if (activity === 'visits')
-    {
-        if (event.state !== 'done')
-            eventDiv.addClass('bg-steel');
-        else
-            eventDiv.addClass('ribbed-steel');
-    }
-    else
-        eventDiv.addClass('bg-red');
+    map = new Object();
+    map['diet'] = 'teal';
+    map['exercises'] = 'pink';
+    map['medicines'] = 'green';
+    map['visits'] = 'steel';
+    map['measurements'] = 'crimson';
+    
+    var color = map[activity];
+    var clazz = (event.state !== 'done' ? 'bg-' : 'ribbed-') + color;
+    eventDiv.addClass(clazz);
 }
