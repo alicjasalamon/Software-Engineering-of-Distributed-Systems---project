@@ -8,11 +8,11 @@ updateStreamer = function()
 {
 
     var patientID = ($('#selectPatientSchedule').length === 0) ? $('#credentials').attr("data-id") : $('#selectPatientSchedule').val();
-    var date = $('#datepicker').attr('data-date');
+    var date = $('#schedulerDate').val();
 
     $.ajax({type: "POST", url: "db/day", data: {
-            patientid: "53690e4e87dba0d8100000bb",
-            date: "18/04/2014",
+            patientid: patientID,
+            date: date,
         }}).success(function(data) {
 
         var streams = data.data.streams;
