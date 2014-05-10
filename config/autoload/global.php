@@ -92,7 +92,7 @@ return array(
         ],
         'Application\Entity\Stream' => [
             'fields' => [
-                'activity'      => 'string', // diet, exercises, medicines, visits
+                'activity'      => 'string', // diet, exercises, medicines, visits, measurements
             ],
             'referencesMany' => [
                 'events' => [

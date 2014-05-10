@@ -25,7 +25,7 @@ class EventValidator extends Validator {
     
     protected function validateActivity($params, $name) {
         $activity = $params[$name];
-        $isValid = in_array($activity, ['diet', 'exercises', 'medicines', 'visits']);
+        $isValid = in_array($activity, ['diet', 'exercises', 'medicines', 'visits', 'measurements']);
         if(!$isValid) {
             $this->throwException($name);
         }

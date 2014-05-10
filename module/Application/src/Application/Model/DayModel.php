@@ -51,7 +51,8 @@ class DayModel extends EntityModel {
         $streamExercises = $this->createStream('exercises');
         $streamMedicines = $this->createStream('medicines');
         $streamVisits = $this->createStream('visits');
-        $streams = [$streamDiet, $streamExercises, $streamMedicines, $streamVisits];
+        $streamMeasurements = $this->createStream('measurements');
+        $streams = [$streamDiet, $streamExercises, $streamMedicines, $streamVisits, $streamMeasurements];
         $day->addStreams($streams);
         foreach ($streams as $stream) {
             $stream->save();
