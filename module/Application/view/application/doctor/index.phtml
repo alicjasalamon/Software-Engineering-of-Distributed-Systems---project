@@ -1,49 +1,61 @@
-<div class="grid" style="display: none;">
+<div class="grid">
     <div class="row">
         <div class="accordion" data-role="accordion">
             <div class="accordion-frame">
                 <a href="#" class="heading">Measurements results</a>
-                <div class="content">...</div>
+                <div class="content" style="display: block">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-left">Date</th>
+                                <th class="text-left">Hour</th>
+                                <th class="text-left">Patient</th>
+                                <th class="text-left">Type</th>
+                                <th class="text-left">Value</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr class="error"><td>Bing</td><td class="right">0:00:01</td><td class="right">0,1 Mb</td><td class="right">0 Mb</td><td class="right">0,1 Mb</td></tr>
+                            <tr ><td>Internet Explorer</td><td class="right">0:00:01</td><td class="right">0,1 Mb</td><td class="right">0 Mb</td><td class="right">0,1 Mb</td></tr>
+                            <tr ><td>Chrome</td><td class="right">0:00:01</td><td class="right">0,1 Mb</td><td class="right">0 Mb</td><td class="right">0,1 Mb</td></tr>
+                            <tr><td>News</td><td class="right">0:00:01</td><td class="right">0,1 Mb</td><td class="right">0 Mb</td><td class="right">0,1 Mb</td></tr>
+                            <tr><td>Music</td><td class="right">0:00:01</td><td class="right">0,1 Mb</td><td class="right">0 Mb</td><td class="right">0,1 Mb</td></tr>
+                            <tr><td>Weather</td><td class="right">0:00:01</td><td class="right">0,1 Mb</td><td class="right">0 Mb</td><td class="right">0,1 Mb</td></tr>
+
+                        </tbody>
+
+                        <tfoot></tfoot>
+                    </table>
+                </div>
             </div>
             <div class="accordion-frame">
                 <a href="#" class="heading">Events management</a>
-                <div class="content">
+                <div class="content" style="display: block">
 
-                   
+                    <div class="span3 no-margin">               
+
+
+                        <?= $this->selectPatients ? $this->selectPatients : "" ?>
+
+                        <div id="datepicker" class="input-control text" data-role="datepicker"
+                             data-format="dd/mm/yyyy"
+                             data-position="bottom"
+                             data-effect="slide"
+                             >
+                            <input type="text" id="schedulerDate">
+                            <button class="btn-date"></button>
+                        </div>
+
+                    </div>
+                    <?= $this->streamer ?>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="grid">
-    <div class="row">
-
-
-        <div class="span3">               
-
-
-            <?= $this->selectPatients ? $this->selectPatients : "" ?>
-
-            <div id="datepicker" class="input-control text" data-role="datepicker"
-                 data-format="dd/mm/yyyy"
-                 data-position="bottom"
-                 data-effect="slide"
-                 >
-                <input type="text" id="schedulerDate">
-                <button class="btn-date"></button>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="row">
-
-        <?= $this->streamer ?>
-
-    </div>
-
-    <div style="display: none;">
-        <?= $this->eventDialogs ?>
-    </div>
+<div style="display: none;">
+    <?= $this->eventDialogs ?>
 </div>
+
