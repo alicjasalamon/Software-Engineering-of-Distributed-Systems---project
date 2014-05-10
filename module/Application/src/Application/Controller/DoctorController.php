@@ -8,7 +8,7 @@ class DoctorController extends ScheduleController
 {
     
     public function indexAction() {
-        $this->requireAuth('doctor');
+        $this->requireAuth(['doctor', 'admin']);
         
         $viewModel = parent::indexAction();
         $renderer = $this->getServiceLocator()->get('ViewRenderer');

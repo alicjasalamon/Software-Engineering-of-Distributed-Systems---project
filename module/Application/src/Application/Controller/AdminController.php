@@ -7,7 +7,7 @@ use Zend\View\Model\ViewModel;
 class AdminController extends BaseController {
     
     public function indexAction() {
-        $this->requireAuth('admin');
+        $this->requireAuth(['admin']);
         
         $viewModel = parent::indexAction();
         $renderer = $this->getServiceLocator()->get('ViewRenderer');

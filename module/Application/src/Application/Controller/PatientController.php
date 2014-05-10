@@ -8,7 +8,7 @@ class PatientController extends ScheduleController
 {
 
     public function indexAction() {
-        $this->requireAuth('patient');
+        $this->requireAuth(['patient', 'admin']);
         
         $viewModel = parent::indexAction();
         $eventDialogsViewModel = new ViewModel();

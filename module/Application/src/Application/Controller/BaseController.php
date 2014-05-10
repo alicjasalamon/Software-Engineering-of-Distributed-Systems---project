@@ -22,13 +22,13 @@ abstract class BaseController extends AbstractActionController {
     public function indexAction() {
         $viewModel = new ViewModel();
         $identity = $this->getAuth()->getIdentity();
-        
-        $name = $identity->getName();
-        $viewModel->setVariable('name', $name);
-        
-        $id = $identity->getId();
-        $viewModel->setVariable('id', $id);
-        
+        if($identity) {
+            $name = $identity->getName();
+            $viewModel->setVariable('name', $name);
+
+            $id = $identity->getId();
+            $viewModel->setVariable('id', $id);
+        }
         return $viewModel;
     }
 
@@ -53,15 +53,14 @@ abstract class BaseController extends AbstractActionController {
         return $this->auth;
     }
     
-    protected function requireAuth($group = null) {
-        return;
-        //return; //uncomment this line for unit tests babe
+    protected function requireAuth($groups = []) {
         if(!$this->getAuth()->hasIdentity()) {
             $this->redirect()->toRoute('auth');
             return;
         } else {
             $identity = $this->getAuth()->getIdentity();
-            if($group != $identity->getGroup()) {
+            $inArray = in_array($identity->getGroup(), $groups);
+            if(!$inArray && count($groups) > 0) {
                 $this->redirect()->toRoute($identity->getGroup());
             }
         }
