@@ -16,6 +16,7 @@ class PatientController extends ScheduleController
         $eventDialogsViewModel->setTemplate('application/patient/eventDialogs');
         $eventDialogsHtml = $renderer->render($eventDialogsViewModel);
         $viewModel->setVariable('eventDialogs', $eventDialogsHtml);
+       
         return $viewModel;
     }
     

@@ -8,7 +8,6 @@ class ScheduleController extends BaseController {
     
     public function indexAction() {
         $viewModel = parent::indexAction();
-        $viewModel->setTemplate('application/schedule/index');
         
         $renderer = $this->getServiceLocator()->get('ViewRenderer');
         
