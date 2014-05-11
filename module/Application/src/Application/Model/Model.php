@@ -46,6 +46,11 @@ class Model {
      */
     private $streamModel;
     
+    /**
+     * @var MeasurementsModel
+     */
+    private $measurementsModel;
+    
     public function __construct($mandango) {
         $this->mandango = $mandango;
     }
@@ -133,6 +138,16 @@ class Model {
             $this->streamModel = new StreamModel($this->mandango);
         }
         return $this->streamModel;
+    }
+    
+    /**
+     * @var MeasurementsModel
+     */
+    public function measurementsModel() {
+        if(!$this->measurementsModel) {
+            $this->measurementsModel = new MeasurementsModel($this->mandango);
+        }
+        return $this->measurementsModel;
     }
     
 }

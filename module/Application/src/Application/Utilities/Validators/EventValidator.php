@@ -15,6 +15,9 @@ class EventValidator extends Validator {
         $this->validateText($params, 'details');
         $this->validateTime($params, 'time');
         $this->validateDuration($params, 'duration');
+        if($params['activity'] == 'measurements') {
+            $this->validateParamExists($params, 'measurement');
+        }
     }
     
     public function validateChangeState($params) {

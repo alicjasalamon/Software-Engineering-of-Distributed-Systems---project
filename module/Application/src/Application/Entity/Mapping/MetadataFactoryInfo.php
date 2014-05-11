@@ -473,6 +473,14 @@ class MetadataFactoryInfo
                     'type' => 'string',
                     'dbName' => 'state',
                 ),
+                'measurement' => array(
+                    'type' => 'string',
+                    'dbName' => 'measurement',
+                ),
+                'measurementvalue' => array(
+                    'type' => 'string',
+                    'dbName' => 'measurementvalue',
+                ),
             ),
             '_has_references' => false,
             'referencesOne' => array(

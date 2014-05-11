@@ -61,6 +61,16 @@ abstract class Event extends \Mandango\Document\Document
         } elseif (isset($data['_fields']['state'])) {
             $this->data['fields']['state'] = null;
         }
+        if (isset($data['measurement'])) {
+            $this->data['fields']['measurement'] = (string) $data['measurement'];
+        } elseif (isset($data['_fields']['measurement'])) {
+            $this->data['fields']['measurement'] = null;
+        }
+        if (isset($data['measurementvalue'])) {
+            $this->data['fields']['measurementvalue'] = (string) $data['measurementvalue'];
+        } elseif (isset($data['_fields']['measurementvalue'])) {
+            $this->data['fields']['measurementvalue'] = null;
+        }
 
         return $this;
     }
@@ -375,6 +385,130 @@ abstract class Event extends \Mandango\Document\Document
         return $this->data['fields']['state'];
     }
 
+    /**
+     * Set the "measurement" field.
+     *
+     * @param mixed $value The value.
+     *
+     * @return \Application\Entity\Event The document (fluent interface).
+     */
+    public function setMeasurement($value)
+    {
+        if (!isset($this->data['fields']['measurement'])) {
+            if (!$this->isNew()) {
+                $this->getMeasurement();
+                if ($this->isFieldEqualTo('measurement', $value)) {
+                    return $this;
+                }
+            } else {
+                if (null === $value) {
+                    return $this;
+                }
+                $this->fieldsModified['measurement'] = null;
+                $this->data['fields']['measurement'] = $value;
+                return $this;
+            }
+        } elseif ($this->isFieldEqualTo('measurement', $value)) {
+            return $this;
+        }
+
+        if (!isset($this->fieldsModified['measurement']) && !array_key_exists('measurement', $this->fieldsModified)) {
+            $this->fieldsModified['measurement'] = $this->data['fields']['measurement'];
+        } elseif ($this->isFieldModifiedEqualTo('measurement', $value)) {
+            unset($this->fieldsModified['measurement']);
+        }
+
+        $this->data['fields']['measurement'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Returns the "measurement" field.
+     *
+     * @return mixed The $name field.
+     */
+    public function getMeasurement()
+    {
+        if (!isset($this->data['fields']['measurement'])) {
+            if ($this->isNew()) {
+                $this->data['fields']['measurement'] = null;
+            } elseif (!isset($this->data['fields']) || !array_key_exists('measurement', $this->data['fields'])) {
+                $this->addFieldCache('measurement');
+                $data = $this->getRepository()->getCollection()->findOne(array('_id' => $this->getId()), array('measurement' => 1));
+                if (isset($data['measurement'])) {
+                    $this->data['fields']['measurement'] = (string) $data['measurement'];
+                } else {
+                    $this->data['fields']['measurement'] = null;
+                }
+            }
+        }
+
+        return $this->data['fields']['measurement'];
+    }
+
+    /**
+     * Set the "measurementvalue" field.
+     *
+     * @param mixed $value The value.
+     *
+     * @return \Application\Entity\Event The document (fluent interface).
+     */
+    public function setMeasurementvalue($value)
+    {
+        if (!isset($this->data['fields']['measurementvalue'])) {
+            if (!$this->isNew()) {
+                $this->getMeasurementvalue();
+                if ($this->isFieldEqualTo('measurementvalue', $value)) {
+                    return $this;
+                }
+            } else {
+                if (null === $value) {
+                    return $this;
+                }
+                $this->fieldsModified['measurementvalue'] = null;
+                $this->data['fields']['measurementvalue'] = $value;
+                return $this;
+            }
+        } elseif ($this->isFieldEqualTo('measurementvalue', $value)) {
+            return $this;
+        }
+
+        if (!isset($this->fieldsModified['measurementvalue']) && !array_key_exists('measurementvalue', $this->fieldsModified)) {
+            $this->fieldsModified['measurementvalue'] = $this->data['fields']['measurementvalue'];
+        } elseif ($this->isFieldModifiedEqualTo('measurementvalue', $value)) {
+            unset($this->fieldsModified['measurementvalue']);
+        }
+
+        $this->data['fields']['measurementvalue'] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Returns the "measurementvalue" field.
+     *
+     * @return mixed The $name field.
+     */
+    public function getMeasurementvalue()
+    {
+        if (!isset($this->data['fields']['measurementvalue'])) {
+            if ($this->isNew()) {
+                $this->data['fields']['measurementvalue'] = null;
+            } elseif (!isset($this->data['fields']) || !array_key_exists('measurementvalue', $this->data['fields'])) {
+                $this->addFieldCache('measurementvalue');
+                $data = $this->getRepository()->getCollection()->findOne(array('_id' => $this->getId()), array('measurementvalue' => 1));
+                if (isset($data['measurementvalue'])) {
+                    $this->data['fields']['measurementvalue'] = (string) $data['measurementvalue'];
+                } else {
+                    $this->data['fields']['measurementvalue'] = null;
+                }
+            }
+        }
+
+        return $this->data['fields']['measurementvalue'];
+    }
+
     private function isFieldEqualTo($field, $otherValue)
     {
         $value = $this->data['fields'][$field];
@@ -446,6 +580,12 @@ abstract class Event extends \Mandango\Document\Document
         if ('state' == $name) {
             return $this->setState($value);
         }
+        if ('measurement' == $name) {
+            return $this->setMeasurement($value);
+        }
+        if ('measurementvalue' == $name) {
+            return $this->setMeasurementvalue($value);
+        }
 
         throw new \InvalidArgumentException(sprintf('The document data "%s" is not valid.', $name));
     }
@@ -475,6 +615,12 @@ abstract class Event extends \Mandango\Document\Document
         }
         if ('state' == $name) {
             return $this->getState();
+        }
+        if ('measurement' == $name) {
+            return $this->getMeasurement();
+        }
+        if ('measurementvalue' == $name) {
+            return $this->getMeasurementvalue();
         }
 
         throw new \InvalidArgumentException(sprintf('The document data "%s" is not valid.', $name));
@@ -507,6 +653,12 @@ abstract class Event extends \Mandango\Document\Document
         if (isset($array['state'])) {
             $this->setState($array['state']);
         }
+        if (isset($array['measurement'])) {
+            $this->setMeasurement($array['measurement']);
+        }
+        if (isset($array['measurementvalue'])) {
+            $this->setMeasurementvalue($array['measurementvalue']);
+        }
 
         return $this;
     }
@@ -527,6 +679,8 @@ abstract class Event extends \Mandango\Document\Document
         $array['time'] = $this->getTime();
         $array['duration'] = $this->getDuration();
         $array['state'] = $this->getState();
+        $array['measurement'] = $this->getMeasurement();
+        $array['measurementvalue'] = $this->getMeasurementvalue();
 
         return $array;
     }
@@ -556,6 +710,12 @@ abstract class Event extends \Mandango\Document\Document
                 }
                 if (isset($this->data['fields']['state'])) {
                     $query['state'] = (string) $this->data['fields']['state'];
+                }
+                if (isset($this->data['fields']['measurement'])) {
+                    $query['measurement'] = (string) $this->data['fields']['measurement'];
+                }
+                if (isset($this->data['fields']['measurementvalue'])) {
+                    $query['measurementvalue'] = (string) $this->data['fields']['measurementvalue'];
                 }
             } else {
                 if (isset($this->data['fields']['title']) || array_key_exists('title', $this->data['fields'])) {
@@ -610,6 +770,28 @@ abstract class Event extends \Mandango\Document\Document
                             $query['$set']['state'] = (string) $this->data['fields']['state'];
                         } else {
                             $query['$unset']['state'] = 1;
+                        }
+                    }
+                }
+                if (isset($this->data['fields']['measurement']) || array_key_exists('measurement', $this->data['fields'])) {
+                    $value = $this->data['fields']['measurement'];
+                    $originalValue = $this->getOriginalFieldValue('measurement');
+                    if ($value !== $originalValue) {
+                        if (null !== $value) {
+                            $query['$set']['measurement'] = (string) $this->data['fields']['measurement'];
+                        } else {
+                            $query['$unset']['measurement'] = 1;
+                        }
+                    }
+                }
+                if (isset($this->data['fields']['measurementvalue']) || array_key_exists('measurementvalue', $this->data['fields'])) {
+                    $value = $this->data['fields']['measurementvalue'];
+                    $originalValue = $this->getOriginalFieldValue('measurementvalue');
+                    if ($value !== $originalValue) {
+                        if (null !== $value) {
+                            $query['$set']['measurementvalue'] = (string) $this->data['fields']['measurementvalue'];
+                        } else {
+                            $query['$unset']['measurementvalue'] = 1;
                         }
                     }
                 }

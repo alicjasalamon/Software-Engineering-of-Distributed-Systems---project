@@ -107,6 +107,8 @@ return array(
                 'time'          => 'string',
                 'duration'      => 'integer',
                 'state'         => 'string', // future, inprogress, done, undone
+                'measurement'   => 'string',
+                'measurementvalue' => 'string',
             ],
         ],
         

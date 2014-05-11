@@ -197,6 +197,19 @@ return array(
                     ),
                 ),
             ),
+            'measurementsdb' => array(
+                'type' => 'segment',
+                'options' => array(
+                    'route' => '/db/measurements[/:action]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Application\Controller\Db\MeasurementsDb',
+                        'action' => 'index',
+                    ),
+                ),
+            ),
         ),
     ),
     'service_manager' => array(
@@ -254,6 +267,7 @@ return array(
             'Application\Controller\Db\UserDb' => 'Application\Controller\Db\UserDbController',
             'Application\Controller\Db\EventDb' => 'Application\Controller\Db\EventDbController',
             'Application\Controller\Db\DayDb' => 'Application\Controller\Db\DayDbController',
+            'Application\Controller\Db\MeasurementsDb' => 'Application\Controller\Db\MeasurementsDbController',
         ),
     ),
     'view_manager' => array(

@@ -40,6 +40,13 @@ class EventModel extends EntityModel {
         return $event;
     }
     
+    public function setMeasurementValue($params) {
+        $event = $this->get($params);
+        $event->setMeasurementvalue($params['measurementvalue']);
+        $event->save();
+        return $event;
+    }
+    
     protected function buildEvent($params) {
         $event = new Event($this->mandango);
         $event->setTitle($params['title']);
@@ -47,6 +54,9 @@ class EventModel extends EntityModel {
         $event->setTime($params['time']);
         $event->setDuration($params['duration']);
         $event->setState('future');
+        if(array_key_exists('measurement', $params)) {
+            $event->setMeasurement($params['measurement']);
+        }
         return $event;
     }
     

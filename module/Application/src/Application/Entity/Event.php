@@ -17,6 +17,8 @@ class Event extends \Application\Entity\Base\Event
         $array['time'] = $this->getTime();
         $array['duration'] = $this->getDuration();
         $array['state'] = $this->getState();
+        $array['measurement'] = $this->getMeasurement();
+        $array['measurementvalue'] = $this->getMeasurementvalue();
 
         return $array;
     }
