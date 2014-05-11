@@ -34,7 +34,7 @@ function start(time)
     var num = 0;
 
     num += min / 15;
-    num += (hour - 6) * 4;
+    num += hour * 4;
 
     return num;
 
