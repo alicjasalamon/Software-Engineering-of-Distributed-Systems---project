@@ -30,6 +30,14 @@ class EventDbController extends DbController {
            return $event;
         });
     }
+    
+    public function measurementAction() {
+        return $this->wrapSingleResultAction(function($params) {
+            $this->validator->validateSetMeasurementValue($params);
+            $event = $this->model()->eventModel()->setMeasurementValue($params);
+            return $event;
+        });
+    }
 
 }
 

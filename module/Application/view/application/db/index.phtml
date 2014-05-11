@@ -232,6 +232,8 @@
             {name:"time", type:"string"},
             {name:"duration", type:"integer"},
             {name:"state", type:"string"},
+            {name:"measurement", type:"string"},
+            {name:"measurementvalue", type:"string"},
         ],
         interfaces: [
             {
@@ -245,6 +247,7 @@
                     {name:"details", type:"string"},
                     {name:"time", type:"string"},
                     {name:"duration", type:"integer"},
+                    {name:"measurement", type:"string", optional: true},
                 ],
                 example:
 '$.ajax({ type: "POST", url: "db/event/add", data: {\n\
@@ -270,6 +273,21 @@
 '$.ajax({ type: "POST", url: "db/event/state", data: {\n\
     id: "EVENTID",\n\
     state: "future", //future, inprogress, done, undone\n\
+}}).success(function(data) { \n\
+    console.log(JSON.stringify(data)); \n\
+});',
+            },
+            {
+                name: "Set measurement value",
+                url: "/db/event/measurement",
+                parameters: [
+                    {name:"id", type:"string (id)"},
+                    {name:"measurementvalue", type:"string"},
+                ],
+                example:
+'$.ajax({ type: "POST", url: "db/event/measurement", data: {\n\
+    id: "EVENTID",\n\
+    measurementvalue: "64kg", \n\
 }}).success(function(data) { \n\
     console.log(JSON.stringify(data)); \n\
 });',

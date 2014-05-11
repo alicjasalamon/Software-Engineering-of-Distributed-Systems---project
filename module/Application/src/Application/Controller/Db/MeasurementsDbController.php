@@ -18,8 +18,8 @@ class MeasurementsDbController extends DbController {
     public function indexAction() {
         return $this->wrapSingleResultAction(function($params) {
             $this->validator->validateGet($params);
-            $institution = $this->model()->measurementsModel()->get($params);
-            return $institution;
+            $measurements = $this->model()->measurementsModel()->get($params);
+            return $measurements;
         });
     }
     

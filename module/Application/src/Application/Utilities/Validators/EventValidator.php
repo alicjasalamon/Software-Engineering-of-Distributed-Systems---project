@@ -26,6 +26,11 @@ class EventValidator extends Validator {
         $this->validateState($params, 'state');
     }
     
+    public function validateSetMeasurementValue($params) {
+        $this->validateParamsExist($params, ['id', 'measurementvalue']);
+        $this->validateId($params, 'id');
+    }
+
     protected function validateActivity($params, $name) {
         $activity = $params[$name];
         $isValid = in_array($activity, ['diet', 'exercises', 'medicines', 'visits', 'measurements']);
