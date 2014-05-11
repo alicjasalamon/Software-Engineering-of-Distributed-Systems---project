@@ -1,17 +1,22 @@
-<div id="patientEventDialog">
-    
+<div id="doctorEventDialog">
+
     <form class="user-input margin20 test">
-       
-        <div class="detailsDialog">
+
+        <div class="details">
+
+            <div>Patient: <span id="patientName"></span></div>
+            <div>Date: <span id="date"></span></div>
+            <div>Hour: <span id="hour"></span></div>
+            <div>Activity type: <span id="activityType"></span></div>
+
         </div>
-        
+
         <div class="margin20"></div>
 
         <div class="form-actions">
-            <button class="button success">Done</button>
+            <button class="button success" type="button">Done</button>
             <button class="button" type="button" onclick="$.Dialog.close()">Cancel</button> 
         </div>
     </form>
 </div>
-
 
