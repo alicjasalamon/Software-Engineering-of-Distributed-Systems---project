@@ -10,8 +10,8 @@
         options: {
             scrollBar: false,
             meter: {
-                start: 6,
-                stop: 23,
+                start: 0,
+                stop: 24,
                 interval: 15
             },
             slideToGroup: 1,
