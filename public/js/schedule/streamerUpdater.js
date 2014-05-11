@@ -114,7 +114,7 @@ function fillEvent(eventDiv, event)
 
 function setColor(event, eventDiv, activity)
 {
-    map = new Object();
+    var map = new Object();
     map['diet'] = 'teal';
     map['exercises'] = 'pink';
     map['medicines'] = 'green';

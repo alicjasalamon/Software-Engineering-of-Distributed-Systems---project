@@ -107,6 +107,37 @@ class DataDbController extends DbController
                 'title' => 'Do stuff', 'details' => '20 push-ups', 'time' => '18:00', 
                 'duration' => 15,
             ]);
+            $ev41 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => $date, 'activity' => 'visits',
+                'title' => 'Dr lol visit', 'details' => 'body massage', 'time' => '7:00', 
+                'duration' => 15,
+            ]);
+            $ev42 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => $date, 'activity' => 'visits',
+                'title' => 'Dr Lol visit', 'details' => 'second body massage', 'time' => '15:00', 
+                'duration' => 15,
+            ]);
+            $ev43 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => $date, 'activity' => 'visits',
+                'title' => 'Dr Mister visit', 'details' => 'check', 'time' => '10:00', 
+                'duration' => 15,
+            ]);
+            $ev51 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => $date, 'activity' => 'measurements',
+                'title' => 'Measure weight', 'details' => 'Enter your weight in [kg]', 'time' => '8:00', 
+                'duration' => 15,
+            ]);
+            $ev52 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => $date, 'activity' => 'measurements',
+                'title' => 'Measure blood pressure', 'details' => 'Enter your blood pressure', 'time' => '9:00', 
+                'duration' => 15,
+            ]);
+            $ev53 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => $date, 'activity' => 'measurements',
+                'title' => 'Measure sugar level', 'details' => 'Enter your sugar level', 'time' => '14:00', 
+                'duration' => 15,
+            ]);
+            
             
             
             $pat2 = $userModel->add([

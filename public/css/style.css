@@ -54,6 +54,7 @@ body.metro {
 }
 .metro .streamer .events .event-stream .event {
 	min-width: 101px;
+	max-width: 101px;
 }
 .metro .streamer .events .event-stream .event.double{
 	max-width: 204px;
