@@ -94,7 +94,7 @@ function fillEvent(eventDiv, event)
     hour.html(event.time);
     eventDiv.append(hour);
 
-    var title = $('<h2/>');
+    var title = $('<div/>');
     title.html(event.title);
     eventDiv.append(title);
 

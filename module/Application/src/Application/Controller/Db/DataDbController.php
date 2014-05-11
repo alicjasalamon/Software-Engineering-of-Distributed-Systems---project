@@ -7,6 +7,8 @@ class DataDbController extends DbController
     
     public function indexAction() {
         try {
+            $date = date('d/m/Y');
+            
             /* institutions */
             $institutionModel = $this->model()->institutionModel();
             $patientModel = $this->model()->patientModel();
@@ -60,20 +62,50 @@ class DataDbController extends DbController
                 'firstname' => 'Albert', 'lastname' => 'Szklanka', 'email' => 'szklanka@o2.pl',
                 'institution' => $krakow->getId(), 'doctor' => $doc1->getId(),
             ]);
-            $ev1 = $patientModel->addEvent([
-                'patientid' => $pat1->getId(), 'date' => '18/04/2014', 'activity' => 'diet',
+            $ev11 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => $date, 'activity' => 'diet',
                 'title' => 'Eat stuff', 'details' => '1 bowl of stuff', 'time' => '10:00', 
+                'duration' => 30,
+            ]);
+            $ev12 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => $date, 'activity' => 'diet',
+                'title' => 'Eat even more stuff', 'details' => '3 bowls of stuff', 'time' => '17:00', 
                 'duration' => 60,
             ]);
-            $ev2 = $patientModel->addEvent([
-                'patientid' => $pat1->getId(), 'date' => '18/04/2014', 'activity' => 'medicines',
-                'title' => 'take drugs', 'details' => 'medicinal drugs', 'time' => '12:00', 
-                'duration' => 45,
+            $ev13 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => $date, 'activity' => 'diet',
+                'title' => 'Eat grapes', 'details' => '5 grapes', 'time' => '18:15', 
+                'duration' => 15,
             ]);
-            $ev3 = $patientModel->addEvent([
-                'patientid' => $pat1->getId(), 'date' => '18/04/2014', 'activity' => 'exercises',
-                'title' => 'Do stuff', 'details' => 'run!', 'time' => '14:00', 
+            $ev21 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => $date, 'activity' => 'medicines',
+                'title' => 'take drugs', 'details' => 'Medicinal drugs', 'time' => '12:00', 
+                'duration' => 15,
+            ]);
+            $ev22 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => $date, 'activity' => 'medicines',
+                'title' => 'take drugs', 'details' => '2x Rutinoscorbin', 'time' => '16:00', 
+                'duration' => 15,
+            ]);
+            $ev23 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => $date, 'activity' => 'medicines',
+                'title' => 'take drugs', 'details' => 'APAP night', 'time' => '22:00', 
+                'duration' => 15,
+            ]);
+            $ev31 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => $date, 'activity' => 'exercises',
+                'title' => 'Do stuff', 'details' => 'Run for 30 minutes', 'time' => '8:00', 
                 'duration' => 30,
+            ]);
+            $ev32 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => $date, 'activity' => 'exercises',
+                'title' => 'Do stuff', 'details' => 'Do a warm-up', 'time' => '14:00', 
+                'duration' => 15,
+            ]);
+            $ev33 = $patientModel->addEvent([
+                'patientid' => $pat1->getId(), 'date' => $date, 'activity' => 'exercises',
+                'title' => 'Do stuff', 'details' => '20 push-ups', 'time' => '18:00', 
+                'duration' => 15,
             ]);
             
             

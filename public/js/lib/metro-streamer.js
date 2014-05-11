@@ -77,7 +77,9 @@
 
                 $(s).css({
                     width: (event_stream_width + ((events.length - 1) * 2) + 1)
+                    
                 });
+                //console.log($(s).css('width'));
 
                 $(s).find(".time").css("background-color", $(streams[i]).css('background-color'));
             });
