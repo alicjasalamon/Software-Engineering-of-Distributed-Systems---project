@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 updateStreamer = function()
 {
-
+    clearAllEvents();
     var patientID = ($('#selectPatientSchedule').length === 0) ? $('#credentials').attr("data-id") : $('#selectPatientSchedule').val();
     var date = $('#schedulerDate').val();
 
@@ -25,6 +25,16 @@ updateStreamer = function()
         }
     });
 };
+
+function clearAllEvents()
+{
+    var events = $('.event');
+    events.empty();
+    events.removeClass();
+    events.addClass('empty');
+    events.addClass('event');
+    events.show();
+}
 
 function start(time)
 {
@@ -90,11 +100,8 @@ function spreadEvent(eventDiv, dur)
 
 function fillEvent(eventDiv, event)
 {
-    var hour = $('<h5/>');
-    hour.html(event.time);
-    eventDiv.append(hour);
 
-    var title = $('<div/>');
+    var title = $('<span/>');
     title.html(event.title);
     eventDiv.append(title);
 
