@@ -135,7 +135,7 @@ class DataDbController extends DbController
             $ev53 = $patientModel->addEvent([
                 'patientid' => $pat1->getId(), 'date' => $date, 'activity' => 'measurements',
                 'title' => 'Measure sugar level', 'details' => 'Enter your sugar level', 'time' => '14:00', 
-                'duration' => 15, 'measurement' => 'sugar',
+                'duration' => 15, 'measurement' => 'sugar-level',
             ]);
             
             
