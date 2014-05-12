@@ -4,7 +4,7 @@ namespace Application\Controller\Db;
 
 use Application\Utilities\Validators\InstitutionValidator;
 
-class MeasurementsDbController extends DbController {
+class InstitutionDbController extends DbController {
     
     /**
      * @var InstitutionValidator

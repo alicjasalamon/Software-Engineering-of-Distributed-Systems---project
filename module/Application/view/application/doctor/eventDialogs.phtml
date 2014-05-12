@@ -2,15 +2,44 @@
 
     <form class="user-input margin20 test">
 
-        <div class="details">
 
-            <div>Patient: <span id="patientName"></span></div>
-            <div>Date: <span id="date"></span></div>
-            <div>Hour: <span id="hour"></span></div>
-            <div>Activity type: <span id="activityType"></span></div>
+        <div>Patient: <span id="patientName"></span></div>
+        <div>Date: <span id="date"></span></div>
+        <div>Hour: <span id="hour"></span></div>
+        <div>Activity type: <span id="activityType"></span></div>
 
+        <div class="margin20"></div>
+
+        <label>Measurement type </label>
+        <div class="input-control select">
+            <select>
+                <option>Weight</option>
+                <option>Blood pressure</option>
+                <option>Sugar level</option>
+            </select>
+        </div>
+                
+        <label>Duration (in min) </label>
+        <div class="input-control select">
+            <select>
+                <option>15</option>
+                <option>30</option>
+                <option>45</option>
+                <option>60</option>
+            </select>
         </div>
 
+        <label>Title:</label>
+        <div class="input-control text">
+            <input type="text" value="" placeholder="input text"/>
+            <button class="btn-clear"></button>
+        </div>
+
+        <label>Details:</label>
+        <div class="input-control textarea">
+            <textarea></textarea>
+        </div>
+        
         <div class="margin20"></div>
 
         <div class="form-actions">

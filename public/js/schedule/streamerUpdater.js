@@ -22,6 +22,7 @@ updateStreamer = function()
             var stream = $('.event-stream')[i];
 
             addEvents(stream, events, streams[i].activity);
+                
         }
     });
 };
@@ -59,11 +60,8 @@ function addEvents(stream, events, activity)
         var event = events[i];
         var index = start(event.time);
 
-
-
         var eventDiv = $(stream).find('.empty')[index];
         eventDiv = $(eventDiv);
-
 
         var dur = event.duration / 15;
         spreadEvent(eventDiv, dur);
@@ -72,6 +70,9 @@ function addEvents(stream, events, activity)
 
         setColor(event, eventDiv, activity);
 
+        eventDiv.addClass(activity);
+        if(activity === 'measurements')
+              eventDiv.attr('data-measurement-type', event.measurement);
 
     }
 }
