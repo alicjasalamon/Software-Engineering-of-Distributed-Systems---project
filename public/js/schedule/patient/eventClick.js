@@ -17,7 +17,7 @@ $(document).ready(function() {
                     var dialog = $('#patientEventDialog');
 
                     addMeasurementFeatures(target, dialog);
-                    
+
                     var detailsStreamer = $(target).find('.details');
                     var detailsDialog = dialog.find('.details');
 
@@ -41,17 +41,17 @@ function addMeasurementFeatures(target, dialog)
         measurementElems.show();
         var unitsMap = new Object();
         unitsMap['weight'] = 'kg';
-        unitsMap['bloodPreasure'] = 'ziom';
-        unitsMap['sugarLevel'] = 'lol'
-        
+        unitsMap['bloodPreasure'] = 'mmHg';
+        unitsMap['sugarLevel'] = 'mmol/L';
+
         var unit = unitsMap[type];
         dialog.find('#unit').html(unit);
-        
+
     }
     else
     {
-      dialog.find('#unit').html('');
-       measurementElems.hide();
-   }
+        dialog.find('#unit').html('');
+        measurementElems.hide();
+    }
 }
 ;
