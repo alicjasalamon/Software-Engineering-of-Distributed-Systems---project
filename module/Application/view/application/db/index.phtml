@@ -296,4 +296,31 @@
     };
     generateDocs(event);
     
+    var measurement = {
+        name: "Measurement",
+        fields: [
+            {name:"date", type:"string"},
+            {name:"time", type:"string"},
+            {name:"patient", type:"string"},
+            {name:"measurement", type:"string"},
+            {name:"measurementvalue", type:"string"},
+        ],
+        interfaces: [
+            {
+                name: "Get measurements",
+                url: "/db/measurements",
+                parameters: [
+                    {name:"doctorid", type:"string (id)"},
+                ],
+                example:
+'$.ajax({ type: "POST", url: "db/measurements", data: {\n\
+    doctorid: "DOCTORID",\n\
+}}).success(function(data) { \n\
+    console.log(JSON.stringify(data)); \n\
+});',
+            },
+        ]
+    };
+    generateDocs(measurement);
+    
 </script>
