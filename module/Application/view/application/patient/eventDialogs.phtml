@@ -1,21 +1,27 @@
 <div id="patientEventDialog">
-    
-    <form class="user-input margin20 test">
-       
-    <div class="input-control select">
-        <select>
-            <option>Value 1</option>
-            <option>Value 2</option>
-            <option>Value 3</option>
-        </select>
-    </div>
-        
-        <div class="margin20"></div>
 
+    <form class="user-input margin20 test">
+
+        <div class="details">
+
+        </div>
+
+        <div style="display: none" id="measurementField">
+            <div class="margin20"></div>
+            <label>Type measurement value in: <span id="unit"></span></label>
+            <div class="input-control text">
+                <input name="measurement" type="text" value="" placeholder="input patient login"/>
+                <button class="btn-clear"></button>
+            </div>
+           
+        </div>
+         <div class="margin20"></div>
         <div class="form-actions">
             <button class="button success">Done</button>
             <button class="button" type="button" onclick="$.Dialog.close()">Cancel</button> 
         </div>
+
+
     </form>
 </div>
 

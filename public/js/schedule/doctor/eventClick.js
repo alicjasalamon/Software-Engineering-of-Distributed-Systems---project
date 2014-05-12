@@ -1,31 +1,32 @@
 $(document).ready(function() {
     $('body').on('click', '.event', function(e) {
 
-        var target = e.currentTarget;
-        if ($(this).children().length > 0)
-        {
-            $.Dialog({
-                overlay: true,
-                shadow: true,
-                flat: true,
-                icon: '<i class="icon-accessibility"></i>',
-                title: 'Event details',
-                content: '',
-                onShow: function(_dialog) {
+        var target = $(e.currentTarget);
+        var isEmpty = (target.children().length === 0)
+        var isMeasurement = target.hasClass('measurements');
+        
+        $.Dialog({
+            overlay: true,
+            shadow: true,
+            flat: true,
+            icon: '<i class="icon-accessibility"></i>',
+            title: 'Event details',
+            content: '',
+            onShow: function(_dialog) {
 
-                    var content = _dialog.children('.content');
+                var content = _dialog.children('.content');
+                var dialog = $('#doctorEventDialog');
+                
+                   
+                var newContent = $(dialog).html();
+                content.html(newContent);
+            }
+        });
 
-                    var patientEventDialog = $('#patientEventDialog');
-
-                    var detailsStreamer = $(target).find('.details')[0];
-                    var detailsDialog = patientEventDialog.find('.detailsDialog');
-
-                    detailsDialog.html(detailsStreamer.html());
-
-                    var newContent = $(patientEventDialog).html();
-                    content.html(newContent);
-                }
-            });
-        }
     });
 });
+
+function basicInformationFill()
+{
+    
+}
