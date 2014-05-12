@@ -28,6 +28,9 @@ abstract class BaseController extends AbstractActionController {
 
             $id = $identity->getId();
             $viewModel->setVariable('id', $id);
+            
+            $group = $identity->getGroup();
+            $viewModel->setVariable('group', $group);
         }
         return $viewModel;
     }
