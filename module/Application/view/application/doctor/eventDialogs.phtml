@@ -3,6 +3,7 @@
     <form class="user-input margin20 test">
 
 
+
         <div>Patient: <span id="patientName"></span></div>
         <div>Date: <span id="date"></span></div>
         <div>Hour: <span id="hour"></span></div>
@@ -10,42 +11,51 @@
 
         <div class="margin20"></div>
 
+        <div style="display: none">
+            <input name="patientid"/>
+            <input name="date"/>
+            <input name="time"/>
+            <input name="activity"/>
+        </div>
+
         <div id="measurementsDiv">   
             <label>Measurement type </label>
             <div class="input-control select">
-                <select>
-                    <option>Weight</option>
-                    <option>Blood pressure</option>
-                    <option>Sugar level</option>
+                <select name="measurement">
+                    <option value="weight">Weight</option>
+                    <option value="blood-pressure">Blood pressure</option>
+                    <option value="sugar-level">Sugar level</option>
                 </select>
             </div>
         </div>
 
         <label>Duration (in min) </label>
         <div class="input-control select">
-            <select>
-                <option>15</option>
-                <option>30</option>
-                <option>45</option>
-                <option>60</option>
+            <select name="duration">
+                <option value="15">15</option>
+                <option value="30">30</option>
+                <option value="45">45</option>
+                <option value="60">60</option>
             </select>
         </div>
 
         <label>Title:</label>
         <div class="input-control text">
-            <input type="text" value="" placeholder="input text"/>
+            <input type="text" name="title" placeholder="input text"/>
             <button class="btn-clear"></button>
         </div>
 
         <label>Details:</label>
         <div class="input-control textarea">
-            <textarea></textarea>
+            <textarea name="details">
+                
+            </textarea>
         </div>
 
         <div class="margin20"></div>
 
         <div class="form-actions">
-            <button class="button success" type="button">Done</button>
+            <button class="button success submit-new-event" type="button">Done</button>
             <button class="button" type="button" onclick="$.Dialog.close()">Cancel</button> 
         </div>
     </form>

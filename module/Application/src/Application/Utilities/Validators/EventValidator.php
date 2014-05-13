@@ -45,7 +45,7 @@ class EventValidator extends Validator {
     }
     
     protected function validateTime($params, $name) {
-        $this->validateRegex("/^(([0-1][0-9])|(2[0-3])):(00|20|40)$/", $params, $name);
+        $this->validateRegex("/^(([0-1][0-9])|(2[0-3])):(00|15|30|45)$/", $params, $name);
     }
     
     protected function validateDuration($params, $name) {

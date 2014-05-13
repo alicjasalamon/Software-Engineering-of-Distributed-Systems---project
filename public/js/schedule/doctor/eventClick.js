@@ -24,7 +24,10 @@ function initialize() {
 
                     
                     var newContent = $(dialog).html();
-                    content.html(newContent);
+                    //content.html(newContent);
+                    var form = $(dialog).children().first();
+                    var formClone = form.clone(true, true);
+                    formClone.appendTo(content);
                 }
             });
         }
@@ -72,6 +75,7 @@ function fillWithData(dialog, target)
     
     var activityMap = Object();
     activityMap['dietStream'] = 'Diet';
+    activityMap['medicinesStream'] = 'Medicines';
     activityMap['exercisesStream'] = 'Excercises';
     activityMap['doctorStream'] = "Doctor's visits";
     activityMap['measurementsStream'] = "Measurements";
