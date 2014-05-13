@@ -38,6 +38,14 @@ class EventDbController extends DbController {
             return $event;
         });
     }
+    
+    public function deleteAction() {
+        return $this->wrapSingleResultAction(function($params) {
+            $this->validator->validateDelete($params);
+            $event = $this->model()->eventModel()->deleteEvent($params);
+            return $event;
+        });
+    }
 
 }
 

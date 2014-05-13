@@ -47,6 +47,12 @@ class EventModel extends EntityModel {
         return $event;
     }
     
+    public function deleteEvent($params) {
+        $event = $this->get($params);
+        $event->delete();
+        return null;
+    }
+    
     protected function buildEvent($params) {
         $event = new Event($this->mandango);
         $event->setTitle($params['title']);

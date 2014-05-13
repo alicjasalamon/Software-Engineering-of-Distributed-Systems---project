@@ -263,6 +263,19 @@
 });',
             },
             {
+                name: "Delete event",
+                url: "/db/event/delete",
+                parameters: [
+                    {name:"id", type:"string"},
+                ],
+                example:
+'$.ajax({ type: "POST", url: "db/event/add", data: {\n\
+    id: "EVENTID",\n\
+}}).success(function(data) { \n\
+    console.log(JSON.stringify(data)); \n\
+});',
+            },
+            {
                 name: "Set state",
                 url: "/db/event/state",
                 parameters: [
