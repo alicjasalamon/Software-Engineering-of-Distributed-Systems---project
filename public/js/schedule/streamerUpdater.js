@@ -68,7 +68,7 @@ function addEvents(stream, events, activity)
 
         fillEvent(eventDiv, event);
 
-        setColor(event, eventDiv, activity);
+        setEventColor(event, eventDiv, activity);
 
         eventDiv.addClass(activity);
         if(activity === 'measurements')
@@ -113,7 +113,7 @@ function fillEvent(eventDiv, event)
     eventDiv.append(details);
 }
 
-function setColor(event, eventDiv, activity)
+function setEventColor(event, eventDiv, activity)
 {
     var map = new Object();
     map['diet'] = 'teal';
