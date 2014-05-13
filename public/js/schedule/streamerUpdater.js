@@ -74,6 +74,8 @@ function addEvents(stream, events, activity)
         if(activity === 'measurements')
               eventDiv.attr('data-measurement-type', event.measurement);
 
+        eventDiv.attr('data-id', event.id);
+        eventDiv.attr('data-time', event.time);
     }
 }
 

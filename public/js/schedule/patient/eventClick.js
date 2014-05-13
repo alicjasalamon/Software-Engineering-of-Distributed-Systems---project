@@ -1,6 +1,7 @@
 $(document).ready(function() {
     $('body').on('click', '.event', function(e) {
 
+    if($('#credentials').attr('data-group')=== 'patient'){
         var target = e.currentTarget;
         if ($(this).children().length > 0)
         {
@@ -27,8 +28,9 @@ $(document).ready(function() {
                 }
             });
         }
-
+    }
     });
+    
 });
 
 function addMeasurementFeatures(target, dialog)
