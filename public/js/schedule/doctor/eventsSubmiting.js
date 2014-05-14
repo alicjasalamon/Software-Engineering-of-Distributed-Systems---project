@@ -5,7 +5,7 @@ $('document').ready(function()
     $('.submit-new-event').click(function(e) {
 
         var form = $(this).parentsUntil('form').parent();
-        
+
 
         $('input[name="patientid"]').val($('#selectPatientSchedule').val());
         var date = $('#schedulerDate').val();
@@ -34,5 +34,20 @@ $('document').ready(function()
         });
 
         $.Dialog.close();
+        updateStreamer();
+    });
+
+    $('.cancel-event').click(function(e) {
+
+        var eventID = $(e.currentTarget).parent().parent().attr('data-id');
+        $.ajax({type: "POST", url: "db/event/delete", data: {
+                id: eventID
+            }}).success(function(data) {
+            console.log(eventID);
+            console.log(JSON.stringify(data));
+        });
+
+        $.Dialog.close();
+        updateStreamer();
     });
 });
