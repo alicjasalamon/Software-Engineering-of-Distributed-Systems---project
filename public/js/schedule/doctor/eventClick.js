@@ -54,6 +54,7 @@ function emptySettings(isEmpty, dialog, target)
         fillWithData(dialog, target);
     } else {
         dialog = $('#cancelEventDialog');
+        dialog.children().first().attr('data-id', target.attr('data-id'));
     }
     return dialog;
 }
@@ -76,7 +77,7 @@ function fillWithData(dialog, target)
     var activityMap = Object();
     activityMap['dietStream'] = 'Diet';
     activityMap['medicinesStream'] = 'Medicines';
-    activityMap['exercisesStream'] = 'Excercises';
+    activityMap['exercisesStream'] = 'Exercises';
     activityMap['doctorStream'] = "Doctor's visits";
     activityMap['measurementsStream'] = "Measurements";
     
