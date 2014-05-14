@@ -49,6 +49,8 @@ class EventModel extends EntityModel {
     
     public function deleteEvent($params) {
         $event = $this->get($params);
+        $stream = $this->findStreamWithEvent($event);
+        $stream->removeEvents($event);
         $event->delete();
         return null;
     }
@@ -66,13 +68,35 @@ class EventModel extends EntityModel {
         return $event;
     }
     
-    protected function findStream($streams, $params) {
+    private function findStream($streams, $params) {
         foreach ($streams as $stream) {
             if($stream->getActivity() == $params['activity']) {
                 return $stream;
             }
         }
         return null;
+    }
+    
+    private function findStreamWithEvent(Event $event) {
+        $streams = $this->streamRepository()->createQuery()->all();
+        foreach ($streams as $stream) {
+            if($this->isEventInStream($stream, $event)){
+                return $stream;
+            }
+        }
+        return null;
+    }
+    
+    private function isEventInStream(\Application\Entity\Stream $stream, Event $event) {
+        $id = (string)$event->getId();
+        $events = $stream->getEvents();
+        foreach ($events as $e) {
+            $currentId = (string)$e->getId();
+            if($currentId == $id) {
+                return true;
+            }
+        }
+        return false;
     }
     
 }
