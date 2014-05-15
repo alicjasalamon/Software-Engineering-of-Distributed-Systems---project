@@ -47,15 +47,11 @@ class MeasurementsModel extends EntityModel {
         });        
         return $results;
     }
-
-    protected function getMeasurementsStreamsFromPatient(Patient $patient) {
-        
-        return $streams;
-    }
     
     protected function isDateNoOlderThan10Days($date) {
         $now = time();
         $dayDate = strtotime($date);
+        echo $dayDate;
         return $now - $dayDate < 60*60*24*10;
     }
 

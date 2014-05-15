@@ -1,8 +1,6 @@
 $('document').ready(function()
 {
-
-    //$('body').on('click', '.submit-new-event', function(e) {
-    $('.submit-new-event').click(function(e) {
+   $('.submit-new-event').click(function(e) {
 
         var form = $(this).parentsUntil('form').parent();
 
@@ -30,11 +28,9 @@ $('document').ready(function()
         var serializedForm = form.serializeArray();
         $.ajax({type: "POST", url: "db/event/add", data: serializedForm
         }).success(function(data) {
-            console.log(JSON.stringify(data));
+            updateStreamer();
         });
-
         $.Dialog.close();
-        updateStreamer();
     });
 
     $('.cancel-event').click(function(e) {
@@ -43,11 +39,8 @@ $('document').ready(function()
         $.ajax({type: "POST", url: "db/event/delete", data: {
                 id: eventID
             }}).success(function(data) {
-            console.log(eventID);
-            console.log(JSON.stringify(data));
+            updateStreamer();
         });
-
         $.Dialog.close();
-        updateStreamer();
     });
 });
