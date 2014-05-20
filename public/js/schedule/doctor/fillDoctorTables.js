@@ -16,10 +16,11 @@ $('document').ready(function() {
                 var measurement = measurements[i];
                 renderMeasurementRow(measurement);
             }
+            $('#measurementsTable').parent().dataTable();
 
         });
         
-         $.ajax('/db/events/undone', {
+         $.ajax('/db/event/undone', {
             data: {
                 doctorid: doctorID,
             }
@@ -30,6 +31,7 @@ $('document').ready(function() {
                 var undoneEvent = undoneEvents[i];
                 renderundoneEventRow(undoneEvent);
             }
+            $('#undone-activities-table').parent().dataTable();
 
         });
     }
@@ -96,10 +98,6 @@ function renderundoneEventRow(undoneEvent)
     var tdPatient = $('<td/>');
     tdPatient.html(undoneEvent.patient);
     row.append(tdPatient);
-
-    var tdType = $('<td/>');
-    tdType.html(undoneEvent.activity);
-    row.append(tdType);
 
     var tdType = $('<td/>');
     tdType.html(undoneEvent.activity);

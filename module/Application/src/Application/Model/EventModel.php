@@ -79,7 +79,7 @@ class EventModel extends EntityModel {
                                     'patient' => $patient->getFirstname() . ' ' . $patient->getLastname(),
                                     'date' => $day->getDate(),
                                     'time' => $event->getTime(),
-                                    'type' => $stream->getActivity(),
+                                    'activity' => $stream->getActivity(),
                                     'title' => $event->getTitle(),
                                 ]);
                             }
