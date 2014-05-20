@@ -21,10 +21,11 @@ $(document).ready(function() {
 
                     var detailsStreamer = $(target).find('.details');
                     var detailsDialog = dialog.find('.details');
+                    
                    // dialog.children().first().attr('data-id', target.attr('data-id'));
                     
-                    detailsDialog.append(detailsDialog.clone(true, true).children());
-                    
+                    //detailsDialog.append(detailsDialog.clone(true, true).children());
+                    detailsDialog.html(detailsStreamer.html());
                     var clone = $(dialog).clone(true, true);
                     var cloneChildren = clone.children();
                     var firstChild = cloneChildren.first();
@@ -33,7 +34,10 @@ $(document).ready(function() {
                     content.append(newContent);
                     $('.submit-event-state').off('click', submitEvent);
                     $('.submit-event-state').on('click', submitEvent);
-                    
+                    $('.submit-event-state').off('click', submitMeasurement);
+                    if($(target).hasClass('measurements')) {
+                        $('.submit-event-state').on('click', submitMeasurement);
+                    }
                     
                 }
             });
