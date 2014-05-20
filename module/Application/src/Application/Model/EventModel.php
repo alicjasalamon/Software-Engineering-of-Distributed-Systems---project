@@ -4,6 +4,7 @@ namespace Application\Model;
 
 use Application\Entity\Day;
 use Application\Entity\Event;
+use Application\Entity\Stream;
 
 class EventModel extends EntityModel {
     
@@ -26,8 +27,8 @@ class EventModel extends EntityModel {
     
     public function addEvent(Day $day, $params) {
         $streams = $day->getStreams()->all();
-        $foundStream = $this->findStream($streams, $params);
         $event = $this->buildEvent($params);
+        $foundStream = $this->findStream($streams, $params);
         $foundStream->addEvents($event);
         $event->save();
         return $event;
@@ -55,6 +56,60 @@ class EventModel extends EntityModel {
         $stream->save();
         $event->delete();
         return null;
+    }
+    
+    public function getUndone($params) {
+        $results = array();
+        $patients = $this->getPatients($params);
+        foreach($patients as $patient) {
+            $schedule = $patient->getSchedule();
+            if(!$schedule) continue;
+            $days = $schedule->getDays();
+            foreach ($days as $day) {
+                $dayDate = $day->getDate();
+                $isDateInRange = $this->isDateInRange($dayDate);
+                if($isDateInRange) {
+                    $streams = $day->getStreams();
+                    foreach ($streams as $stream) {
+                        $events = $stream->getEvents();
+                        foreach ($events as $event) {
+                            $state = $event->getState();
+                            if($state != 'done') {
+                                array_push($results, [
+                                    'patient' => $patient->getFirstname() . ' ' . $patient->getLastname(),
+                                    'date' => $day->getDate(),
+                                    'time' => $event->getTime(),
+                                    'type' => $stream->getActivity(),
+                                    'title' => $event->getTitle(),
+                                ]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $results;
+    }
+    
+    protected function getPatients($params) {        
+        $allPatients = $this->patientRepository()->createQuery()->all();
+        $patients = [];
+        foreach ($allPatients as $patient) {
+            $doctorid = (string)$patient->getDoctor_reference_field();
+            if($doctorid == $params['doctorid']){
+                array_push($patients, $patient);
+            }
+        }
+        return $patients;
+    }
+    
+    protected function isDateInRange($date) {
+        $now = time();
+        $convertedDate = str_replace("/", "-", $date);
+        $dayDate = strtotime($convertedDate);
+        $inRange = $now - $dayDate < 60*60*24*10;
+        $inRange = $inRange && $now > $dayDate;
+        return $inRange;
     }
     
     protected function buildEvent($params) {
@@ -89,7 +144,7 @@ class EventModel extends EntityModel {
         return null;
     }
     
-    private function isEventInStream(\Application\Entity\Stream $stream, Event $event) {
+    private function isEventInStream(Stream $stream, Event $event) {
         $id = (string)$event->getId();
         $events = $stream->getEvents();
         foreach ($events as $e) {

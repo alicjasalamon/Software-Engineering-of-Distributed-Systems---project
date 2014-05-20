@@ -1,3 +1,4 @@
+
 <h1>Data model and database interfaces</h1>
 
 <script type="text/javascript">
@@ -301,6 +302,19 @@
 '$.ajax({ type: "POST", url: "db/event/measurement", data: {\n\
     id: "EVENTID",\n\
     measurementvalue: "64kg", \n\
+}}).success(function(data) { \n\
+    console.log(JSON.stringify(data)); \n\
+});',
+            },
+            {
+                name: "Get undone events",
+                url: "/db/event/undone",
+                parameters: [
+                    {name:"doctorid", type:"string (id)"},
+                ],
+                example:
+'$.ajax({ type: "POST", url: "db/event/undone", data: {\n\
+    doctorid: "DOCTORID",\n\
 }}).success(function(data) { \n\
     console.log(JSON.stringify(data)); \n\
 });',

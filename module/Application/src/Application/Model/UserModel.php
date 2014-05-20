@@ -44,6 +44,8 @@ class UserModel extends EntityModel {
         if($subUser) {
             $subUser->save();
             return $subUser;
+        } else {
+            $user->save();
         }
         return [];
     }

@@ -35,6 +35,11 @@ class EventValidator extends Validator {
         $this->validateParamExists($params, 'id');
         $this->validateId($params, 'id');
     }
+    
+    public function validateUndone($params) {
+        $this->validateParamExists($params, 'doctorid');
+        $this->validateId($params, 'doctorid');
+    }
 
     protected function validateActivity($params, $name) {
         $activity = $params[$name];

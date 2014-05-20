@@ -12,8 +12,13 @@ class AuthIdentity {
     public function __construct($login, $group, $subUser) {
         $this->login = $login;
         $this->group = $group;
-        $this->name = $subUser->getFirstname() . ' ' . $subUser->getLastname();
-        $this->id = (string) $subUser->getId();
+        if($subUser) {
+            $this->name = $subUser->getFirstname() . ' ' . $subUser->getLastname();
+            $this->id = (string) $subUser->getId();
+        } else {
+            $this->name = "ADMIN";
+            $this->id = "ADMIN";
+        }        
     }
     
     public function getLogin() {

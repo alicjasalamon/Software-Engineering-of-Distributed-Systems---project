@@ -46,6 +46,14 @@ class EventDbController extends DbController {
             return $event;
         });
     }
+    
+    public function undoneAction() {
+        return $this->wrapSingleResultAction(function($params) {
+            $this->validator->validateUndone($params);
+            $undoneEvents = $this->model()->eventModel()->getUndone($params);
+            return $undoneEvents;
+        });
+    }
 
 }
 
