@@ -12,16 +12,12 @@ class MeasurementsModel extends EntityModel {
         $results = [];
         $patients = $this->getPatients($params);
         foreach ($patients as $patient) {
-            
             $schedule = $patient->getSchedule();
             if(!$schedule) continue;
             $days = $schedule->getDays();
-            echo count($days);
             foreach ($days as $day) {
                 $dayDate = $day->getDate();
-                echo 'x';
                 $isDateNoOlderThan10Days = $this->isDateNoOlderThan10Days($dayDate);
-                echo $isDateNoOlderThan10Days;
                 if($isDateNoOlderThan10Days) {
                     $dayStream = $this->getMeasurementsStreamFromDay($day);
                     $events = $dayStream->getEvents();
@@ -54,8 +50,8 @@ class MeasurementsModel extends EntityModel {
     
     protected function isDateNoOlderThan10Days($date) {
         $now = time();
-        $dayDate = strtotime($date);
-        echo $dayDate;
+        $convertedDate = str_replace("/", "-", $date);
+        $dayDate = strtotime($convertedDate);
         return $now - $dayDate < 60*60*24*10;
     }
 
