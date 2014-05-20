@@ -21,10 +21,20 @@ $(document).ready(function() {
 
                     var detailsStreamer = $(target).find('.details');
                     var detailsDialog = dialog.find('.details');
-
-                    detailsDialog.html(detailsStreamer.html());
-                    var newContent = $(dialog).html();
-                    content.html(newContent);
+                   // dialog.children().first().attr('data-id', target.attr('data-id'));
+                    
+                    detailsDialog.append(detailsDialog.clone(true, true).children());
+                    
+                    var clone = $(dialog).clone(true, true);
+                    var cloneChildren = clone.children();
+                    var firstChild = cloneChildren.first();
+                    firstChild.attr('data-id', $(target).attr('data-id'));
+                    var newContent = clone.children();
+                    content.append(newContent);
+                    $('.submit-event-state').off('click', submitEvent);
+                    $('.submit-event-state').on('click', submitEvent);
+                    
+                    
                 }
             });
         }
@@ -36,23 +46,26 @@ $(document).ready(function() {
 function addMeasurementFeatures(target, dialog)
 {
     var clickedEvent = $(target);
-    var measurementElems = dialog.find('#measurementField')
+    var measurementElems = dialog.find('#measurementField');
     if (clickedEvent.hasClass('measurements'))
     {
         var type = $(target).attr('data-measurement-type');
         measurementElems.show();
         var unitsMap = new Object();
         unitsMap['weight'] = 'kg';
-        unitsMap['bloodPreasure'] = 'mmHg';
-        unitsMap['sugarLevel'] = 'mmol/L';
-
+        unitsMap['blood-pressure'] = 'mmHg';
+        unitsMap['sugar-level'] = 'mmol/L';
+         
         var unit = unitsMap[type];
-        dialog.find('#unit').html(unit);
+        dialog.find('.unit').html(unit);
+        
+        var eventId = clickedEvent.attr('data-id');
+        dialog.attr('data-id', eventId);
 
     }
     else
     {
-        dialog.find('#unit').html('');
+        dialog.find('.unit').html('');
         measurementElems.hide();
     }
 }

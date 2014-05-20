@@ -1,8 +1,12 @@
 (function($) {
 
     var dt = new Date();
-    var minutes = Math.round(dt.getMinutes()/15)*15; 
-    var time = dt.getHours() + ":" + minutes;
+    var minutes = Math.floor(dt.getMinutes()/15)*15; 
+    var hours = dt.getHours();
+    if(hours < 10) hours = "0" + hours;
+    if(minutes < 10) minutes = "0" + minutes;
+    var time = hours + ":" + minutes;
+
     
     $.widget("metro.streamer", {
         version: "1.0.0",

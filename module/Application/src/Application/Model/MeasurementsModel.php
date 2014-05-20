@@ -12,12 +12,16 @@ class MeasurementsModel extends EntityModel {
         $results = [];
         $patients = $this->getPatients($params);
         foreach ($patients as $patient) {
+            
             $schedule = $patient->getSchedule();
             if(!$schedule) continue;
             $days = $schedule->getDays();
+            echo count($days);
             foreach ($days as $day) {
                 $dayDate = $day->getDate();
+                echo 'x';
                 $isDateNoOlderThan10Days = $this->isDateNoOlderThan10Days($dayDate);
+                echo $isDateNoOlderThan10Days;
                 if($isDateNoOlderThan10Days) {
                     $dayStream = $this->getMeasurementsStreamFromDay($day);
                     $events = $dayStream->getEvents();
