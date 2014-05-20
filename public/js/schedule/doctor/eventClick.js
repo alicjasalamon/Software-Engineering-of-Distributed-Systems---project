@@ -3,6 +3,16 @@ function initialize() {
 
         if ($('#credentials').attr('data-group') === 'doctor')
         {
+            var oneDay = 24*60*60*1000;
+            var date = $('#schedulerDate').val();
+            var splitted = date.split('/');
+            var selectedDay = Math.floor(new Date(splitted[2], splitted[1] - 1, splitted[0])/oneDay);
+            var nowDay = Math.floor(new Date()/oneDay);
+            
+            if(selectedDay < nowDay - 1) {
+                alert('Remember, you selected date from the past.');
+            }
+            
             var target = $(e.currentTarget);
             var isEmpty = (target.children().length === 0);
             var isMeasurement = target.parent().is('#measurementsStream');

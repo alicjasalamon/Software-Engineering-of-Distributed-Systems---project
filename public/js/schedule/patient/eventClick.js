@@ -2,6 +2,16 @@ $(document).ready(function() {
     $('body').on('click', '.event', function(e) {
 
     if($('#credentials').attr('data-group')=== 'patient'){
+        var oneDay = 24*60*60*1000;
+        var date = $('#schedulerDate').val();
+        var splitted = date.split('/');
+        var selectedDay = Math.floor(new Date(splitted[2], splitted[1] - 1, splitted[0])/oneDay);
+        var nowDay = Math.floor(new Date()/oneDay);
+
+        if(selectedDay + 1 > nowDay) {
+            alert('Remember, you selected date from the future.');
+        }
+
         var target = e.currentTarget;
         if ($(this).children().length > 0)
         {

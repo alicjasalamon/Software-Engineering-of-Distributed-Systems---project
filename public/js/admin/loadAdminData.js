@@ -35,7 +35,14 @@ $(document).ready(function() {
                });
                renderPatient(patient, doctor[0]);
            }
+           
+           $('#admin-doctors-table').dataTable();
+           $('#admin-patients-table').dataTable();
+           updateStreamer();
+
        });
      });
+     
+   //  
     
 });
