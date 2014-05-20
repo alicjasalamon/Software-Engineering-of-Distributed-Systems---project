@@ -18,6 +18,20 @@ $('document').ready(function() {
             }
 
         });
+        
+         $.ajax('/db/events/undone', {
+            data: {
+                doctorid: doctorID,
+            }
+        }).success(function(data) {
+            var undoneEvents = data.data;
+            for (var i = 0; i < undoneEvents.length; i++)
+            {
+                var undoneEvent = undoneEvents[i];
+                renderundoneEventRow(undoneEvent);
+            }
+
+        });
     }
 });
 
@@ -64,6 +78,40 @@ function renderMeasurementRow(measurement)
     setColor(row, type, value);
     measurementsTable.append(row);
 }
+
+
+function renderundoneEventRow(undoneEvent)
+{
+    var undoneEventsTable = $('#undone-activities-table');
+    var row = $('<tr/>');
+
+    var tdDate = $('<td/>');
+    tdDate.html(undoneEvent.date);
+    row.append(tdDate);
+
+    var tdHour = $('<td/>');
+    tdHour.html(undoneEvent.time);
+    row.append(tdHour);
+
+    var tdPatient = $('<td/>');
+    tdPatient.html(undoneEvent.patient);
+    row.append(tdPatient);
+
+    var tdType = $('<td/>');
+    tdType.html(undoneEvent.activity);
+    row.append(tdType);
+
+    var tdType = $('<td/>');
+    tdType.html(undoneEvent.activity);
+    row.append(tdType);
+    
+    var tdTitle = $('<td/>');
+    tdTitle.html(undoneEvent.title);
+    row.append(tdTitle);
+    
+    undoneEventsTable.append(row);
+}
+
 
 function setColor(row, type, value)
 {

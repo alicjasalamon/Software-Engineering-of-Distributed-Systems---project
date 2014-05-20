@@ -7,8 +7,4 @@ $(document).ready(function()
         var d = new Date(inputFormat);
         return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/');
     }
-
-    var dt = new Date();
-    //$("#schedulerDate").val(convertDate(dt));
-    
 });
